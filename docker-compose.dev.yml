@@ -1,10 +1,9 @@
-version: "3.9"
-
 services:
   frontend:
     build:
       context: ./apps/frontend
       dockerfile: ../../docker/frontend.Dockerfile
+    container_name: fixko_frontend
     volumes:
       - ./apps/frontend:/app
       - /app/node_modules
@@ -19,6 +18,7 @@ services:
     build:
       context: ./apps/backend
       dockerfile: ../../docker/backend.Dockerfile
+    container_name: fixko_backend
     volumes:
       - ./apps/backend:/app
       - /app/node_modules
