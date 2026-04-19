@@ -28,6 +28,7 @@ coverage/**
 
 ### Environment
 .env
+.env.prod
 .env.*
 .env.*.local
 .env.local
