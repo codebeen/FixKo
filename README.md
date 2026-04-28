@@ -50,12 +50,12 @@ The system is built with a focus on scalability, maintainability, and clean arch
 - Fast API communication between frontend and backend
 
 ## Tech Stack
-Frontend:
+Web:
 - Next.js
 - TypeScript
 - Tailwind CSS
 
-Backend:
+API:
 - NestJS
 - TypeScript
 
@@ -73,12 +73,12 @@ DevOps / Infrastructure:
 ```bash
 fixko/
 ├── apps/
-│   ├── frontend/        # Frontend (Next.js)
-│   └── backend/        # Backend (NestJS)
+│   ├── web/            # Web (Next.js)
+│   └── api/            # API (NestJS)
 │
 ├── docker/
-│   └── frontend.Dockerfile  # Dockerfile for frontend
-│   └── backend.Dockerfile   # Dockerfile for backend
+│   └── web.Dockerfile  # Dockerfile for web
+│   └── api.Dockerfile   # Dockerfile for api
 │
 ├── docker-compose.dev.yml
 └── README.md
@@ -106,17 +106,17 @@ docker compose -f docker-compose.dev.yml up --build -d
 
 Run manually (without Docker)
 
-Frontend:
+Web:
 
 ```bash
-cd apps/frontend
+cd apps/web
 pnpm dev
 ```
 
-Backend:
+API:
 
 ```bash
-cd apps/backend
+cd apps/api
 pnpm start:dev
 ```
 
@@ -124,6 +124,6 @@ Services
 
 | Service     | URL                  |
 |-------------|----------------------|
-| Frontend    | http://localhost:3000|
-| Backend API | http://localhost:3001|
+| Web         | http://localhost:3000|
+| API         | http://localhost:3001|
 | Database    | localhost:5432       |
