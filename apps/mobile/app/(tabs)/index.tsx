@@ -1,98 +1,73 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const TAGS = [
+  { label: 'Connection', type: 'dashed' },
+  { label: 'Trust', type: 'dashed' },
+  { label: 'Consistency', type: 'solid' },
+  { label: 'Bridging Filipinos', type: 'dashed' },
+  { label: 'Reliability', type: 'dashed' },
+  { label: 'Opportunity', type: 'dashed' },
+  { label: 'Efficiency', type: 'dashed' },
+];
 
-export default function HomeScreen() {
+export default function App() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Hello World!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      
+      <View style={styles.content}>
+        <Text style={styles.title}>Supporting Filipino Workers,{'\n'}
+          <Text style={styles.subtitle}>Serving Every Home.</Text>
+        </Text>
+        <Text style={styles.description}>
+          Empowering the hands that build our nation. We bridge the gap between 
+          the hardworking Filipino and the homes that need them most.
+        </Text>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View style={styles.tagCloud}>
+          {TAGS.map((tag, i) => (
+            <View key={i} style={[styles.tag, styles[`${tag.type}Tag`]]}>
+              <Text style={[styles.tagText, tag.type === 'solid' && styles.solidText]}>
+                {tag.label}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.btnText}>Get Started</Text>
+        </TouchableOpacity>
+        <Text style={styles.linkText}>I Already have an Account</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: { flex: 1, backgroundColor: '#001449', padding: 25 },
+  content: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  title: { color: '#FFF', fontSize: 22, fontWeight: 'bold', textAlign: 'center' },
+  subtitle: { fontSize: 18, fontWeight: 'normal', fontStyle: 'italic', color: '#CCC' },
+  description: { color: '#BBB', textAlign: 'center', fontSize: 13, marginTop: 15, paddingHorizontal: 10 },
+  
+  tagCloud: { 
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    justifyContent: 'center', 
+    gap: 10, 
+    marginTop: 40 
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  tag: { paddingVertical: 8, paddingHorizontal: 16, borderRadius: 20 },
+  dashedTag: { borderWidth: 1, borderColor: '#FFF', borderStyle: 'dashed' },
+  solidTag: { backgroundColor: '#FFF' },
+  tagText: { color: '#FFF', fontSize: 14 },
+  solidText: { color: '#001449', fontWeight: 'bold' },
+
+  footer: { gap: 20, alignItems: 'center', marginBottom: 20 },
+  button: { backgroundColor: '#7EB1F1', width: '100%', padding: 16, borderRadius: 30, alignItems: 'center' },
+  btnText: { color: '#001449', fontWeight: 'bold', fontSize: 16 },
+  linkText: { color: '#FFF', fontWeight: '600' }
 });
