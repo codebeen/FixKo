@@ -1,17 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const TAGS = [
   { label: 'Connection', type: 'dashed' },
   { label: 'Trust', type: 'dashed' },
   { label: 'Consistency', type: 'solid' },
-  { label: 'Bridging Filipinos', type: 'dashed' },
+  { label: 'Bridging Filipinos', type: 'solid' },
   { label: 'Reliability', type: 'dashed' },
   { label: 'Opportunity', type: 'dashed' },
-  { label: 'Efficiency', type: 'dashed' },
+  { label: 'Efficiency', type: 'solid' },
 ];
 
 export default function App() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -27,7 +29,7 @@ export default function App() {
 
         <View style={styles.tagCloud}>
           {TAGS.map((tag, i) => (
-            <View key={i} style={[styles.tag, styles[`${tag.type}Tag`]]}>
+            <View key={i} style={[styles.tag, tag.type === 'dashed' ? styles.dashedTag : styles.solidTag]}>
               <Text style={[styles.tagText, tag.type === 'solid' && styles.solidText]}>
                 {tag.label}
               </Text>
@@ -37,10 +39,12 @@ export default function App() {
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push('/(auth)/register/page')}>
           <Text style={styles.btnText}>Get Started</Text>
         </TouchableOpacity>
-        <Text style={styles.linkText}>I Already have an Account</Text>
+        <TouchableOpacity onPress={() => router.push('/(auth)/login/page')}>
+          <Text style={styles.linkText}>I Already have an Account</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
