@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
+import BaseLayout from '@/components/layout/BaseLayout';
 
 interface ButtonProps {
   title: string;
@@ -12,7 +13,7 @@ interface ButtonProps {
 }
 
 export default function SimplifiedUpload() {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
 
   const pickImage = async () => {
@@ -27,7 +28,7 @@ export default function SimplifiedUpload() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseLayout scrollable={false}>
       <View style={styles.header}>
         <Ionicons name="arrow-back" size={24} color="white" />
         <Text style={styles.whiteText}>Upload Photo</Text>
@@ -45,12 +46,11 @@ export default function SimplifiedUpload() {
         <View style={{ height: 100 }} />
         <Button title="Mark as Completed" onPress={() => router.push('/(joboverview)/jobcomplete/complete/page' as any)} bg="#5df260" color="black" />
       </View>
-    </SafeAreaView>
+    </BaseLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#001233' },
   header: { flexDirection: 'row', justifyContent: 'space-between', padding: 20 },
   body: { flex: 1, alignItems: 'center', paddingHorizontal: 30 },
   whiteText: { color: 'white', fontSize: 16 },

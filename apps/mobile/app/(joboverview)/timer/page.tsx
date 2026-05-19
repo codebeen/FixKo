@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import BaseLayout from '@/components/layout/BaseLayout';
 
 const THEME = { bg: '#001540', accent: '#5CF263', blue: '#0047FF', border: 'rgba(255,255,255,0.5)' };
 
@@ -28,50 +29,47 @@ export default function JobOverview() {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseLayout scrollable={true} contentContainerStyle={{ padding: 20 }}>
       <View style={styles.header}>
         <Feather name="chevron-left" color="white" size={28} />
         <Text style={styles.headerTitle}>Job Overview</Text>
         <View style={{ width: 28 }} />
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
-        <View style={styles.center}>
-          <Text style={styles.title}>Working Hours</Text>
-          <Text style={styles.subtitle}>Track your time while working on this job.</Text>
-          
-          <View style={styles.timerCard}>
-            <Text style={styles.timerText}>1 : 00 : 00</Text>
-            <View style={styles.controls}>
-              <Feather name="play" color={THEME.blue} size={20} />
-              <View style={styles.pauseCircle}><Feather name="pause" color="white" size={20} /></View>
-              <Feather name="square" color={THEME.blue} size={18} />
-            </View>
+      <View style={styles.center}>
+        <Text style={styles.title}>Working Hours</Text>
+        <Text style={styles.subtitle}>Track your time while working on this job.</Text>
+        
+        <View style={styles.timerCard}>
+          <Text style={styles.timerText}>1 : 00 : 00</Text>
+          <View style={styles.controls}>
+            <Feather name="play" color={THEME.blue} size={20} />
+            <View style={styles.pauseCircle}><Feather name="pause" color="white" size={20} /></View>
+            <Feather name="square" color={THEME.blue} size={18} />
           </View>
         </View>
+      </View>
 
-        <Text style={[styles.title, { marginTop: 50, fontSize: 20 }]}>Task Checklist</Text>
-        {tasks.map((item, i) => (
-          <TaskRow 
-            key={item.id} 
-            label={item.text} 
-            isChecked={item.done} 
-            onToggle={() => {
-              const newTasks = [...tasks];
-              newTasks[i].done = !newTasks[i].done;
-              setTasks(newTasks);
-            }} 
-          />
-        ))}
+      <Text style={[styles.title, { marginTop: 50, fontSize: 20 }]}>Task Checklist</Text>
+      {tasks.map((item, i) => (
+        <TaskRow 
+          key={item.id} 
+          label={item.text} 
+          isChecked={item.done} 
+          onToggle={() => {
+            const newTasks = [...tasks];
+            newTasks[i].done = !newTasks[i].done;
+            setTasks(newTasks);
+          }} 
+        />
+      ))}
 
-        <TouchableOpacity style={styles.btn} onPress={() => router.push('/(joboverview)/uploading/uploadingfile/page' as any)}><Text style={styles.btnText}>Mark as Completed</Text></TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+      <TouchableOpacity style={styles.btn} onPress={() => router.push('/(joboverview)/uploading/uploadingfile/page' as any)}><Text style={styles.btnText}>Mark as Completed</Text></TouchableOpacity>
+    </BaseLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: THEME.bg },
   header: { flexDirection: 'row', justifyContent: 'space-between', padding: 15, alignItems: 'center' },
   headerTitle: { color: 'white', fontSize: 18, fontWeight: '700' },
   center: { alignItems: 'center' },
