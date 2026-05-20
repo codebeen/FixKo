@@ -55,7 +55,7 @@ export default function Notification() {
 
   return (
     <>
-      <Indicator color="red" offset={2} size={8} withBorder disabled={unreadCount === 0}>
+      <Indicator offset={2} size={8} withBorder disabled={unreadCount === 0} styles={{ indicator: { backgroundImage: 'linear-gradient(140deg, #001851 0%, #0b2361 25%, #18388c 50%, #2655bf 75%, #3b82f6 100%)', border: '1px solid white' } }}>
         <ActionIcon
           variant="transparent"
           c="black"
@@ -190,7 +190,7 @@ export default function Notification() {
                           width: 8,
                           height: 8,
                           borderRadius: '50%',
-                          backgroundColor: '#228be6',
+                          backgroundImage: 'linear-gradient(140deg, #001851 0%, #0b2361 25%, #18388c 50%, #2655bf 75%, #3b82f6 100%)',
                           animation: pulseUnreadBadge ? 'notif-pulse 900ms ease-in-out' : 'none',
                           flexShrink: 0,
                         }}
@@ -203,7 +203,12 @@ export default function Notification() {
           </Box>
 
           <Box p="md" pt="xs" style={{ borderTop: '1px solid #eceff3', background: '#fff' }}>
-            <Button color="#800000" fullWidth onClick={handleMarkAllAsRead} disabled={unreadCount === 0}>
+            <Button 
+              fullWidth 
+              onClick={handleMarkAllAsRead} 
+              disabled={unreadCount === 0}
+              style={{ backgroundImage: 'linear-gradient(140deg, #001851 0%, #0b2361 25%, #18388c 50%, #2655bf 75%, #3b82f6 100%)', border: 'none', color: 'white' }}
+            >
               Mark all as read
             </Button>
           </Box>

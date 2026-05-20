@@ -18,9 +18,10 @@ export function SidebarLink({ item, role, isActive, isNarrow, opened, isAnyOpene
     width: "100%",
     padding: rem(12),
     borderRadius: rem(8),
-    backgroundColor: activeState ? "#470606" : "transparent",
+    backgroundColor: activeState ? "#003B9F" : "transparent",
     color: "#F5F5F5",
     transition: "all 0.2s ease",
+    boxShadow: activeState ? "0 4px 10px rgba(0, 59, 159, 0.3)" : "none",
   });
 
   if (item.links) {

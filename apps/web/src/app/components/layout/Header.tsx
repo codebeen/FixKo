@@ -5,9 +5,10 @@ import {
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconUserCircle, IconLogout, IconUser, IconSettings, IconSearch } from '@tabler/icons-react';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Notification from "./Notification";
+import { NAV_CONFIG } from "../sidebar/NavigationConfig";
 
 interface TopHeaderProps {
   onBurgerClick: () => void;
@@ -17,28 +18,38 @@ interface TopHeaderProps {
 export default function Header({ onBurgerClick, opened }: TopHeaderProps) {
   const isMobile = useMediaQuery('(max-width: 820px)');
   const router = useRouter();
+  const pathname = usePathname();
 
   const roleLabel = "Administrator";
   const profileLabel = "John Doe";
 
-  const items = [
-    { title: 'Home', href: `/dashboard` },
-    { title: 'Inventory System', href: '#' },
-    { title: roleLabel, href: '#' },
-  ].map((item, index) => (
-    <Anchor
-      key={index}
-      component={(item.href === "#" ? "button" : Link) as any}
-      href={item.href === "#" ? undefined : item.href}
-      size="xs"
-      c={index === 2 ? "black" : "dimmed"}
-      fw={index === 2 ? 700 : 400}
-      underline="hover"
-      style={{ transition: "color 0.2s ease" }}
-    >
-      {item.title}
-    </Anchor>
-  ));
+  const currentNav = NAV_CONFIG.find(item => pathname?.startsWith(`/${item.link}`));
+
+  const breadcrumbData = [
+    { title: 'FixKo PH', href: `/dashboard` }
+  ];
+
+  if (currentNav && currentNav.link !== 'dashboard') {
+    breadcrumbData.push({ title: currentNav.label, href: `/${currentNav.link}` });
+  }
+
+  const items = breadcrumbData.map((item, index) => {
+    const isLast = index === breadcrumbData.length - 1;
+    return (
+      <Anchor
+        key={index}
+        component={(item.href === "#" ? "button" : Link) as any}
+        href={item.href === "#" ? undefined : item.href}
+        size="xs"
+        c={isLast ? "#003B9F" : "dimmed"}
+        fw={isLast ? 700 : 500}
+        underline="hover"
+        style={{ transition: "color 0.2s ease", cursor: isLast ? "default" : "pointer", textDecoration: isLast ? "none" : undefined }}
+      >
+        {item.title}
+      </Anchor>
+    );
+  });
 
   const onLogoutClick = () => {
     router.push('/login');
@@ -70,16 +81,12 @@ export default function Header({ onBurgerClick, opened }: TopHeaderProps) {
               onClick={onBurgerClick}
               size="sm"
               mr="xs"
-              color="#800000"
+              color="#003B9F"
             />
           )}
-          <Text fw={800} size="md" style={{ letterSpacing: '0.5px', whiteSpace: 'nowrap', color: '#800000', display: isMobile ? 'none' : 'block' }}>
-            PUP - IMS
-          </Text>
 
           {!isMobile && (
             <>
-              <Divider orientation="vertical" h={20} />
               <Box>
                 <Breadcrumbs separator="|" mt={3}>
                   {items}
@@ -99,7 +106,7 @@ export default function Header({ onBurgerClick, opened }: TopHeaderProps) {
             width={230}
             radius="md"
             position="bottom-end"
-            offset={12} 
+            offset={12}
             zIndex={2000}
             transitionProps={{ transition: 'pop' }}
           >
@@ -108,9 +115,9 @@ export default function Header({ onBurgerClick, opened }: TopHeaderProps) {
                 <Avatar
                   src={null}
                   alt="User Profile"
-                  radius="md" 
+                  radius="md"
                   size="md"
-                  color="maroon"
+                  color="#003B9F"
                   variant="filled"
                 >
                   <IconUserCircle size={24} />
@@ -124,15 +131,15 @@ export default function Header({ onBurgerClick, opened }: TopHeaderProps) {
                 <Group gap="sm" wrap="nowrap">
                   <Avatar
                     src={null}
-                    radius="md" 
+                    radius="md"
                     size="md"
-                    color="maroon"
+                    color="#003B9F"
                     variant="filled"
                   >
                     <IconUserCircle size={20} />
                   </Avatar>
                   <Box>
-                    <Text size="sm" fw={700} lh={1.3}>{profileLabel}</Text>
+                    <Text size="sm" fw={700} lh={1.3} c="#003B9F">{profileLabel}</Text>
                     <Text size="xs" c="dimmed">{roleLabel}</Text>
                   </Box>
                 </Group>
