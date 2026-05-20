@@ -33,16 +33,8 @@ export default function Applicant() {
   const canAdd = true;
   const canViewTransferredTab = true;
 
-  const setAssetToView = (v: any) => { };
-  const setAssetToTransfer = (v: any) => { };
-  const setAssetToEdit = (v: any) => { };
-  const setTransferToEdit = (v: any) => { };
   const setImportModalOpened = (v: boolean) => { };
-  const setShowAddForm = (v: boolean) => { };
 
-  const handleExportPDF = () => { };
-  const handleExportCSV = () => { };
-  const handleExportExcel = () => { };
   // -----------------------------------------
 
   const table = useMantineReactTable({
@@ -149,51 +141,6 @@ export default function Applicant() {
         </Menu.Item>,
       ];
 
-      const hasStock = Number(row.original.remaining_quantity ?? row.original.quantity ?? 0) > 0;
-
-      if (canTransfer && activeTab === 'for_transfer') {
-        items.push(
-          <Menu.Item
-            key="transfer"
-            className="pup-table-action-item"
-            onClick={() => {
-              if (!hasStock) return;
-              setAssetToTransfer(row.original);
-            }}
-            leftSection={<IconTransfer style={{ width: rem(16), height: rem(16) }} />}
-            disabled={!hasStock}
-          >
-            Transfer
-          </Menu.Item>
-        );
-      }
-
-      if (canEdit && activeTab === 'for_transfer') {
-        items.push(
-          <Menu.Item
-            key="edit"
-            className="pup-table-action-item"
-            onClick={() => setAssetToEdit(row.original)}
-            leftSection={<IconPencil style={{ width: rem(16), height: rem(16) }} />}
-          >
-            Edit Asset
-          </Menu.Item>
-        );
-      }
-
-      if (canEdit && activeTab === 'transferred') {
-        items.push(
-          <Menu.Item
-            key="edit-transfer"
-            className="pup-table-action-item"
-            onClick={() => setTransferToEdit(row.original)}
-            leftSection={<IconPencil style={{ width: rem(16), height: rem(16) }} />}
-          >
-            Edit Transfer
-          </Menu.Item>
-        );
-      }
-
       return items;
     },
 
@@ -222,57 +169,6 @@ export default function Applicant() {
               onChange={(e) => setGlobalFilter(e.target.value)}
             />
           </Flex>
-
-          {/* Buttons */}
-          <Flex gap="sm" align="center">
-            <Menu shadow="md" width={180} radius="md" transitionProps={{ transition: 'pop', duration: 150 }}>
-              <Menu.Target>
-                <Button
-                  className="pup-table-btn-export"
-                  size="sm"
-                  leftSection={<IconFileExport style={{ width: rem(18), height: rem(18) }} />}
-                  rightSection={<IconChevronDown style={{ width: rem(14), height: rem(14) }} />}
-                >
-                  Export
-                </Button>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Label>Format</Menu.Label>
-                <Menu.Item
-                  className="pup-table-action-item"
-                  leftSection={<IconFileTypePdf style={{ width: rem(16), height: rem(16) }} />}
-                  onClick={handleExportPDF}
-                >
-                  PDF
-                </Menu.Item>
-                <Menu.Item className="pup-table-action-item" leftSection={<IconFileTypeCsv style={{ width: rem(16), height: rem(16) }} />} onClick={handleExportCSV}>CSV</Menu.Item>
-                <Menu.Item className="pup-table-action-item" leftSection={<IconTableExport style={{ width: rem(16), height: rem(16) }} />} onClick={handleExportExcel}>Excel</Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-
-            {canImport && (
-              <Button
-                className="pup-table-btn-import"
-                size="sm"
-                leftSection={<IconFileImport style={{ width: rem(18), height: rem(18) }} />}
-                onClick={() => setImportModalOpened(true)}
-              >
-                Import
-              </Button>
-            )}
-
-            {canAdd && (
-              <Button
-                className="pup-table-btn-add"
-                radius="0"
-                size="sm"
-                onClick={() => setShowAddForm(true)}
-                leftSection={<IconPlus style={{ width: rem(18), height: rem(18) }} />}
-              >
-                Add Asset
-              </Button>
-            )}
-          </Flex>
         </Flex>
       </Box>
 
@@ -284,25 +180,16 @@ export default function Applicant() {
             setPage(1);
           }}
         >
-          For Transfer
+          Workers
         </button>
         {canViewTransferredTab && (
           <button
             className={`pup-tab ${activeTab === 'transferred' ? 'pup-tab-active' : 'pup-tab-inactive'}`}
             onClick={() => { setActiveTab('transferred'); table.setPageIndex(0); }}
           >
-            Transferred
+            For Approval
           </button>
         )}
-        <button
-          className={`pup-tab ${activeTab === 'my_transfers' ? 'pup-tab-active' : 'pup-tab-inactive'}`}
-          onClick={() => {
-            setActiveTab('my_transfers');
-            setPage(1);
-          }}
-        >
-          Received Assets
-        </button>
       </Box>
 
       <Box className="pup-tab-active-bar" />
@@ -310,13 +197,6 @@ export default function Applicant() {
       <Box style={{ display: 'flex', flexDirection: 'column' }} mt={0}>
         <MantineReactTable key={activeTab} table={table} />
       </Box>
-
-
-
-
-
-
-
 
     </BaseLayout>
   );

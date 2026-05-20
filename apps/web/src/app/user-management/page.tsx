@@ -41,6 +41,7 @@ export default function UserManagement() {
     {
       accessorKey: 'full_name',
       header: 'Full Name',
+      mantineTableHeadCellProps: { align: 'center' },
       Cell: ({ row }) => {
         const first = row.original.first_name ?? '';
         const middle = row.original.middle_name ? ` ${row.original.middle_name}` : '';
@@ -51,18 +52,21 @@ export default function UserManagement() {
     {
       accessorKey: 'email',
       header: 'Email',
-      Cell: ({ cell }) => <Text c="dimmed" fz="sm">{cell.getValue<string>() ?? '—'}</Text>,
+      mantineTableHeadCellProps: { align: 'center' },
+      Cell: ({ cell }) => <Text c="dimmed">{cell.getValue<string>() ?? '—'}</Text>,
     },
     {
       accessorKey: 'status',
       header: 'Status',
+      mantineTableHeadCellProps: { align: 'center' },
       Cell: ({ cell }) => {
         const status = cell.getValue<string>() ?? 'Pending';
         const color = statusColorMap[status] ?? '#888';
         return (
           <Badge
             variant="light"
-            style={{ backgroundColor: `${color}20`, color, border: `1px solid ${color}` }}
+            size="xs"
+            style={{ backgroundColor: `${color}20`, color, border: `1px solid ${color}`, fontSize: '0.6rem' }}
           >
             {status}
           </Badge>
@@ -72,10 +76,11 @@ export default function UserManagement() {
     {
       accessorKey: 'created_at',
       header: 'Joined Date',
+      mantineTableHeadCellProps: { align: 'center' },
       Cell: ({ cell }) => {
         const val = cell.getValue<string>();
         if (!val) return <Text c="dimmed">—</Text>;
-        return <Text fz="sm">{new Date(val).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</Text>;
+        return <Text>{new Date(val).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</Text>;
       },
     },
   ];
@@ -142,7 +147,11 @@ export default function UserManagement() {
     },
 
     mantineTableHeadCellProps: {
-      align: "center",
+      align: 'center',
+      style: {
+        textAlign: 'center',
+        justifyContent: 'center',
+      },
     },
 
     mantineFilterTextInputProps: {
@@ -168,14 +177,10 @@ export default function UserManagement() {
     },
 
     mantineTableBodyCellProps: {
-      align: "center",
       style: {
-        verticalAlign: 'middle'
+        textAlign: 'center',
+        verticalAlign: 'middle',
       }
-    },
-    mantinePaginationProps: {
-      className: "pup-table-pagination",
-      rowsPerPageOptions: ['10', '20', '50'],
     },
 
     renderRowActionMenuItems: ({ row }) => {
