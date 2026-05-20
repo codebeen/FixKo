@@ -4,9 +4,12 @@ import { Badge, Box, Button, Divider, Flex, Text, Title } from "@mantine/core";
 import { IconMail, IconUser, IconCalendar, IconShield } from "@tabler/icons-react";
 import PageHeader from "../../components/page-header/PageHeader";
 
+import BaseModal from "@/app/components/modal/BaseModal";
+
 interface ViewUserProps {
+  opened: boolean;
   user?: any;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 const statusColorMap: Record<string, string> = {
@@ -27,7 +30,7 @@ function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string;
   );
 }
 
-export default function ViewUser({ user, onClose }: ViewUserProps) {
+export default function ViewUser({ opened, user, onClose }: ViewUserProps) {
   const fullName = [user?.first_name, user?.middle_name, user?.last_name]
     .filter(Boolean)
     .join(" ");
@@ -42,16 +45,8 @@ export default function ViewUser({ user, onClose }: ViewUserProps) {
   const statusColor = statusColorMap[status] ?? "#888";
 
   return (
-    <Box mx="auto" py="sm">
-      <Box px="md">
-        <PageHeader
-          title="User Details"
-          description="Read-only view of the selected user's account."
-          area="User Management"
-        />
-      </Box>
-
-      <Box px={{ base: "sm", lg: 80 }} mt={20}>
+    <BaseModal opened={opened} onClose={onClose} title="User Details" width="md">
+      <Box mt={8}>
         {/* Name + Status header */}
         <Flex align="center" gap="md" mb="md">
           <Box
@@ -84,16 +79,8 @@ export default function ViewUser({ user, onClose }: ViewUserProps) {
         <Divider mb="md" />
 
         <InfoRow icon={<IconMail size={16} />}    label="Email"       value={user?.email ?? "—"} />
-        <InfoRow icon={<IconShield size={16} />}  label="Role"        value={user?.role ?? "—"} />
         <InfoRow icon={<IconCalendar size={16} />} label="Joined Date" value={joinedDate} />
-        <InfoRow icon={<IconUser size={16} />}    label="User ID"     value={user?.id ?? "—"} />
-
-        <Flex justify="flex-end" mt={30}>
-          <Button variant="default" radius="md" size="md" onClick={onClose}>
-            Close
-          </Button>
-        </Flex>
       </Box>
-    </Box>
+    </BaseModal>
   );
 }

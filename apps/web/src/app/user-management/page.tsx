@@ -130,6 +130,7 @@ export default function UserManagement() {
 
       setPage(newState.pageIndex + 1);
     },
+    enablePagination: false,
     enableStickyHeader: true,
     onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
@@ -218,17 +219,9 @@ export default function UserManagement() {
 
   return (
     <BaseLayout>
-      {viewMode === 'add' && (
-        <AddUser onCancel={() => setViewMode('table')} onSave={() => setViewMode('table')} />
-      )}
-      {viewMode === 'edit' && (
-        <EditUser user={selectedUser} onCancel={() => setViewMode('table')} onSave={() => setViewMode('table')} />
-      )}
-      {viewMode === 'view' && (
-        <ViewUser user={selectedUser} onClose={() => setViewMode('table')} />
-      )}
-      {viewMode === 'table' && (
-        <>
+      <AddUser opened={viewMode === 'add'} onClose={() => setViewMode('table')} onSave={() => setViewMode('table')} />
+      <EditUser opened={viewMode === 'edit'} user={selectedUser} onClose={() => setViewMode('table')} onSave={() => setViewMode('table')} />
+      <ViewUser opened={viewMode === 'view'} user={selectedUser} onClose={() => setViewMode('table')} />
           <PageHeader
             title="User Management"
             description="Manage user roles, monitor account statuses, and oversee platform access."
@@ -287,8 +280,6 @@ export default function UserManagement() {
           <Box style={{ display: 'flex', flexDirection: 'column' }} mt={0}>
             <MantineReactTable table={table} />
           </Box>
-        </>
-      )}
     </BaseLayout>
   );
 }
