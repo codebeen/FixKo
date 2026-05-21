@@ -3,8 +3,9 @@ import { Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import BaseLayout from '@/components/layout/BaseLayout';
-const logo = require("../../../assets/logo_fixko.png");
+import { validateEmail, validatePassword } from '@/utils/Validation';
 
+const logo = require("../../../assets/logo_fixko.png");
 
 interface InputGroupProps {
   label: string;
@@ -15,10 +16,11 @@ interface InputGroupProps {
   setShowPass?: (val: boolean) => void;
   keyboardType?: any;
   labelColor?: string;
+  error?: string | null;
   [key: string]: any;
 }
 
-const InputGroup = ({ label, icon, placeholder, isPassword, showPass, setShowPass, labelColor, ...props }: InputGroupProps) => {
+const InputGroup = ({ label, icon, placeholder, isPassword, showPass, setShowPass, labelColor, error, ...props }: InputGroupProps) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <View style={{ marginTop: 12, width: '100%' }}>
@@ -29,19 +31,19 @@ const InputGroup = ({ label, icon, placeholder, isPassword, showPass, setShowPas
           alignItems: 'center',
           backgroundColor: isFocused ? '#FFF' : '#F8FAFC',
           borderWidth: 1,
-          borderColor: isFocused ? '#1A56DB' : '#E2E8F0',
+          borderColor: error ? '#EF4444' : (isFocused ? '#1A56DB' : '#E2E8F0'),
           borderRadius: 8,
           paddingHorizontal: 14,
           height: 42,
           gap: 8,
-          shadowColor: '#1A56DB',
+          shadowColor: error ? '#EF4444' : '#1A56DB',
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: isFocused ? 0.08 : 0,
           shadowRadius: 4,
           elevation: isFocused ? 2 : 0,
         }}
       >
-        <Ionicons name={icon} size={18} color={isFocused ? '#1A56DB' : '#888'} />
+        <Ionicons name={icon} size={18} color={error ? '#EF4444' : (isFocused ? '#1A56DB' : '#888')} />
         <TextInput
           style={{ flex: 1, fontSize: 13.5, color: '#333', paddingVertical: 4, outlineStyle: 'none' } as any}
           placeholder={placeholder}
@@ -57,6 +59,9 @@ const InputGroup = ({ label, icon, placeholder, isPassword, showPass, setShowPas
           </TouchableOpacity>
         )}
       </View>
+      {error && (
+        <Text style={{ color: '#EF4444', fontSize: 11, marginTop: 4, fontWeight: '500' }}>{error}</Text>
+      )}
     </View>
   );
 };
@@ -91,6 +96,26 @@ export default function App() {
   const [showPass, setShowPass] = useState(false);
   const router = useRouter();
 
+  // Input states
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Error states
+  const [errors, setErrors] = useState<{ email?: string | null; password?: string | null }>({});
+
+  const handleLogin = () => {
+    const emailErr = validateEmail(email);
+    const passErr = validatePassword(password);
+
+    if (emailErr || passErr) {
+      setErrors({ email: emailErr, password: passErr });
+      return;
+    }
+
+    setErrors({});
+    router.push('/(main)/mainpage/page' as any);
+  };
+
   return (
     <BaseLayout align="center" contentContainerStyle={{ justifyContent: 'center', marginTop: -50 }}>
 
@@ -109,7 +134,16 @@ export default function App() {
           </View>
         </View>
 
-        <InputGroup label="Email Address" icon="mail-outline" placeholder="Enter Email" keyboardType="email-address" labelColor="#ffffffa8" />
+        <InputGroup 
+          label="Email Address" 
+          icon="mail-outline" 
+          placeholder="Enter Email" 
+          keyboardType="email-address" 
+          labelColor="#ffffffa8"
+          value={email}
+          onChangeText={setEmail}
+          error={errors.email}
+        />
 
         <InputGroup
           label="Password"
@@ -119,6 +153,9 @@ export default function App() {
           showPass={showPass}
           setShowPass={setShowPass}
           labelColor="#ffffffa8"
+          value={password}
+          onChangeText={setPassword}
+          error={errors.password}
         />
 
         <TouchableOpacity style={{ width: '100%', alignItems: 'flex-end', marginTop: 7 }}>
@@ -136,7 +173,7 @@ export default function App() {
             marginTop: 30,
             width: '100%'
           }}
-          onPress={() => router.push('/(main)/mainpage/page')}
+          onPress={handleLogin}
         >
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14.5 }}>Sign In</Text>
         </TouchableOpacity>
@@ -156,7 +193,7 @@ export default function App() {
         {/* Footer */}
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 22 }}>
           <Text style={{ color: '#ffffffa8', fontSize: 13 }}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => router.push('/(auth)/register/page')}>
+          <TouchableOpacity onPress={() => router.push('/(auth)/register/page' as any)}>
             <Text style={{ color: '#1A56DB', fontWeight: 'bold', fontSize: 13 }}>Register</Text>
           </TouchableOpacity>
         </View>

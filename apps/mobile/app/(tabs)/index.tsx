@@ -47,7 +47,7 @@ export default function App() {
               opacity: pressed ? 0.85 : 1,
               transform: [{ scale: hovered ? 1.03 : 1 }],
             })}
-            onPress={() => router.push('/(auth)/register/page')}
+            onPress={() => router.push('/(auth)/User-Type' as any)}
           >
             <Text style={{ color: '#001449', fontWeight: 'bold', fontSize: 16 }}>Get Started</Text>
           </Pressable>

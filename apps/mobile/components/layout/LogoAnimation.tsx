@@ -347,7 +347,7 @@ export default function LogoAnimation() {
         </G>
 
         {/* TEXT GRAPHIC GROUP */}
-        <G transform="translate(15, 290)">
+        <G transform="translate(46, 290)">
           {/* Animated floating "Fix" */}
           <AnimatedG
             style={{
@@ -398,7 +398,7 @@ export default function LogoAnimation() {
                 { rotate: phRotate }
               ]
             }}
-            originX={485}
+            originX={425}
             originY={90}
           >
             <SvgText
@@ -421,10 +421,10 @@ export default function LogoAnimation() {
                 { rotate: sunRotation }
               ]
             }}
-            originX={490}
+            originX={430}
             originY={50}
           >
-            <G transform="translate(490, 50)">
+            <G transform="translate(430, 50)">
               <Path d="M -30 0 A 30 30 0 0 1 30 0 Z" fill="#FACC15" />
               {[-70, -45, -20, 0, 20, 45, 70].map((angle, i) => (
                 <Polygon
@@ -442,11 +442,11 @@ export default function LogoAnimation() {
             <Path d="M 0 -15 Q 0 0 15 0 Q 0 0 0 15 Q 0 0 -15 0 Q 0 0 0 -15 Z" fill="#FEF08A" />
           </AnimatedG>
 
-          <AnimatedG style={getSparkleStyle(sparkleText2Anim, 560, 30, 0.7)}>
+          <AnimatedG style={getSparkleStyle(sparkleText2Anim, 500, 30, 0.7)}>
             <Path d="M 0 -15 Q 0 0 15 0 Q 0 0 0 15 Q 0 0 -15 0 Q 0 0 0 -15 Z" fill="#FEF08A" />
           </AnimatedG>
 
-          <AnimatedG style={getSparkleStyle(sparkleText3Anim, 580, 60, 0.5)}>
+          <AnimatedG style={getSparkleStyle(sparkleText3Anim, 520, 60, 0.5)}>
             <Path d="M 0 -15 Q 0 0 15 0 Q 0 0 0 15 Q 0 0 -15 0 Q 0 0 0 -15 Z" fill="#FEF08A" />
           </AnimatedG>
         </G>
