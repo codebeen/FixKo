@@ -78,6 +78,10 @@ export default function App() {
           <Text style={styles.blueBtnText}>See more</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.blueBtn} onPress={() => router.push('/(services)/page')}>
+          <Text style={styles.blueBtnText}>Explore our services</Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </SafeAreaView>
   );
