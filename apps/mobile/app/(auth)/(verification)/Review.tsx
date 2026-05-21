@@ -23,7 +23,7 @@ export default function ReviewScreen() {
 
   const handleFinish = () => {
     setShowSuccessModal(false);
-    router.replace('/home');
+    router.replace('../../home');
     resetForm();
   };
 

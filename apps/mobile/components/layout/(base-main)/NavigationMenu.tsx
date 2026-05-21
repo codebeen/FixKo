@@ -1,124 +1,134 @@
 import React, { useEffect, useRef } from 'react';
-import { View, TouchableOpacity, StyleSheet, Animated, Dimensions } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Animated, Dimensions, Platform, Easing } from 'react-native';
 import { useRouter, useSegments } from 'expo-router';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Svg, { Path } from 'react-native-svg';
 
-const { width } = Dimensions.get('window');
-const TAB_BAR_WIDTH = width - 40; // Accounting for 20px padding on each side
+const { width: windowWidth } = Dimensions.get('window');
+const TAB_BAR_WIDTH = windowWidth - 32;
 const TABS_COUNT = 4;
 const TAB_WIDTH = TAB_BAR_WIDTH / TABS_COUNT;
 
-const ICON_SIZE = 22;
-const BAR_BACKGROUND = '#0052cc'; 
-const ACTIVE_PILL_COLOR = '#ffffff';
-const ACTIVE_ICON_COLOR = '#0052cc';
-const INACTIVE_ICON_COLOR = '#b3d1ff'; 
+// Preserving your exact colors
+const BG_COLOR = '#121624';       // Deep premium midnight navy
+const ACTIVE_COLOR = '#000000';   // Black active icon color
+const ACTIVE_BG_COLOR = '#FFEB3B'; // Yellow background for active tab
+const INACTIVE_COLOR = '#5A637A'; // Clean slate muted grey
 
 type TabName = 'home' | 'booking' | 'reviews' | 'settings';
 
 export default function NavigationMenu() {
   const router = useRouter();
   const segments = useSegments() as string[];
-
-  // Local state tracking matching tabs
   const [active, setActive] = React.useState<TabName>('home');
-  const slideAnim = useRef(new Animated.Value(0)).current;
+  const anim = useRef(new Animated.Value(0)).current;
 
-  // Map routes to tab states
-  // Define routes using simple names; expo-router resolves them relative to the app root.
-  const routes: { name: TabName; path: string }[] = [
-    { name: 'home', path: 'home' },
-    { name: 'booking', path: 'booking' },
-    { name: 'reviews', path: 'reviews' },
-    { name: 'settings', path: 'settings' },
-  ];
+  const routes = [
+    { name: 'home', path: '/home', icon: 'home-variant' },
+    { name: 'booking', path: '/booking', icon: 'clock' },
+    { name: 'reviews', path: '/reviews', icon: 'chart-pie' },
+    { name: 'settings', path: '/settings', icon: 'account' },
+  ] as const;
 
-  // Determine active tab based on the last segment of the current route.
-  // Expo-router provides an array of segments for nested routes; the relevant screen name is the last element.
   useEffect(() => {
-    if (!segments || segments.length === 0) return;
-    const seg = segments[segments.length - 1]; // last segment represents the screen name
-    const activeIndex = routes.findIndex(r => r.name === seg.replace(/[()]/g, ''));
-    if (activeIndex !== -1) {
-      setActive(routes[activeIndex].name);
-      Animated.spring(slideAnim, {
-        toValue: activeIndex * TAB_WIDTH,
-        useNativeDriver: true,
-        bounciness: 4,
-      }).start();
+    if (!segments?.length) return;
+    const seg = segments[segments.length - 1];
+    const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
+    const idx = routes.findIndex(r => r.name === cleanedSeg);
+    if (idx !== -1) {
+      setActive(routes[idx].name);
+      animateTo(idx);
     }
   }, [segments]);
 
-  const handlePress = (path: string, index: number, name: TabName) => {
-    setActive(name);
-    Animated.spring(slideAnim, {
-      toValue: index * TAB_WIDTH,
-      useNativeDriver: true,
-      bounciness: 4,
-    }).start();
-
-    // Use router.push with a relative path (no leading slash) for expo-router navigation.
-    router.push(path as any);
+  const animateTo = (index: number) => {
+    Animated.timing(anim, {
+        toValue: index,
+        duration: 300,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }).start();
   };
+
+  const handlePress = (path: string, idx: number, name: TabName) => {
+    setActive(name);
+    animateTo(idx);
+    router.replace(path as any);
+  };
+
+  // Move the sliding curved pocket across the screen
+  const translateX = anim.interpolate({
+    inputRange: [0, 1, 2, 3],
+    outputRange: [0, TAB_WIDTH, TAB_WIDTH * 2, TAB_WIDTH * 3],
+  });
+
+  // Simple solid background for the bar (no pocket)
+const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
+
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.container}>
-        {/* Animated Sliding White Background Pill */}
-        <Animated.View
-          style={[
-            styles.animatedPill,
-            {
-              width: TAB_WIDTH - 12, // Subtly smaller than the container box
-              transform: [{ translateX: Animated.add(slideAnim, 6) }],
-            },
-          ]}
-        />
+      {/* 1. SLIDING BACKGROUND LAYER */}
+      {/* This layer moves everything together underneath your active tab choice */}
+      <Animated.View
+        style={[
+          styles.slidingWrapper,
+          { width: TAB_WIDTH, transform: [{ translateX }] }
+        ]}
+      >
+        {/* Left Wing Filler: Bridges gap from the left edge of bar to the curve */}
+        <View style={[styles.wingFiller, { left: -TAB_BAR_WIDTH, right: TAB_WIDTH }]} />
 
-        {/* Tab Buttons */}
-        {routes.map((tab, index) => {
+        {/* Right Wing Filler: Bridges gap from the right edge of bar to the curve */}
+        <View style={[styles.wingFiller, { left: TAB_WIDTH, right: -TAB_BAR_WIDTH }]} />
+
+        {/* The dynamic fluid curve pocket path shape */}
+        <Svg width={TAB_WIDTH} height={64}>
+          <Path d={d} fill={BG_COLOR} />
+        </Svg>
+
+        {/* The active bright yellow highlight circle tucked underneath the cutout shape */}
+
+      </Animated.View>
+
+      {/* 2. INTERACTIVE CHANNELS (ICONS & TEXT) */}
+      <View style={styles.tabsContainer}>
+        {routes.map((tab, idx) => {
           const isActive = active === tab.name;
+
+          // Smoothly bring up labels under the active icon item
+          const labelOpacity = anim.interpolate({
+            inputRange: [idx - 0.3, idx, idx + 0.3],
+            outputRange: [0, 1, 0],
+            extrapolate: 'clamp',
+          });
+
+          // Scale icon slightly up when inside the active circle highlight
+          const iconScale = anim.interpolate({
+            inputRange: [idx - 0.5, idx, idx + 0.5],
+            outputRange: [1, 1.3, 1], // larger when active
+            extrapolate: 'clamp',
+          });
+
           return (
             <TouchableOpacity
               key={tab.name}
-              onPress={() => handlePress(tab.path, index, tab.name)}
+              onPress={() => handlePress(tab.path, idx, tab.name)}
               style={styles.item}
-              activeOpacity={0.8}
+              activeOpacity={1}
             >
-              {tab.name === 'home' && (
-                <Ionicons
-                  name={isActive ? "home" : "home-outline"}
-                  size={ICON_SIZE}
-                  color={isActive ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR}
-                />
-              )}
-              {tab.name === 'booking' && (
-                <MaterialIcons
-                  name="calendar-today"
-                  size={ICON_SIZE}
-                  color={isActive ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR}
-                />
-              )}
-              {tab.name === 'reviews' && (
-                <MaterialIcons
-                  name={isActive ? "rate-review" : "reviews"}
-                  size={ICON_SIZE}
-                  color={isActive ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR}
-                />
-              )}
-              {tab.name === 'settings' && (
-                <Ionicons
-                  name={isActive ? "settings" : "settings-outline"}
-                  size={ICON_SIZE}
-                  color={isActive ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR}
-                />
-              )}
-
-              {isActive && (
-                <Animated.Text style={[styles.label, { color: ACTIVE_ICON_COLOR }]}>
-                  {tab.name.charAt(0).toUpperCase() + tab.name.slice(1)}
-                </Animated.Text>
-              )}
+              <Animated.View style={[styles.inlineContainer, isActive && styles.activeItem]}>
+                <Animated.View style={[styles.iconWrapper, { transform: [{ scale: iconScale }] }]}>
+                  <MaterialCommunityIcons
+                    name={tab.icon as any}
+                    size={26}
+                    color={isActive ? ACTIVE_COLOR : INACTIVE_COLOR} // Active icons turn yellow
+                  />
+                </Animated.View>
+                  <Animated.Text style={[styles.label, { opacity: labelOpacity, color: isActive ? ACTIVE_COLOR : '#FFF' }]}>
+                    {tab.name.charAt(0).toUpperCase() + tab.name.slice(1)}
+                  </Animated.Text>
+              </Animated.View>
             </TouchableOpacity>
           );
         })}
@@ -130,45 +140,90 @@ export default function NavigationMenu() {
 const styles = StyleSheet.create({
   wrapper: {
     position: 'absolute',
-    bottom: 25, // Floats above edge of screen
-    left: 20,
-    right: 20,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 48,
+    borderRadius: 12,
+    overflow: 'hidden', // Clips the sliding background wings cleanly to create the rounded bar profile
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: BG_COLOR, // fallback solid background
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.25,
+        shadowRadius: 15,
+      },
+      android: {
+        elevation: 10,
+      },
+    }),
   },
-  container: {
+  slidingWrapper: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    height: 64,
+    zIndex: 1,
+  },
+  wingFiller: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    backgroundColor: BG_COLOR,
+  },
+
+  tabsContainer: {
     flexDirection: 'row',
     width: TAB_BAR_WIDTH,
-    height: 60,
-    backgroundColor: BAR_BACKGROUND,
-    borderRadius: 30, // Fully pill-shaped matching image reference
+    height: '100%',
     alignItems: 'center',
-    paddingHorizontal: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-  animatedPill: {
-    position: 'absolute',
-    height: 44,
-    backgroundColor: ACTIVE_PILL_COLOR,
-    borderRadius: 22,
-    zIndex: 0,
+    zIndex: 10, // Places interactions and icon images above the moving background shapes
   },
   item: {
     flex: 1,
-    flexDirection: 'row',
-    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1,
-    gap: 6,
+    height: '100%',
+  },
+  iconWrapper: {
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    paddingTop: 8,
+  },
+  activeItem: {
+    backgroundColor: ACTIVE_BG_COLOR,
+    borderRadius: 16,
+    alignSelf: 'center',
+    width: TAB_WIDTH - 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    marginHorizontal: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: { elevation: 4 },
+    }),
+  },
+  // inlineContainer aligns icon and label vertically
+  inlineContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   label: {
+    color: '#FFF',
     fontSize: 12,
-    fontFamily: 'Inter',
     fontWeight: '700',
+    letterSpacing: 0.4,
+    marginTop: -6,
+    paddingBottom: 4,
   },
 });
