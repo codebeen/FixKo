@@ -3,13 +3,12 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  SafeAreaView, 
-  TouchableOpacity, 
-  ScrollView,
+  TouchableOpacity,
   Image
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import BaseLayout from '@/components/layout/BaseLayout';
 
 // Reusable component for the overview list items
 interface InfoItemProps {
@@ -28,65 +27,65 @@ const InfoItem = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialCo
 
 export default function JobOverviewScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity>
-            <Ionicons name="arrow-back" size={28} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Job Overview</Text>
-          <View style={{ width: 28 }} />
-        </View>
-
-        {/* Main Info Card */}
-        <View style={styles.outlineCard}>
-          <InfoItem icon="vacuum" text="Service: House Cleaning" isBold={true} />
-          <InfoItem icon="location-on" text="Location: (with map pin)" isBold={false} iconFamily={MaterialIcons} />
-          <InfoItem icon="arrow-expand-all" text="Property Size: Small Home (0-50 sqm)" isBold={false} />
-          <InfoItem icon="currency-php" text="Rate: ₱25-₱35 per sqm" isBold={false} />
-          <InfoItem icon="calculator" text="Estimated Total: (auto-calculated)" isBold={false} />
-          <Text style={styles.exampleText}>Example: 40 sqm × ₱30 = ₱1,200</Text>
-          <InfoItem icon="clock-outline" text="Schedule: Date & Time" isBold={false} />
-          <InfoItem icon="account-outline" text="Client Name: Shanella A. Cagulang" isBold={false} />
-
-          <TouchableOpacity style={styles.updateStatusBtn}>
-            <Text style={styles.btnText}>Update Status</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Action Buttons Container */}
-        <View style={[styles.outlineCard, styles.actionRow]}>
-          <TouchableOpacity style={styles.outlineBtn}>
-            <Text style={styles.outlineBtnText}>Contact Customer</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.whiteBtn}>
-            <Text style={styles.whiteBtnText}>View Details</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Map Section */}
-        <View style={styles.mapContainer}>
-          {/* For real implementation, use <MapView /> from react-native-maps */}
-          <View style={styles.mapPlaceholder}>
-             <Ionicons name="location" size={40} color="#800000" style={styles.mapPin} />
-             <Text style={styles.mapLabel}>Map Preview</Text>
-          </View>
-        </View>
-
-        {/* Footer Action */}
-        <TouchableOpacity style={styles.arrivedBtn} onPress={() => router.push('/(joboverview)/arrived/page')}>
-          <Text style={styles.btnText}>Arrived</Text>
+    <BaseLayout 
+      theme="navy" 
+      scrollable={true} 
+      contentContainerStyle={styles.scrollContent}
+    >
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <Ionicons name="arrow-back" size={28} color="white" />
         </TouchableOpacity>
+        <Text style={styles.headerTitle}>Job Overview</Text>
+        <View style={{ width: 28 }} />
+      </View>
 
-      </ScrollView>
-    </SafeAreaView>
+      {/* Main Info Card */}
+      <View style={styles.outlineCard}>
+        <InfoItem icon="vacuum" text="Service: House Cleaning" isBold={true} />
+        <InfoItem icon="location-on" text="Location: (with map pin)" isBold={false} iconFamily={MaterialIcons} />
+        <InfoItem icon="arrow-expand-all" text="Property Size: Small Home (0-50 sqm)" isBold={false} />
+        <InfoItem icon="currency-php" text="Rate: ₱25-₱35 per sqm" isBold={false} />
+        <InfoItem icon="calculator" text="Estimated Total: (auto-calculated)" isBold={false} />
+        <Text style={styles.exampleText}>Example: 40 sqm × ₱30 = ₱1,200</Text>
+        <InfoItem icon="clock-outline" text="Schedule: Date & Time" isBold={false} />
+        <InfoItem icon="account-outline" text="Client Name: Shanella A. Cagulang" isBold={false} />
+
+        <TouchableOpacity style={styles.updateStatusBtn}>
+          <Text style={styles.btnText}>Update Status</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Action Buttons Container */}
+      <View style={[styles.outlineCard, styles.actionRow]}>
+        <TouchableOpacity style={styles.outlineBtn}>
+          <Text style={styles.outlineBtnText}>Contact Customer</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.whiteBtn}>
+          <Text style={styles.whiteBtnText}>View Details</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Map Section */}
+      <View style={styles.mapContainer}>
+        {/* For real implementation, use <MapView /> from react-native-maps */}
+        <View style={styles.mapPlaceholder}>
+           <Ionicons name="location" size={40} color="#800000" style={styles.mapPin} />
+           <Text style={styles.mapLabel}>Map Preview</Text>
+        </View>
+      </View>
+
+      {/* Footer Action */}
+      <TouchableOpacity style={styles.arrivedBtn} onPress={() => router.push('/(joboverview)/arrived/page')}>
+        <Text style={styles.btnText}>Arrived</Text>
+      </TouchableOpacity>
+
+    </BaseLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#001540' },
   scrollContent: { paddingHorizontal: 20, paddingBottom: 40 },
   
   header: {

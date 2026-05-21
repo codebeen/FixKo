@@ -3,12 +3,11 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  SafeAreaView, 
-  TouchableOpacity, 
-  ScrollView 
+  TouchableOpacity 
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import BaseLayout from '@/components/layout/BaseLayout';
 
 // Reusable component for the job details
 interface JobDetailProps {
@@ -29,66 +28,63 @@ export default function JobUploadScreen() {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <BaseLayout 
+      theme="navy" 
+      scrollable={true} 
+      contentContainerStyle={styles.scrollContent}
+    >
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Job Overview</Text>
+        <View style={{ width: 28 }} />
+      </View>
+
+      {/* Outer Container Frame */}
+      <View style={styles.outerFrame}>
         
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity>
-            <Ionicons name="arrow-back" size={28} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Job Overview</Text>
-          <View style={{ width: 28 }} />
-        </View>
-
-        {/* Outer Container Frame */}
-        <View style={styles.outerFrame}>
+        {/* Summary Card */}
+        <View style={styles.whiteCard}>
+          <JobDetail icon="vacuum" text="Service: House Cleaning" isBold={true} />
+          <JobDetail icon="location-on" text="Location: (with map pin)" isBold={false} iconFamily={MaterialIcons as any} />
+          <JobDetail icon="arrow-expand-all" text="Property Size: Small Home (0–50 sqm)" isBold={false} />
+          <JobDetail icon="currency-php" text="Rate: ₱25–₱35 per sqm" isBold={false} />
           
-          {/* Summary Card */}
-          <View style={styles.whiteCard}>
-            <JobDetail icon="vacuum" text="Service: House Cleaning" isBold={true} />
-            <JobDetail icon="location-on" text="Location: (with map pin)" isBold={false} iconFamily={MaterialIcons as any} />
-            <JobDetail icon="arrow-expand-all" text="Property Size: Small Home (0–50 sqm)" isBold={false} />
-            <JobDetail icon="currency-php" text="Rate: ₱25–₱35 per sqm" isBold={false} />
-            
-            <View style={styles.calcBox}>
-              <Text style={styles.calcLabel}>Estimated Total: (auto-calculated)</Text>
-              <Text style={styles.calcExample}>Example: 40 sqm × ₱30 = ₱1,200</Text>
-            </View>
-
-            <JobDetail icon="clock-outline" text="Schedule: Date & Time" isBold={false} />
-            <JobDetail icon="account-outline" text="Client Name: Shanella A. Cagulang" isBold={false} />
-
-            <TouchableOpacity
-              style={styles.startBtn} onPress={() => router.push('/(joboverview)/timer/page')}>
-              <Text style={styles.startBtnText}>Start Job</Text>
-            </TouchableOpacity>
+          <View style={styles.calcBox}>
+            <Text style={styles.calcLabel}>Estimated Total: (auto-calculated)</Text>
+            <Text style={styles.calcExample}>Example: 40 sqm × ₱30 = ₱1,200</Text>
           </View>
 
-          {/* Upload Section */}
-          <View style={styles.uploadSection}>
-            <Text style={styles.uploadTitle}>Upload Photos to Start Job</Text>
-            
-            <TouchableOpacity style={styles.uploadPlaceholder}>
-              <MaterialCommunityIcons name="image-plus" size={50} color="white" />
-            </TouchableOpacity>
+          <JobDetail icon="clock-outline" text="Schedule: Date & Time" isBold={false} />
+          <JobDetail icon="account-outline" text="Client Name: Shanella A. Cagulang" isBold={false} />
 
-            <TouchableOpacity style={styles.uploadBtn}>
-              <Text style={styles.uploadBtnText}>Upload</Text>
-            </TouchableOpacity>
-          </View>
-
+          <TouchableOpacity
+            style={styles.startBtn} onPress={() => router.push('/(joboverview)/timer/page')}>
+            <Text style={styles.startBtnText}>Start Job</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        {/* Upload Section */}
+        <View style={styles.uploadSection}>
+          <Text style={styles.uploadTitle}>Upload Photos to Start Job</Text>
+          
+          <TouchableOpacity style={styles.uploadPlaceholder}>
+            <MaterialCommunityIcons name="image-plus" size={50} color="white" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.uploadBtn}>
+            <Text style={styles.uploadBtnText}>Upload</Text>
+          </TouchableOpacity>
+        </View>
+
+      </View>
+    </BaseLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#001540' 
-  },
   scrollContent: { 
     paddingHorizontal: 20, 
     paddingBottom: 40 

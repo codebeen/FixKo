@@ -3,13 +3,13 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  SafeAreaView, 
   TouchableOpacity, 
   FlatList, 
   Dimensions 
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import BaseLayout from '@/components/layout/BaseLayout';
 
 const { width } = Dimensions.get('window');
 const COLUMN_WIDTH = (width - 60) / 2; // Accounting for screen padding and gap
@@ -26,7 +26,15 @@ export default function ReviewsScreen() {
     status: 'Excellent'
   });
 
-  const renderReviewItem = ({ item }) => (
+  interface ReviewItem {
+    id: string;
+    user: string;
+    title: string;
+    rating: number;
+    status: string;
+  }
+
+  const renderReviewItem = ({ item }: { item: ReviewItem }) => (
     <View style={styles.reviewCard}>
       <Text style={styles.reviewerName}>{item.user}</Text>
       <Text style={styles.reviewTitle} numberOfLines={2}>{item.title}</Text>
@@ -46,7 +54,7 @@ export default function ReviewsScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseLayout scrollable={false}>
       <View style={styles.mainWrapper}>
         
         {/* Header */}
@@ -99,12 +107,11 @@ export default function ReviewsScreen() {
         </View>
 
       </View>
-    </SafeAreaView>
+    </BaseLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#001540' },
   mainWrapper: { flex: 1, paddingHorizontal: 20 },
   
   header: {
