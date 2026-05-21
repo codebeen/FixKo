@@ -1,0 +1,27 @@
+/*back button*/
+.pup-back-button {
+  padding-left: 0 !important;
+  margin-bottom: 32px !important;
+  color: var(--mantine-color-dimmed) !important;
+  background-color: transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+.pup-back-button:hover {
+  transform: scale(1.02);
+  color: black !important;
+}
+
+.pup-back-button .mantine-Button-section {
+  margin-right: 4px !important;
+}
+
+.pup-back-button-inner {
+  justify-content: flex-start !important;
+}
+
+.pup-back-button-label {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+

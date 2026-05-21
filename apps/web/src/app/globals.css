@@ -1,0 +1,103 @@
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-family: 'Inter', sans-serif;
+    --radius: 0.625rem;
+
+    /* Brand Colors */
+    --brand-primary:    #18388c;  /* FixKo Blue  — headers, primary buttons, active nav */
+    --brand-secondary:  #3b82f6;  /* FixKo Light — accents, badges, icons, dividers */
+    --brand-dark-text:  #001851;  /* FixKo Navy  — body text, labels, headings */
+    --brand-mid-gray:   #4A4A6A;  /* Gray    — subtext, captions, placeholders */
+    --brand-background: #F5F5F5;  /* Light   — page/card backgrounds */
+    --brand-white:      #FFFFFF;  /* White   — card surfaces, modals, inputs */
+    --brand-success:    #27AE60;
+    --brand-darksucess: #239D56;
+    --brand-warning:    #F39C12;
+    --brand-danger:     #E74C3C;
+    --brand-info:       #2980B9;
+    --brand-hover:      #0b2361;  /* FixKo Dark Hover */
+    --font-family:      'Inter', sans-serif;
+
+    /* Status Colors */
+    --status-available: #0EA5A4;
+    --status-submitted: #3498DB;
+    --status-for-condemnation: #8525B2;
+    --status-transferred: #2416E3;
+    --status-ict-approved: #F1C40F;
+    --status-initially-approved: #F39C12;
+    --status-under-review: #E67E22;
+    --status-low-stock: #D35400;
+    --status-maintenance: #F39C12;
+    --status-approved: #27AE60;
+    --status-for-disposal: #B45309;
+    --status-completed: #2ECC71;
+    --status-reviewed: #8E44AD;
+    --status-pending: #E67E22;
+    --status-received: #16A085;
+    --status-assigned: #2980B9;
+    --status-default: #E74C3C;
+    --status-rejected: #C0392B;
+    --status-critical: #900C3F;
+    --status-out-of-stock: #34495E;
+
+    /* Semantic Tokens */
+    --background:           var(--brand-background);
+    --foreground:           var(--brand-dark-text);
+    --card:                 var(--brand-white);
+    --card-foreground:      var(--brand-dark-text);
+    --popover:              var(--brand-white);
+    --popover-foreground:   var(--brand-dark-text);
+    --primary:              var(--brand-primary);
+    --primary-foreground:   var(--brand-white);
+    --secondary:            var(--brand-secondary);
+    --secondary-foreground: var(--brand-dark-text);
+    --muted:                #EBEBEB;
+    --muted-foreground:     var(--brand-mid-gray);
+    --accent:               var(--brand-secondary);
+    --accent-foreground:    var(--brand-dark-text);
+    --destructive:          var(--brand-danger);
+    --success:              var(--brand-success);
+    --warning:              var(--brand-warning);
+    --info:                 var(--brand-info);
+    --border:               #E0E0E0;
+    --input:                var(--brand-white);
+    --ring:                 var(--brand-primary);
+
+    --chart-1: var(--brand-primary);
+    --chart-2: var(--brand-secondary);
+    --chart-3: var(--brand-success);
+    --chart-4: var(--brand-warning);
+    --chart-5: var(--brand-info);
+
+    --sidebar:                    var(--brand-primary);
+    --sidebar-foreground:         var(--brand-white);
+    --sidebar-primary:            var(--brand-secondary);
+    --sidebar-primary-foreground: var(--brand-dark-text);
+    --sidebar-accent:             #001851;
+    --sidebar-accent-foreground:  var(--brand-white);
+    --sidebar-border:             #001851;
+    --sidebar-ring:               var(--brand-secondary);
+  }
+
+  body {
+    font-family: var(--font-family);
+  }
+
+  .dark {
+    --background:           var(--brand-dark-text);
+    --foreground:           var(--brand-white);
+    --card:                 #22223B;
+    --card-foreground:      var(--brand-white);
+    --popover:              #22223B;
+    --popover-foreground:   var(--brand-white);
+    --primary:              var(--brand-secondary);
+    --primary-foreground:   var(--brand-dark-text);
+    --secondary:            #2A2A3E;
+    --secondary-foreground: var(--brand-white);
+    --muted:                #2A2A3E;
+    --muted-foreground:     var(--brand-mid-gray);
+    --accent:               var(--brand-primary);
+  }
+}
