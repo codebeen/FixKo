@@ -43,11 +43,11 @@ export default function NavigationMenu() {
 
   const animateTo = (index: number) => {
     Animated.timing(anim, {
-        toValue: index,
-        duration: 300,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true,
-      }).start();
+      toValue: index,
+      duration: 300,
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: true,
+    }).start();
   };
 
   const handlePress = (path: string, idx: number, name: TabName) => {
@@ -68,45 +68,35 @@ const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
 
   return (
     <View style={styles.wrapper}>
-      {/* 1. SLIDING BACKGROUND LAYER */}
-      {/* This layer moves everything together underneath your active tab choice */}
       <Animated.View
         style={[
           styles.slidingWrapper,
           { width: TAB_WIDTH, transform: [{ translateX }] }
         ]}
       >
-        {/* Left Wing Filler: Bridges gap from the left edge of bar to the curve */}
         <View style={[styles.wingFiller, { left: -TAB_BAR_WIDTH, right: TAB_WIDTH }]} />
 
-        {/* Right Wing Filler: Bridges gap from the right edge of bar to the curve */}
         <View style={[styles.wingFiller, { left: TAB_WIDTH, right: -TAB_BAR_WIDTH }]} />
 
-        {/* The dynamic fluid curve pocket path shape */}
         <Svg width={TAB_WIDTH} height={64}>
           <Path d={d} fill={BG_COLOR} />
         </Svg>
 
-        {/* The active bright yellow highlight circle tucked underneath the cutout shape */}
-
       </Animated.View>
 
-      {/* 2. INTERACTIVE CHANNELS (ICONS & TEXT) */}
       <View style={styles.tabsContainer}>
         {routes.map((tab, idx) => {
           const isActive = active === tab.name;
 
-          // Smoothly bring up labels under the active icon item
           const labelOpacity = anim.interpolate({
             inputRange: [idx - 0.3, idx, idx + 0.3],
             outputRange: [0, 1, 0],
             extrapolate: 'clamp',
           });
 
-          // Scale icon slightly up when inside the active circle highlight
           const iconScale = anim.interpolate({
             inputRange: [idx - 0.5, idx, idx + 0.5],
-            outputRange: [1, 1.3, 1], // larger when active
+            outputRange: [1, 1.3, 1], 
             extrapolate: 'clamp',
           });
 
@@ -125,9 +115,9 @@ const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
                     color={isActive ? ACTIVE_COLOR : INACTIVE_COLOR} // Active icons turn yellow
                   />
                 </Animated.View>
-                  <Animated.Text style={[styles.label, { opacity: labelOpacity, color: isActive ? ACTIVE_COLOR : '#FFF' }]}>
-                    {tab.name.charAt(0).toUpperCase() + tab.name.slice(1)}
-                  </Animated.Text>
+                <Animated.Text style={[styles.label, { opacity: labelOpacity, color: isActive ? ACTIVE_COLOR : '#FFF' }]}>
+                  {tab.name.charAt(0).toUpperCase() + tab.name.slice(1)}
+                </Animated.Text>
               </Animated.View>
             </TouchableOpacity>
           );
@@ -145,9 +135,9 @@ const styles = StyleSheet.create({
     right: 0,
     height: 48,
     borderRadius: 12,
-    overflow: 'hidden', // Clips the sliding background wings cleanly to create the rounded bar profile
+    overflow: 'hidden', 
     alignItems: 'center',
-    backgroundColor: BG_COLOR, // fallback solid background
+    backgroundColor: BG_COLOR, 
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -179,7 +169,7 @@ const styles = StyleSheet.create({
     width: TAB_BAR_WIDTH,
     height: '100%',
     alignItems: 'center',
-    zIndex: 10, // Places interactions and icon images above the moving background shapes
+    zIndex: 10, 
   },
   item: {
     flex: 1,
@@ -212,7 +202,6 @@ const styles = StyleSheet.create({
       android: { elevation: 4 },
     }),
   },
-  // inlineContainer aligns icon and label vertically
   inlineContainer: {
     flexDirection: 'column',
     alignItems: 'center',
