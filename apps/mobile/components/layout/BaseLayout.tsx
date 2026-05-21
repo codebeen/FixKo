@@ -62,10 +62,8 @@ export default function BaseLayout({
 
   const activeTheme = theme || detectedTheme;
   
-  // Support either single color overrides or standard gradient themes
-  const finalColors = (backgroundColor 
-    ? [backgroundColor, backgroundColor] 
-    : GRADIENT_COLORS[activeTheme]) as [string, string, ...string[]];
+  const solidColor = backgroundColor ?? '#001851';
+  const finalColors = [solidColor, solidColor] as [string, string, ...string[]];
 
   // Determine status bar style based on background brightness
   const finalStatusBarStyle = statusBarStyle || (activeTheme === 'light' ? 'dark' : 'light');
