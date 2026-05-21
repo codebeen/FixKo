@@ -2,22 +2,6 @@ import Swal from 'sweetalert2';
 import { notifications } from '@mantine/notifications';
 import { sileo as sileoToast } from "sileo";
 
-/*
-HOW TO USE:
-import this to your page/file: 
-    import { swal, toast, sileo } from "../../utils/alerts";
-
-    Custom message:
-        sileo.success('This is a success sileo message');
-    or with custom Title:
-        sileo.success('This is a success sileo message', "Successful");
-
-
-    onClick button: 
-        <button type="button" onClick={() => sileo.success('This is a success sileo message')} className="login-btn">
-
-*/
-
 // ======================= UNIFIED STYLES INJECTION ==========================//
 
 if (typeof document !== 'undefined' && !document.getElementById('alert-dynamic-styles')) {

@@ -86,7 +86,30 @@ function Login() {
           </Anchor>
         </Group>
 
-        <Button fullWidth mt="lg" type="submit" color="#061C48" radius="sm" loading={loading} disabled={loading}>
+        <style>{`
+          .login-btn {
+            transition: all 0.2s ease !important;
+          }
+          .login-btn:hover {
+            background-color: #0b2763 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(6, 28, 72, 0.3) !important;
+          }
+          .login-btn:active {
+            transform: translateY(0) !important;
+            box-shadow: none !important;
+          }
+        `}</style>
+        <Button 
+          className="login-btn"
+          fullWidth 
+          mt="lg" 
+          type="submit" 
+          color="#061C48" 
+          radius="sm" 
+          loading={loading} 
+          disabled={loading}
+        >
           {loading ? "Logging in..." : "LOGIN"}
         </Button>
 

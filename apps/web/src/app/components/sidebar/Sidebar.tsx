@@ -6,7 +6,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { usePathname } from "next/navigation";
 import { IconChevronLeft, IconChevronRight, IconCopyright, IconX } from "@tabler/icons-react";
 
-import pupLogo from "../../assets/FixKoLogo.png";
+import fixkoLogo from "../../assets/logo_fixko.png";
 import { NAV_CONFIG } from "./NavigationConfig";
 import { SidebarLink } from "./SidebarLink";
 
@@ -61,29 +61,45 @@ export default function Sidebar({ opened, close }: SidebarProps) {
   };
 
   const NavContent = (
-    <Box style={{ display: 'flex', flexDirection: 'column', height: '100%', color: 'white' }} p={isNarrow ? 12 : 20}>
-      <style>{`.nav-item-hover:hover { background-color: rgba(71, 6, 6, 0.8) !important; }`}</style>
+    <Box 
+      style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        height: '100%', 
+        color: 'white',
+        background: `
+          url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E"),
+          radial-gradient(circle at 15% 85%, rgba(219, 169, 46, 0.15) 0%, transparent 40%),
+          radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.3) 0%, transparent 45%),
+          linear-gradient(140deg, #001851 0%, #0b2361 25%, #18388c 50%, #2655bf 75%, #3b82f6 100%)
+        `
+      }} 
+      p={isNarrow ? 12 : 20}
+    >
+      <style>{`.nav-item-hover:hover { background-color: rgba(255, 255, 255, 0.15) !important; }`}</style>
 
       {/* Sidebar Header */}
-      <Box p="md">
-        <Group justify={isNarrow ? "center" : "space-between"} wrap="nowrap">
-          <Group gap="sm" wrap="nowrap" ml={isNarrow ? 0 : 10}>
-            <Image src={pupLogo} w={isNarrow ? 60 : 70} h={isNarrow ? 60 : 70} fit="contain" />
-            {!isNarrow && <Text fw={900} c="white" fz={20}>PUP Inventory</Text>}
-          </Group>
-          {isMobile ? (
-            <ActionIcon onClick={close} variant="subtle" color="gray.0">
-              <IconX size={25} />
-            </ActionIcon>
-          ) : !isNarrow && (
-            <ActionIcon onClick={() => setCollapsed(!collapsed)} variant="subtle" color="gray.0">
-              {collapsed ? <IconChevronRight size={20} /> : <IconChevronLeft size={25} />}
-            </ActionIcon>
-          )}
+      <Box pt="md" px="md" pb={0} style={{ position: 'relative' }}>
+        <Group justify="center" wrap="nowrap">
+          <Image src={fixkoLogo.src} w={isNarrow ? 105 : 190} h={isNarrow ? 60 : 85} fit="contain" />
         </Group>
+        
+        {(isMobile || !isNarrow) && (
+          <Box style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)' }}>
+            {isMobile ? (
+              <ActionIcon onClick={close} variant="subtle" color="gray.0">
+                <IconX size={25} />
+              </ActionIcon>
+            ) : (
+              <ActionIcon onClick={() => setCollapsed(!collapsed)} variant="subtle" color="gray.0">
+                {collapsed ? <IconChevronRight size={20} /> : <IconChevronLeft size={25} />}
+              </ActionIcon>
+            )}
+          </Box>
+        )}
       </Box>
 
-      <Divider my="xl" w="80%" mx="auto" color="rgba(255, 255, 255, 0.2)" />
+      <Divider mt={4} mb="xl" w="80%" mx="auto" color="rgba(255, 255, 255, 0.2)" />
 
       {/* Main Links Area */}
       <ScrollArea flex={1} px={isNarrow ? 0 : "md"} scrollbars="y">
@@ -108,7 +124,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
       <Box p="md" mt="auto">
         <Group justify="center" gap="xs" opacity={0.5}>
           {!isNarrow ? (
-            <Text fz={12}>2026 © PUP Inventory</Text>
+            <Text fz={12}>2026 © FixKo PH</Text>
           ) : (
             <IconCopyright size={18} />
           )}
@@ -135,7 +151,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
         >
           <Box style={{
             height: '100%',
-            backgroundColor: "#800000",
+            backgroundColor: "#001851",
             borderTopRightRadius: '16px',
             borderBottomRightRadius: '16px',
             overflow: 'hidden'
@@ -154,7 +170,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
         withCloseButton={false}
         zIndex={1000}
         styles={{
-          content: { backgroundColor: "#800000" },
+          content: { backgroundColor: "#001851" },
           body: { padding: 0, height: '100%' }
         }}
       >

@@ -1,0 +1,522 @@
+/* Transparent wrapper (replaces paperStyle) */
+.pup-table-wrapper {
+    background-color: var(--brand-white);
+    box-shadow: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden !important;
+}
+
+.pup-table-container {
+    max-height: calc(90vh - 280px);
+}
+
+/* Targets the input text inside the filter */
+.pup-table thead input {
+    color: white !important;
+}
+
+/* Targets the placeholder text */
+.pup-table thead input::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Targets the clear (X) button and filter icons */
+.pup-table thead button,
+.pup-table thead svg {
+    color: white !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+.pup-table thead th:first-of-type {
+    border-top-left-radius: 10px;
+}
+
+.pup-table thead th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+#dashboard-table thead th:last-of-type,
+#no-curve thead th:last-of-type {
+    border-top-right-radius: 0px !important;
+}
+
+#dashboard-table thead th:first-of-type,
+#no-curve thead th:first-of-type {
+    border-top-left-radius: 0px !important;
+}
+
+/* Header cells — maroon bg, white text */
+.pup-table thead th {
+    background-color: var(--brand-primary);
+    color: var(--brand-white);
+    position: sticky;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Force the main header wrapper to center everything tightly */
+.pup-table thead th > div,
+.pup-table thead th .mantine-Group-root {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0px !important; 
+    width: 100%;
+}
+
+/* Remove flexible growth so they stay together in the middle */
+.pup-table thead th > div > *,
+.pup-table thead th .mantine-Group-root > * {
+    flex: 0 0 auto !important;
+    margin: 0 !important; 
+}
+
+/* Ensure the inner text/sort wrapper also behaves */
+.pup-table thead th .mrt-table-head-cell-labels,
+.pup-table thead th .mrt-table-head-cell-content {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0px !important;
+}
+
+/* Offset the built-in padding of the action icon (3 dots) to pull it closer */
+.pup-table thead th .mantine-ActionIcon-root {
+    margin-left: -6px !important;
+    margin-right: -4px !important;
+}
+
+
+/* Body cells — dark text, medium weight */
+.pup-table tbody td {
+    color: var(--brand-dark-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Force consistent font size on all content inside body cells */
+.pup-table tbody td * {
+    font-size: inherit;
+}
+
+/* Row height */
+.pup-table tbody tr {
+    height: 2rem !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Row striping — odd rows white, even rows light gray */
+.pup-table tbody tr:nth-child(odd) {
+    background-color: var(--brand-white);
+}
+
+.pup-table tbody tr:nth-child(even) {
+    background-color: var(--brand-background);
+}
+
+/* Row hover */
+/* .pup-table tbody tr:hover {
+    background-color: var(--brand-hover) !important;
+}
+
+.pup-table tbody tr:hover td:not(.text-center) {
+    color: var(--brand-white) !important;
+    transform: scale(1.03);
+}
+
+.pup-table tbody tr:hover td button {
+    color: var(--brand-white) !important;
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+} */
+
+/* Utility: center-aligned cell */
+.text-center {
+    text-align: center;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   SEARCH INPUT
+   ────────────────────────────────────────────────────────────── */
+
+.pup-table-search {
+    min-width: 280px;
+}
+
+.pup-search-icon {
+    width: 1rem;
+    /* equivalent to Mantine's rem(16) */
+    height: 1rem;
+    /* equivalent to Mantine's rem(16) */
+    color: #adb5bd;
+}
+
+.pup-table-search .mantine-TextInput-input,
+.pup-table-search .mantine-Input-input {
+    border: 1px solid var(--border);
+    background-color: var(--brand-white);
+    border-radius: 10px;
+}
+
+.pup-table-search .mantine-TextInput-input:focus,
+.pup-table-search .mantine-Input-input:focus {
+    border-color: var(--brand-dark-text);
+    box-shadow: none;
+}
+
+
+
+
+/* ──────────────────────────────────────────────────────────────
+   TABLE BUTTONS — Export / Import / Add
+   ────────────────────────────────────────────────────────────── */
+
+/* Export & Import — white variant, gray border, pill shape */
+.pup-table-btn-export,
+.pup-table-btn-import {
+    font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    color: var(--brand-mid-gray);
+    background-color: var(--brand-white);
+}
+
+.pup-table-btn-export:hover,
+.pup-table-btn-import:hover {
+    background-color: var(--brand-primary);
+    color: var(--brand-white);
+    border-color: var(--brand-primary);
+}
+
+.pup-table-btn-export[aria-expanded="true"] {
+    background-color: var(--brand-primary);
+    color: var(--brand-white);
+    border-color: var(--brand-primary);
+}
+
+.pup-table-btn-export[aria-expanded="true"] svg {
+    color: currentColor;
+    stroke: currentColor;
+}
+
+
+/* Export & Import — maroon variant, gray border, pill shape */
+.pup-table-btn-export-dashboard,
+.pup-table-btn-import-dashboard {
+    font-weight: 500;
+    border: 1px solid var(--brand-primary);
+    border-radius: 9999px;
+    color: var(--brand-white);
+    background-color: var(--brand-primary);
+}
+
+.pup-table-btn-export-dashboard:hover,
+.pup-table-btn-import-dashboard:hover {
+    background-color: var(--brand-white);
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.pup-table-btn-export-dashboard[aria-expanded="true"] {
+    background-color: var(--brand-white);
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.pup-table-btn-export-dashboard[aria-expanded="true"] svg {
+    color: currentColor;
+    stroke: currentColor;
+}
+
+/* Add button — gold accent, pill shape, glow shadow */
+.pup-table-btn-add {
+    border-radius: 9999px;
+    background-color: var(--brand-success);
+    color: var(--brand-white);
+}
+
+.pup-table-btn-add:hover {
+    background-color: color-mix(in srgb, var(--brand-success) 85%, black);
+}
+
+.pup-table-bottom-toolbar {
+    background-color: var(--muted);
+    color: var(--brand-dark-text);
+    border: 1px solid var(--border);
+    border-top: none;
+    min-height: 3.125rem;
+    padding: 1rem !important;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   TABLE ACTION MENU ITEMS (View / Edit / Delete)
+   ────────────────────────────────────────────────────────────── */
+
+.pup-table-action-item {
+    /* background-color: var(--brand-background);
+    color: var(--brand-primary);
+    font-weight: 600; */
+    /* Thicker text *
+    border-radius: 6px;
+    margin-bottom: 6px;
+    padding: 10px 16px;
+    /* Responsive, standard padding instead of 15% */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Enforce exactly 1rem spacing between the icon and the text *
+.pup-table-action-item .mantine-Menu-itemLabel {
+    padding-left: 0.5rem;
+}
+
+/* Ensure the icon inherits the current text color *
+.pup-table-action-item svg {
+    color: currentColor;
+    stroke: currentColor;
+}
+
+.pup-table-action-item:last-child {
+    margin-bottom: 0;
+}
+*/
+/* Hover state: background red, text AND icon white */
+.pup-table-action-item[data-hovered],
+.pup-table-action-item:hover {
+    background-color: var(--brand-primary) !important;
+    color: var(--brand-white) !important;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   PAGINATION
+   ────────────────────────────────────────────────────────────── */
+
+.pup-table-pagination {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.pup-table-pagination .mantine-Pagination-control {
+    border-color: transparent;
+}
+
+.pup-table-pagination .mantine-Pagination-control[data-active] {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    border-radius: 50%;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   STATUS BADGES
+   ────────────────────────────────────────────────────────────── */
+
+/* Base badge style — filled, pill, lg size */
+.pup-status-badge {
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-transform: title;
+}
+
+/* ── Per-status color classes ── */
+
+.pup-status-available {
+    background-color: var(--status-available);
+    color: var(--brand-white);
+}
+
+.pup-status-submitted {
+    background-color: var(--status-submitted);
+    color: var(--brand-white);
+}
+
+.pup-status-for-condemnation {
+    background-color: var(--status-for-condemnation);
+    color: var(--brand-white);
+}
+
+.pup-status-transferred {
+    background-color: var(--status-transferred);
+    color: var(--brand-white);
+}
+
+.pup-status-ict-approved {
+    background-color: var(--status-ict-approved);
+    color: var(--brand-white);
+}
+
+.pup-status-initially-approved {
+    background-color: var(--status-initially-approved);
+    color: var(--brand-white);
+}
+
+.pup-status-under-review {
+    background-color: var(--status-under-review);
+    color: var(--brand-white);
+}
+
+.pup-status-low-stock {
+    background-color: var(--status-low-stock);
+    color: var(--brand-white);
+}
+
+.pup-status-maintenance {
+    background-color: var(--status-maintenance);
+    color: var(--brand-white);
+}
+
+.pup-status-approved {
+    background-color: var(--status-approved);
+    color: var(--brand-white);
+}
+
+.pup-status-for-disposal {
+    background-color: var(--status-for-disposal);
+    color: var(--brand-white);
+}
+
+.pup-status-completed {
+    background-color: var(--status-completed);
+    color: var(--brand-white);
+}
+
+.pup-status-reviewed {
+    background-color: var(--status-reviewed);
+    color: var(--brand-white);
+}
+
+.pup-status-pending {
+    background-color: var(--status-pending);
+    color: var(--brand-white);
+}
+
+.pup-status-received {
+    background-color: var(--status-received);
+    color: var(--brand-white);
+}
+
+.pup-status-assigned {
+    background-color: var(--status-assigned);
+    color: var(--brand-white);
+}
+
+.pup-status-default {
+    background-color: var(--status-default);
+    color: var(--brand-white);
+}
+
+.pup-status-rejected {
+    background-color: var(--status-rejected);
+    color: var(--brand-white);
+}
+
+.pup-status-critical {
+    background-color: var(--status-critical);
+    color: var(--brand-white);
+}
+
+.pup-status-out-of-stock {
+    background-color: var(--status-out-of-stock);
+    color: var(--brand-white);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   FILTER POPOVER & INPUTS
+   ────────────────────────────────────────────────────────────── */
+
+/* The little active indicator dot on the filter button */
+.pup-filter-active-dot {
+    width: 8px;
+    height: 8px;
+    margin-left: 6px;
+    background-color: var(--brand-primary);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Customizing the Select inputs inside the filter popover */
+.pup-filter-select .mantine-Select-label {
+    font-weight: 500;
+    color: var(--brand-mid-gray);
+    margin-bottom: 4px;
+}
+
+.pup-filter-select .mantine-Select-input {
+    border-color: var(--border);
+    transition: border-color 0.2s ease;
+}
+
+/* Add a subtle focus state to the inputs matching your brand */
+.pup-filter-select .mantine-Select-input:focus,
+.pup-filter-select .mantine-Select-input:focus-within {
+    border-color: var(--brand-primary);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TABS — Request & For Approval
+   ────────────────────────────────────────────────────────────── */
+
+.pup-tabs-container {
+    display: flex;
+    align-items: flex-end;
+}
+
+.pup-tab {
+    padding: 0.625rem 2.5rem;
+    /* rem(10) rem(40) */
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 3.125rem;
+    /* rem(50) */
+    border: 1px solid var(--border);
+    border-bottom: none;
+    margin-right: -0.9375rem;
+    /* rem(-15) */
+    transition: all 0.2s ease;
+    z-index: 1;
+    background-color: var(--brand-white);
+    color: var(--brand-dark-text);
+}
+
+.pup-tab-active {
+    background-color: var(--brand-primary);
+    color: var(--brand-white);
+    border-color: var(--brand-primary);
+    z-index: 2;
+}
+
+.pup-tab-inactive:hover {
+    background-color: var(--brand-background);
+}
+
+.pup-tab-active-bar {
+    background-color: var(--brand-primary);
+    height: 0.5rem;
+    width: 100%;
+}
+
+/* Connect table to the active bar */
+.pup-tab-active-bar+div .pup-table-wrapper,
+.pup-tab-active-bar+div .pup-table-container,
+.pup-tab-active-bar+div .pup-table {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+/* If the wrapper itself follows the bar */
+.pup-tab-active-bar+.pup-table-wrapper {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}

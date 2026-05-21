@@ -20,6 +20,11 @@ export const NAV_CONFIG = [
     label: 'Customer Service',
     icon: IconClipboardListFilled,
   },
+  {
+    link: 'user-management',
+    label: 'User Management',
+    icon: IconSettingsFilled,
+  },
 ]
 
 
