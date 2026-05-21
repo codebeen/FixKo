@@ -1,15 +1,15 @@
 import React, { useRef } from 'react';
-import { 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
-  View, 
-  StyleProp, 
-  ViewStyle, 
-  Image, 
-  TouchableOpacity, 
-  Text, 
-  Animated 
+import {
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  View,
+  StyleProp,
+  ViewStyle,
+  Image,
+  TouchableOpacity,
+  Text,
+  Animated
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useSegments } from 'expo-router';
@@ -69,9 +69,9 @@ export default function BaseMain({
   }
 
   const activeTheme = theme || detectedTheme;
-  
+
   // Dynamic gradient selection based on theme or explicit override
-  const finalColors = backgroundColor 
+  const finalColors = backgroundColor
     ? [backgroundColor, backgroundColor] as [string, string, ...string[]]
     : GRADIENT_COLORS[activeTheme];
 
@@ -84,7 +84,7 @@ export default function BaseMain({
       Animated.timing(scaleValue, { toValue: 1.1, duration: 100, useNativeDriver: true }),
       Animated.timing(scaleValue, { toValue: 1, duration: 80, useNativeDriver: true }),
     ]).start();
-    
+
     console.log("Notification opened"); // Hook up your notification tray toggle or navigation here
   };
 
@@ -123,15 +123,15 @@ export default function BaseMain({
       <StatusBar style={finalStatusBarStyle} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.masterContainer}>
-          
+
           {/* Enhanced Premium Asymmetrical Header */}
           <View style={styles.header}>
             <View style={styles.headerBackgroundYellow} />
-            <LinearGradient 
-              colors={['#001851', '#001851']} 
-              start={{x: 0, y: 0}} 
-              end={{x: 1, y: 1}} 
-              style={styles.headerBackgroundDark} 
+            <LinearGradient
+              colors={['#001851', '#001851']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.headerBackgroundDark}
             />
 
             {/* Header Content Items */}
@@ -139,8 +139,8 @@ export default function BaseMain({
               <Image source={require('../../../assets/logo_fixko.png')} style={styles.logo} />
 
               <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-                <TouchableOpacity 
-                  style={styles.iconButton} 
+                <TouchableOpacity
+                  style={styles.iconButton}
                   activeOpacity={0.6}
                   onPress={handleNotificationPress}
                 >
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     right: 0,
     width: 140,
     height: 60,
-    backgroundColor: '#F5C518', 
+    backgroundColor: '#F5C518',
     zIndex: 0,
   },
   headerContent: {
@@ -228,10 +228,10 @@ const styles = StyleSheet.create({
     borderRadius: 4.5,
     backgroundColor: '#FF3B30',
     borderWidth: 1.5,
-    borderColor: '#15305B', 
+    borderColor: '#15305B',
   },
   content: {
     flex: 1,
-    paddingBottom: 75, 
+    paddingBottom: 75,
   },
 });

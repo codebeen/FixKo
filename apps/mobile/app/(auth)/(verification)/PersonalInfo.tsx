@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ScrollView,
-  Modal,
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Modal,
 } from 'react-native';
 
 const logo = require('../../../assets/logo_fixko.png');

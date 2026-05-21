@@ -9,10 +9,10 @@ const TABS_COUNT = 4;
 const TAB_WIDTH = TAB_BAR_WIDTH / TABS_COUNT;
 
 const ICON_SIZE = 22;
-const BAR_BACKGROUND = '#0052cc'; // Sleek premium brand blue
+const BAR_BACKGROUND = '#0052cc'; 
 const ACTIVE_PILL_COLOR = '#ffffff';
 const ACTIVE_ICON_COLOR = '#0052cc';
-const INACTIVE_ICON_COLOR = '#b3d1ff'; // Soft light blue for contrast
+const INACTIVE_ICON_COLOR = '#b3d1ff'; 
 
 type TabName = 'home' | 'booking' | 'reviews' | 'settings';
 
@@ -25,17 +25,20 @@ export default function NavigationMenu() {
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   // Map routes to tab states
+  // Define routes using simple names; expo-router resolves them relative to the app root.
   const routes: { name: TabName; path: string }[] = [
-    { name: 'home', path: '/mainpage' },
-    { name: 'booking', path: '/bookings' },
-    { name: 'reviews', path: '/reviewspage' },
-    { name: 'settings', path: '/settings' },
+    { name: 'home', path: 'home' },
+    { name: 'booking', path: 'booking' },
+    { name: 'reviews', path: 'reviews' },
+    { name: 'settings', path: 'settings' },
   ];
 
-  // Determine active tab based on current route segments
+  // Determine active tab based on the last segment of the current route.
+  // Expo-router provides an array of segments for nested routes; the relevant screen name is the last element.
   useEffect(() => {
-    const seg = segments[0]; // first segment after root
-    const activeIndex = routes.findIndex(r => r.path.includes(seg.replace(/[()]/g, '')));
+    if (!segments || segments.length === 0) return;
+    const seg = segments[segments.length - 1]; // last segment represents the screen name
+    const activeIndex = routes.findIndex(r => r.name === seg.replace(/[()]/g, ''));
     if (activeIndex !== -1) {
       setActive(routes[activeIndex].name);
       Animated.spring(slideAnim, {
@@ -54,6 +57,7 @@ export default function NavigationMenu() {
       bounciness: 4,
     }).start();
 
+    // Use router.push with a relative path (no leading slash) for expo-router navigation.
     router.push(path as any);
   };
 

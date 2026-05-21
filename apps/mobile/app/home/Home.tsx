@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseMain from '../../../components/layout/(base-main)/BaseMain';
+import BaseMain from '../../components/layout/(base-main)/BaseMain';
 
 const StatusTab = ({ label, color, isActive, onPress, textColor, tabType }: { label: string; color: string; isActive: boolean; onPress: () => void; textColor: string; tabType: 'Online' | 'Offline' }) => (
   <TouchableOpacity
@@ -31,7 +31,7 @@ const ServiceEntry = ({ name, description }: { name: string; description: string
 
 // --- Main Screen ---
 
-export default function App() {
+export default function Home() {
   const [activeTab, setActiveTab] = useState('Online');
   const router = useRouter();
 

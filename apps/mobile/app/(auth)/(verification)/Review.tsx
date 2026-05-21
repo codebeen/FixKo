@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ScrollView,
-  Modal,
+  Text, View, TouchableOpacity, StyleSheet, Image, ScrollView, Modal,
 } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -29,9 +23,8 @@ export default function ReviewScreen() {
 
   const handleFinish = () => {
     setShowSuccessModal(false);
+    router.replace('/home');
     resetForm();
-    // Redirect to main workspace/dashboard
-    router.replace('/(main)/mainpage/page' as any);
   };
 
   return (
@@ -222,7 +215,7 @@ export default function ReviewScreen() {
               </Text>
 
               <TouchableOpacity style={styles.finishBtn} onPress={handleFinish}>
-                <Text style={styles.finishBtnText}>Go to Dashboard</Text>
+                <Text style={styles.finishBtnText}>Go to Home</Text>
               </TouchableOpacity>
             </View>
           </View>

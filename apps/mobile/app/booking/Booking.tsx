@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseMain from '../../../components/layout/(base-main)/BaseMain'
+import BaseMain from '../../components/layout/(base-main)/BaseMain'
 
-export default function BookingsScreen() {
+export default function Booking() {
   const [activeTab, setActiveTab] = useState('Online');
   const router = useRouter();
 
@@ -16,12 +16,7 @@ export default function BookingsScreen() {
   ];
 
   return (
-    <BaseMain
-      theme="navy"
-      scrollable={true}
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
+    <BaseMain>
       {/* Header */}
       <View style={styles.headerRow}>
         <TouchableOpacity>
@@ -41,54 +36,6 @@ export default function BookingsScreen() {
         </View>
         <Text style={{ fontSize: 40 }}>💡</Text>
       </View>
-
-      {/* Toggle Buttons */}
-      <View style={styles.tabRow}>
-        <TouchableOpacity
-          onPress={() => setActiveTab('Online')}
-          style={[styles.tab, activeTab === 'Online' ? styles.tabActiveWhite : styles.tabInactive]}
-        >
-          <Text style={[styles.tabText, { color: activeTab === 'Online' ? '#000' : '#FFF' }]}>Online</Text>
-          <View style={[styles.dot, { backgroundColor: '#4CAF50' }]} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => setActiveTab('Offline')}
-          style={[styles.tab, activeTab === 'Offline' ? styles.tabActiveWhite : styles.tabInactive]}
-        >
-          <Text style={[styles.tabText, { color: activeTab === 'Offline' ? '#000' : '#FFF' }]}>Offline</Text>
-          <View style={[styles.dot, { backgroundColor: '#FFF' }]} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Bookings List Card */}
-      <View style={styles.whiteCard}>
-        {bookingData.map((item, index) => (
-          <View key={item.id}>
-            <View style={styles.bookingItem}>
-              <View style={styles.itemHeader}>
-                <Text style={styles.providerName}>{item.name}</Text>
-                <View style={styles.stars}>
-                  {[...Array(item.stars)].map((_, i) => (
-                    <Ionicons key={i} name="star" size={14} color="#FFE600" />
-                  ))}
-                </View>
-              </View>
-
-              <Text style={styles.labelGray}>Type of Service: Cleaning</Text>
-              <Text style={styles.labelBold}>Small Homes (0–50 sqm)</Text>
-              <Text style={styles.description}>
-                Perfect for condos, studio units, and small apartments
-              </Text>
-              <TouchableOpacity onPress={() => router.push('/reviewspage/page')}>
-                <Text style={styles.reviewLink}>See Reviews</Text>
-              </TouchableOpacity>
-            </View>
-            {index !== bookingData.length - 1 && <View style={styles.divider} />}
-          </View>
-        ))}
-      </View>
-
     </BaseMain>
   );
 }

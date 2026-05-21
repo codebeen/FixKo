@@ -2,15 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import BaseMain from '../../../components/layout/(base-main)/BaseMain';
+import BaseMain from '../../components/layout/(base-main)/BaseMain';
 
 const { width } = Dimensions.get('window');
-const COLUMN_WIDTH = (width - 60) / 2; // Accounting for screen padding and gap
+const COLUMN_WIDTH = (width - 60) / 2; 
 
-export default function ReviewsScreen() {
+export default function Reviews() {
   const router = useRouter();
 
-  // Sample data for the grid
   const reviews = Array(6).fill({
     id: Math.random().toString(),
     user: 'Anonymous',
@@ -47,10 +46,9 @@ export default function ReviewsScreen() {
   );
 
   return (
-    <BaseMain scrollable={false}>
+    <BaseMain>
       <View style={styles.mainWrapper}>
 
-        {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity>
             <Ionicons name="arrow-back" size={28} color="white" />
