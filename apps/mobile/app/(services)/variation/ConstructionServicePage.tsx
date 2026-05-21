@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SearchBar from '../../../components/search-bar';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
+
+import BackButton from '../../../components/back-button';
+import SearchBar from '../components/search-bar';
+import SectionHeader from '../components/section-header';
+import SectionLabel from '../components/section-label';
+import TierSelector from '../components/tier-selector';
 
 const CONSTRUCTION_TIERS = [
     {
@@ -24,13 +27,9 @@ export default function ConstructionServicePage() {
 
     return (
         <SafeAreaView style={styles.safeArea}>
+
             {/* Back button */}
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => router.back()}
-            >
-                <FontAwesome5 name="arrow-left" size={20} color="white" />
-            </TouchableOpacity>
+            <BackButton />
 
             <ScrollView
                 style={styles.scrollView}
@@ -38,29 +37,26 @@ export default function ConstructionServicePage() {
                 showsVerticalScrollIndicator={false}
             >
                 {/* Header */}
-                <Text style={styles.heading}>Explore our Services</Text>
-                <Text style={styles.subheading}>
-                    Whether it's a quick repair or a full home service, FixKo connects you to trusted workers in just a few taps.
-                </Text>
+                <SectionHeader
+                    title="Explore our Services"
+                    subtitle="Whether it's a quick repair or a full home service, FixKo connects you to trusted workers in just a few taps."
+                />
 
+                {/* Search Bar */}
                 <SearchBar />
 
                 {/* Section label */}
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Construction Services Pricing</Text>
-                    <Text style={styles.sectionSubtitle}>
-                        Hire skilled professionals based on your project needs—flexible and cost-efficient.
-                    </Text>
-                </View>
+                <SectionLabel
+                    title="Construction Services Pricing"
+                    subtitle="Hire skilled professionals based on your project needs—flexible and cost-efficient."
+                />
 
                 {/* Tier cards */}
-                {CONSTRUCTION_TIERS.map((tier) => (
-                    <View key={tier.title} style={styles.card}>
-                        <Text style={styles.cardTitle}>{tier.title}</Text>
-                        <Text style={styles.cardRate}>{tier.rate}</Text>
-                        <Text style={styles.cardDescription}>{tier.description}</Text>
-                    </View>
-                ))}
+                <TierSelector 
+                    tiers={CONSTRUCTION_TIERS} 
+                    onSelectTier={(title) => console.log('User selected:', title)} 
+                />
+
             </ScrollView>
         </SafeAreaView>
     );
@@ -71,80 +67,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#001851',
     },
+
     backButton: {
         paddingHorizontal: 20,
         paddingTop: 10,
         paddingBottom: 5,
     },
+
     scrollView: {
         flex: 1,
         width: '100%',
     },
+    
     scrollContent: {
         paddingHorizontal: 20,
         paddingBottom: 40,
-    },
-    heading: {
-        color: 'white',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: 10,
-    },
-    subheading: {
-        color: 'white',
-        marginTop: 6,
-        lineHeight: 20,
-    },
-    sectionHeader: {
-        marginTop: 24,
-        marginBottom: 4,
-    },
-    sectionTitle: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    sectionSubtitle: {
-        color: 'white',
-        marginTop: 5,
-        lineHeight: 20,
-    },
-    card: {
-        width: '100%',
-        borderWidth: 1,
-        borderColor: 'white',
-        borderRadius: 10,
-        padding: 15,
-        marginTop: 16,
-    },
-    cardTitle: {
-        color: 'white',
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    cardRate: {
-        color: '#7AB1F5',
-        fontWeight: '600',
-        marginBottom: 4,
-    },
-    cardDescription: {
-        color: 'white',
-        lineHeight: 20,
-    },
-    bookButtonWrapper: {
-        alignSelf: 'flex-end',
-        marginTop: 12,
-    },
-    bookButton: {
-        paddingVertical: 8,
-        paddingHorizontal: 20,
-        borderRadius: 40,
-        alignItems: 'center',
-    },
-    bookButtonText: {
-        color: '#fff',
-        fontSize: 13,
-        fontWeight: '600',
     },
 });

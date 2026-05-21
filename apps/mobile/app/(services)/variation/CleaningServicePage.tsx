@@ -1,14 +1,17 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SearchBar from '../../../components/search-bar';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
 
-const { width } = Dimensions.get('window');
+import BackButton from '../../../components/back-button';
+import SearchBar from '../components/search-bar';
+import SectionHeader from '../components/section-header';
+import SectionLabel from '../components/section-label';
+import TierSelector from '../components/tier-selector';
 
-const SERVICE_TIERS = [
+// const { width } = Dimensions.get('window');
+
+const CLEANING_TIERS = [
     {
         title: 'Small Homes (0–50 sqm)',
         description: 'Perfect for condos, studio units, and small apartments',
@@ -28,16 +31,13 @@ const SERVICE_TIERS = [
 
 export default function CleaningServicePage() {
     const router = useRouter();
+    const [selectedTier, setSelectedTier] = useState<string | null>(null);
 
     return (
         <SafeAreaView style={styles.safeArea}>
+
             {/* Back button */}
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => router.back()}
-            >
-                <FontAwesome5 name="arrow-left" size={20} color="white" />
-            </TouchableOpacity>
+            <BackButton />
 
             <ScrollView
                 style={styles.scrollView}
@@ -45,29 +45,26 @@ export default function CleaningServicePage() {
                 showsVerticalScrollIndicator={false}
             >
                 {/* Header */}
-                <Text style={styles.heading}>Explore our Services</Text>
-                <Text style={styles.subheading}>
-                    Whether it's a quick repair or a full home service, FixKo connects you to trusted workers in just a few taps.
-                </Text>
+                <SectionHeader
+                    title="Explore our Services"
+                    subtitle="Whether it's a quick repair or a full home service, FixKo connects you to trusted workers in just a few taps."
+                />
 
+                {/* Search Bar */}
                 <SearchBar />
 
                 {/* Section label */}
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Variations for Cleaning Services</Text>
-                    <Text style={styles.sectionSubtitle}>
-                        Flexible pricing based on home size—bigger spaces, more time and effort.
-                    </Text>
-                </View>
+                <SectionLabel
+                    title="Variations for Cleaning Services"
+                    subtitle="Flexible pricing based on home size—bigger spaces, more time and effort."
+                />
 
                 {/* Tier cards */}
-                {SERVICE_TIERS.map((tier) => (
-                    <View key={tier.title} style={styles.card}>
-                        <Text style={styles.cardTitle}>{tier.title}</Text>
-                        <Text style={styles.cardDescription}>{tier.description}</Text>
-                        <Text style={styles.cardRate}>{tier.rate}</Text>
-                    </View>
-                ))}
+                <TierSelector 
+                    tiers={CLEANING_TIERS} 
+                    onSelectTier={(title) => console.log('User selected:', title)} 
+                />
+
             </ScrollView>
         </SafeAreaView>
     );
@@ -91,84 +88,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
     },
-
     scrollContent: {
         paddingHorizontal: 20,
         paddingBottom: 40,
-    },
-
-    heading: {
-        color: 'white',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: 10,
-    },
-
-    subheading: {
-        color: 'white',
-        marginTop: 6,
-        lineHeight: 20,
-    },
-
-    sectionHeader: {
-        marginTop: 24,
-        marginBottom: 4,
-    },
-
-    sectionTitle: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-
-    sectionSubtitle: {
-        color: 'white',
-        marginTop: 5,
-        lineHeight: 20,
-    },
-
-    card: {
-        width: '100%',           // ← fixes the cut-off issue
-        borderWidth: 1,
-        borderColor: 'white',
-        borderRadius: 10,
-        padding: 15,
-        marginTop: 16,
-    },
-
-    cardTitle: {
-        color: 'white',
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginBottom: 6,
-    },
-
-    cardDescription: {
-        color: 'white',
-        lineHeight: 20,
-    },
-
-    cardRate: {
-        color: '#7AB1F5',
-        fontWeight: '600',
-        marginTop: 6,
-    },
-
-    bookButtonWrapper: {
-        alignSelf: 'flex-end',
-        marginTop: 12,
-    },
-
-    bookButton: {
-        paddingVertical: 8,
-        paddingHorizontal: 20,
-        borderRadius: 40,
-        alignItems: 'center',
-    },
-
-    bookButtonText: {
-        color: '#fff',
-        fontSize: 13,
-        fontWeight: '600',
     },
 });
