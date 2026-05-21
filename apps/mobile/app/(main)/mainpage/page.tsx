@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseMain from '../../../components/layout/(base-main)/BaseMain';
 
 // --- Reusable UI Pieces ---
 
 const StatusTab = ({ label, color, isActive, onPress, textColor, tabType }: { label: string; color: string; isActive: boolean; onPress: () => void; textColor: string; tabType: 'Online' | 'Offline' }) => (
-  <TouchableOpacity 
+  <TouchableOpacity
     onPress={onPress}
     style={[styles.tab, isActive ? { backgroundColor: tabType === 'Offline' ? 'white' : '#001851' } : null]}
   >
@@ -38,11 +38,7 @@ export default function App() {
   const router = useRouter();
 
   return (
-    <BaseLayout 
-      theme="navy" 
-      scrollable={true} 
-      contentContainerStyle={{ padding: 20 }}
-    >
+    <BaseMain>
       <View style={[styles.rowBetween, { marginBottom: 30 }]}>
         <MaterialCommunityIcons name="view-grid" size={30} color="white" />
         <Text style={styles.header}>Home</Text>
@@ -61,11 +57,11 @@ export default function App() {
       </View>
 
       <View style={[styles.row, { marginBottom: 20 }]}>
-        <StatusTab 
+        <StatusTab
           label="Online" color="#4CAF50" textColor={activeTab === 'Online' ? 'white' : '#999'}
           isActive={activeTab === 'Online'} onPress={() => setActiveTab('Online')} tabType="Online"
         />
-        <StatusTab 
+        <StatusTab
           label="Offline" color="black" textColor={activeTab === 'Offline' ? 'black' : '#999'}
           isActive={activeTab === 'Offline'} onPress={() => setActiveTab('Offline')} tabType="Offline"
         />
@@ -81,7 +77,7 @@ export default function App() {
         <Text style={styles.blueBtnText}>See more</Text>
       </TouchableOpacity>
 
-    </BaseLayout>
+    </BaseMain>
   );
 }
 

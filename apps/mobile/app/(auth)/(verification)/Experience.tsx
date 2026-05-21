@@ -12,7 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 import { useVerification } from './_layout';
 import Stepper from './components/Stepper';
 
@@ -97,7 +97,7 @@ export default function ExperienceScreen() {
     }
 
     setErrors({});
-    
+
     // Save to context
     setExperience({
       workExperience,

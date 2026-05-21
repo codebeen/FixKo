@@ -1,14 +1,14 @@
 import React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
+import {
+  StyleSheet,
+  Text,
+  View,
   TouchableOpacity,
   Image
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 // Reusable component for the overview list items
 interface InfoItemProps {
@@ -27,9 +27,9 @@ const InfoItem = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialCo
 
 export default function JobOverviewScreen() {
   return (
-    <BaseLayout 
-      theme="navy" 
-      scrollable={true} 
+    <BaseLayout
+      theme="navy"
+      scrollable={true}
       contentContainerStyle={styles.scrollContent}
     >
       {/* Header */}
@@ -71,8 +71,8 @@ export default function JobOverviewScreen() {
       <View style={styles.mapContainer}>
         {/* For real implementation, use <MapView /> from react-native-maps */}
         <View style={styles.mapPlaceholder}>
-           <Ionicons name="location" size={40} color="#800000" style={styles.mapPin} />
-           <Text style={styles.mapLabel}>Map Preview</Text>
+          <Ionicons name="location" size={40} color="#800000" style={styles.mapPin} />
+          <Text style={styles.mapLabel}>Map Preview</Text>
         </View>
       </View>
 
@@ -87,12 +87,12 @@ export default function JobOverviewScreen() {
 
 const styles = StyleSheet.create({
   scrollContent: { paddingHorizontal: 20, paddingBottom: 40 },
-  
+
   header: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    marginVertical: 25 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 25
   },
   headerTitle: { color: 'white', fontSize: 22, fontWeight: 'bold' },
 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 15,
   },
-  
+
   // Info Items
   infoRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
   infoIcon: { width: 30 },

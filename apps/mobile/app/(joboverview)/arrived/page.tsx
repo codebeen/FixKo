@@ -1,13 +1,13 @@
 import React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TouchableOpacity 
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 // Reusable component for the job details
 interface JobDetailProps {
@@ -28,9 +28,9 @@ export default function JobUploadScreen() {
   const router = useRouter();
 
   return (
-    <BaseLayout 
-      theme="navy" 
-      scrollable={true} 
+    <BaseLayout
+      theme="navy"
+      scrollable={true}
       contentContainerStyle={styles.scrollContent}
     >
       {/* Header */}
@@ -44,14 +44,14 @@ export default function JobUploadScreen() {
 
       {/* Outer Container Frame */}
       <View style={styles.outerFrame}>
-        
+
         {/* Summary Card */}
         <View style={styles.whiteCard}>
           <JobDetail icon="vacuum" text="Service: House Cleaning" isBold={true} />
           <JobDetail icon="location-on" text="Location: (with map pin)" isBold={false} iconFamily={MaterialIcons as any} />
           <JobDetail icon="arrow-expand-all" text="Property Size: Small Home (0–50 sqm)" isBold={false} />
           <JobDetail icon="currency-php" text="Rate: ₱25–₱35 per sqm" isBold={false} />
-          
+
           <View style={styles.calcBox}>
             <Text style={styles.calcLabel}>Estimated Total: (auto-calculated)</Text>
             <Text style={styles.calcExample}>Example: 40 sqm × ₱30 = ₱1,200</Text>
@@ -69,7 +69,7 @@ export default function JobUploadScreen() {
         {/* Upload Section */}
         <View style={styles.uploadSection}>
           <Text style={styles.uploadTitle}>Upload Photos to Start Job</Text>
-          
+
           <TouchableOpacity style={styles.uploadPlaceholder}>
             <MaterialCommunityIcons name="image-plus" size={50} color="white" />
           </TouchableOpacity>
@@ -85,9 +85,9 @@ export default function JobUploadScreen() {
 }
 
 const styles = StyleSheet.create({
-  scrollContent: { 
-    paddingHorizontal: 20, 
-    paddingBottom: 40 
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 40
   },
   header: {
     flexDirection: 'row',
@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 25,
   },
-  headerTitle: { 
-    color: 'white', 
-    fontSize: 22, 
-    fontWeight: 'bold' 
+  headerTitle: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold'
   },
   outerFrame: {
     borderWidth: 1,
@@ -113,32 +113,32 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 25,
   },
-  detailRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    marginBottom: 10 
+  detailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10
   },
-  detailIcon: { 
-    width: 30 
+  detailIcon: {
+    width: 30
   },
-  detailText: { 
-    fontSize: 14, 
-    color: '#333' 
+  detailText: {
+    fontSize: 14,
+    color: '#333'
   },
-  boldText: { 
-    fontWeight: 'bold' 
+  boldText: {
+    fontWeight: 'bold'
   },
-  calcBox: { 
-    marginLeft: 30, 
-    marginBottom: 10 
+  calcBox: {
+    marginLeft: 30,
+    marginBottom: 10
   },
-  calcLabel: { 
-    fontSize: 13, 
-    color: '#333' 
+  calcLabel: {
+    fontSize: 13,
+    color: '#333'
   },
-  calcExample: { 
-    fontSize: 12, 
-    color: '#666' 
+  calcExample: {
+    fontSize: 12,
+    color: '#666'
   },
   startBtn: {
     backgroundColor: '#66EE66',
@@ -147,10 +147,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
   },
-  startBtnText: { 
-    color: '#001540', 
-    fontWeight: 'bold', 
-    fontSize: 16 
+  startBtnText: {
+    color: '#001540',
+    fontWeight: 'bold',
+    fontSize: 16
   },
   uploadSection: {
     alignItems: 'center',
@@ -178,9 +178,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
   },
-  uploadBtnText: { 
-    color: '#001540', 
-    fontWeight: 'bold', 
-    fontSize: 16 
+  uploadBtnText: {
+    color: '#001540',
+    fontWeight: 'bold',
+    fontSize: 16
   },
 });

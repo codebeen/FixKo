@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 import { useVerification } from './_layout';
 import Stepper from './components/Stepper';
 

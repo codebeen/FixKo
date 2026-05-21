@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 const THEME = { bg: '#001540', accent: '#5CF263', blue: '#0047FF', border: 'rgba(255,255,255,0.5)' };
 
@@ -39,7 +39,7 @@ export default function JobOverview() {
       <View style={styles.center}>
         <Text style={styles.title}>Working Hours</Text>
         <Text style={styles.subtitle}>Track your time while working on this job.</Text>
-        
+
         <View style={styles.timerCard}>
           <Text style={styles.timerText}>1 : 00 : 00</Text>
           <View style={styles.controls}>
@@ -52,15 +52,15 @@ export default function JobOverview() {
 
       <Text style={[styles.title, { marginTop: 50, fontSize: 20 }]}>Task Checklist</Text>
       {tasks.map((item, i) => (
-        <TaskRow 
-          key={item.id} 
-          label={item.text} 
-          isChecked={item.done} 
+        <TaskRow
+          key={item.id}
+          label={item.text}
+          isChecked={item.done}
           onToggle={() => {
             const newTasks = [...tasks];
             newTasks[i].done = !newTasks[i].done;
             setTasks(newTasks);
-          }} 
+          }}
         />
       ))}
 

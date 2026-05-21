@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 import { validateEmail, validatePassword } from '@/utils/Validation';
 
 const logo = require("../../../assets/logo_fixko.png");
@@ -134,11 +134,11 @@ export default function App() {
           </View>
         </View>
 
-        <InputGroup 
-          label="Email Address" 
-          icon="mail-outline" 
-          placeholder="Enter Email" 
-          keyboardType="email-address" 
+        <InputGroup
+          label="Email Address"
+          icon="mail-outline"
+          placeholder="Enter Email"
+          keyboardType="email-address"
           labelColor="#ffffffa8"
           value={email}
           onChangeText={setEmail}

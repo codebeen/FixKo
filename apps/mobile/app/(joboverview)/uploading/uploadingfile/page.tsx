@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 interface ButtonProps {
   title: string;
@@ -32,7 +32,7 @@ export default function SimplifiedUpload() {
       <View style={styles.header}>
         <Ionicons name="arrow-back" size={24} color="white" />
         <Text style={styles.whiteText}>Upload Photo</Text>
-        <View style={{ width: 24 }} /> 
+        <View style={{ width: 24 }} />
       </View>
 
       <View style={styles.body}>

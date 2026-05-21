@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 export default function BookingsScreen() {
   const [activeTab, setActiveTab] = useState('Online');
@@ -16,9 +16,9 @@ export default function BookingsScreen() {
   ];
 
   return (
-    <BaseLayout 
-      theme="navy" 
-      scrollable={true} 
+    <BaseLayout
+      theme="navy"
+      scrollable={true}
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
@@ -44,7 +44,7 @@ export default function BookingsScreen() {
 
       {/* Toggle Buttons */}
       <View style={styles.tabRow}>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => setActiveTab('Online')}
           style={[styles.tab, activeTab === 'Online' ? styles.tabActiveWhite : styles.tabInactive]}
         >
@@ -52,7 +52,7 @@ export default function BookingsScreen() {
           <View style={[styles.dot, { backgroundColor: '#4CAF50' }]} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => setActiveTab('Offline')}
           style={[styles.tab, activeTab === 'Offline' ? styles.tabActiveWhite : styles.tabInactive]}
         >
@@ -74,7 +74,7 @@ export default function BookingsScreen() {
                   ))}
                 </View>
               </View>
-              
+
               <Text style={styles.labelGray}>Type of Service: Cleaning</Text>
               <Text style={styles.labelBold}>Small Homes (0–50 sqm)</Text>
               <Text style={styles.description}>
@@ -95,7 +95,7 @@ export default function BookingsScreen() {
 
 const styles = StyleSheet.create({
   scrollContent: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 40 },
-  
+
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
   welcomeLink: { color: '#0056D2', fontSize: 14, textDecorationLine: 'underline', marginTop: 5 },
 
   tabRow: { flexDirection: 'row', gap: 10, marginBottom: 25 },
-  tab: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingVertical: 10, 
-    paddingHorizontal: 20, 
-    borderRadius: 25, 
-    borderWidth: 1, 
-    borderColor: 'white' 
+  tab: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: 'white'
   },
   tabActiveWhite: { backgroundColor: 'white' },
   tabInactive: { backgroundColor: 'transparent' },

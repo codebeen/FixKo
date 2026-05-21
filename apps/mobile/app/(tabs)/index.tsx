@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Text, View, Image, TouchableOpacity, Pressable, Animated, Easing, Dimensions, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
-import LogoAnimation from '@/components/layout/LogoAnimation';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
+import LogoAnimation from '@/components/layout/(base-auth)/LogoAnimation';
 
 export default function App() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function App() {
     <BaseLayout align="center" contentContainerStyle={{ justifyContent: 'center' }}>
       <View style={{ width: '100%', maxWidth: containerMaxWidth, alignItems: 'center', paddingHorizontal: 10 }}>
         <LogoAnimation />
-        
+
         <Text style={{ color: '#FFF', fontSize: titleFontSize, fontWeight: 'bold', textAlign: 'center', marginTop: 10 }}>
           Supporting Filipino Workers,{'\n'}
           <Text style={{ fontSize: subtitleFontSize, fontWeight: 'normal', fontStyle: 'italic', color: '#CCC' }}>

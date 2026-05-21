@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, useWindowDimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 type RoleType = 'client' | 'worker' | null;
 
@@ -57,13 +57,13 @@ export default function UserTypeScreen() {
                 styles.iconContainer,
                 selectedRole === 'client' ? styles.iconContainerSelected : styles.iconContainerUnselected
               ]}>
-                <MaterialCommunityIcons 
-                  name="account-search" 
-                  size={isSmallScreen ? 24 : 28} 
-                  color={selectedRole === 'client' ? '#001449' : '#DBA92E'} 
+                <MaterialCommunityIcons
+                  name="account-search"
+                  size={isSmallScreen ? 24 : 28}
+                  color={selectedRole === 'client' ? '#001449' : '#DBA92E'}
                 />
               </View>
-              
+
               {/* Radio Indicator */}
               <View style={[
                 styles.radioOuter,
@@ -94,10 +94,10 @@ export default function UserTypeScreen() {
                 styles.iconContainer,
                 selectedRole === 'worker' ? styles.iconContainerSelected : styles.iconContainerUnselected
               ]}>
-                <MaterialCommunityIcons 
-                  name="hammer-wrench" 
-                  size={isSmallScreen ? 24 : 28} 
-                  color={selectedRole === 'worker' ? '#001449' : '#DBA92E'} 
+                <MaterialCommunityIcons
+                  name="hammer-wrench"
+                  size={isSmallScreen ? 24 : 28}
+                  color={selectedRole === 'worker' ? '#001449' : '#DBA92E'}
                 />
               </View>
 

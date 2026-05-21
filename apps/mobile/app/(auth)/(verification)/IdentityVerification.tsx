@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 import { useVerification } from './_layout';
 import Stepper from './components/Stepper';
 
@@ -75,7 +75,7 @@ export default function IdentityVerificationScreen() {
     }
 
     setErrors({});
-    
+
     // Save to context
     setIdentity({
       governmentId,
@@ -114,7 +114,7 @@ export default function IdentityVerificationScreen() {
           <Text style={styles.infoNote}>
             Accepted IDs: Passport, UMID, Driver's License, SSS, Postal ID, PRC, Voter's ID.
           </Text>
-          
+
           {governmentId ? (
             <View style={styles.imagePreviewContainer}>
               <Image source={{ uri: governmentId }} style={styles.imagePreview} />
@@ -126,8 +126,8 @@ export default function IdentityVerificationScreen() {
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity 
-              style={[styles.uploadBox, errors.governmentId ? styles.uploadBoxError : null]} 
+            <TouchableOpacity
+              style={[styles.uploadBox, errors.governmentId ? styles.uploadBoxError : null]}
               onPress={() => pickDocument('govId')}
             >
               <Ionicons name="card-outline" size={28} color="#DBA92E" />
@@ -159,8 +159,8 @@ export default function IdentityVerificationScreen() {
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity 
-              style={[styles.uploadBox, errors.nbiClearance ? styles.uploadBoxError : null]} 
+            <TouchableOpacity
+              style={[styles.uploadBox, errors.nbiClearance ? styles.uploadBoxError : null]}
               onPress={() => pickDocument('nbi')}
             >
               <Ionicons name="document-text-outline" size={28} color="#DBA92E" />

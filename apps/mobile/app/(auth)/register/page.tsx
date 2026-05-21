@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/BaseLayout';
-import { 
-  validateName, 
-  validateEmail, 
-  validatePhone, 
-  validatePassword, 
-  validateConfirmPassword 
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
+import {
+  validateName,
+  validateEmail,
+  validatePhone,
+  validatePassword,
+  validateConfirmPassword
 } from '@/utils/Validation';
 
 const logo = require("../../../assets/logo_fixko.png");
@@ -202,20 +202,20 @@ export default function App() {
         </View>
 
         {/* Inputs list */}
-        <InputGroup 
-          label="Full Name" 
-          icon="person-outline" 
-          placeholder="Enter Full Name" 
+        <InputGroup
+          label="Full Name"
+          icon="person-outline"
+          placeholder="Enter Full Name"
           labelColor="#ffffffa8"
           value={name}
           onChangeText={setName}
           error={errors.name}
         />
-        <InputGroup 
-          label="Email Address" 
-          icon="mail-outline" 
-          placeholder="Enter Email" 
-          keyboardType="email-address" 
+        <InputGroup
+          label="Email Address"
+          icon="mail-outline"
+          placeholder="Enter Email"
+          keyboardType="email-address"
           labelColor="#ffffffa8"
           value={email}
           onChangeText={setEmail}
@@ -223,8 +223,8 @@ export default function App() {
         />
 
         {/* Phone Picker */}
-        <PhoneInputGroup 
-          labelColor="#ffffffa8" 
+        <PhoneInputGroup
+          labelColor="#ffffffa8"
           value={phone}
           onChangeText={setPhone}
           error={errors.phone}

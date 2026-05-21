@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
-import BaseLayout from '@/components/layout/BaseLayout';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 export default function IdenticalSimplified() {
   return (
@@ -14,7 +14,7 @@ export default function IdenticalSimplified() {
 
       <View style={styles.content}>
         <MaterialCommunityIcons name="check-decagram" size={130} color="#5df260" style={styles.mainIcon} />
-        
+
         <Text style={styles.statusText}>Work submitted. Awaiting{"\n"}approval to release payment.</Text>
 
         {/* Info Grid */}
@@ -75,27 +75,27 @@ const styles = StyleSheet.create({
   mainIcon: { marginTop: 30, marginBottom: 20 },
   statusText: { color: 'white', textAlign: 'center', fontSize: 16, lineHeight: 22, marginBottom: 30 },
   row: { flexDirection: 'row', alignItems: 'center' },
-  card: { 
-    width: '100%', 
-    borderWidth: 1, 
-    borderColor: 'rgba(255,255,255,0.4)', 
-    borderRadius: 12, 
-    padding: 15, 
-    marginBottom: 12, 
-    justifyContent: 'center', 
-    alignItems: 'flex-start' 
+  card: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.4)',
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 12,
+    justifyContent: 'center',
+    alignItems: 'flex-start'
   },
   boldLabel: { color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 4 },
   whiteText: { color: 'white', fontSize: 13 },
   mutedText: { color: 'rgba(255,255,255,0.7)', fontSize: 12, lineHeight: 18 },
-  btn: { 
-    backgroundColor: '#5df260', 
-    width: '100%', 
-    padding: 16, 
-    borderRadius: 30, 
-    alignItems: 'center', 
-    marginTop: 'auto', 
-    marginBottom: 40 
+  btn: {
+    backgroundColor: '#5df260',
+    width: '100%',
+    padding: 16,
+    borderRadius: 30,
+    alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 40
   },
   btnText: { color: '#001a4d', fontWeight: 'bold', fontSize: 16 }
 });
