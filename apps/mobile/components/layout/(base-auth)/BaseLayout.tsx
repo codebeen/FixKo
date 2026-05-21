@@ -1,12 +1,5 @@
 import React from 'react';
-import { 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
-  View, 
-  StyleProp, 
-  ViewStyle 
-} from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View, StyleProp, ViewStyle} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useSegments } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -27,11 +20,11 @@ export interface BaseLayoutProps {
 }
 
 const GRADIENT_COLORS: Record<BaseLayoutTheme, string[]> = {
-  navy: ['#061C48', '#5893DF'],       // Premium signature royal navy to sky-blue gradient
-  blue: ['#061C48', '#5893DF'],       // Premium signature royal navy to sky-blue gradient
-  darkNavy: ['#061C48', '#5893DF'],   // Premium signature royal navy to sky-blue gradient
-  accentNavy: ['#061C48', '#5893DF'], // Premium signature royal navy to sky-blue gradient
-  light: ['#061C48', '#5893DF'],      // Premium signature royal navy to sky-blue gradient
+  navy: ['#061C48', '#5893DF'],       
+  blue: ['#061C48', '#5893DF'],      
+  darkNavy: ['#061C48', '#5893DF'],  
+  accentNavy: ['#061C48', '#5893DF'],
+  light: ['#061C48', '#5893DF'],     
 };
 
 export default function BaseLayout({
@@ -61,7 +54,7 @@ export default function BaseLayout({
   }
 
   const activeTheme = theme || detectedTheme;
-  
+
   const solidColor = backgroundColor ?? '#001851';
   const finalColors = [solidColor, solidColor] as [string, string, ...string[]];
 

@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Dimensions
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
+import BaseMain from '../../../components/layout/(base-main)/BaseMain';
 
 const { width } = Dimensions.get('window');
 const COLUMN_WIDTH = (width - 60) / 2; // Accounting for screen padding and gap
@@ -27,7 +20,7 @@ export default function ReviewsScreen() {
   });
 
   interface ReviewItem {
-    id: string;
+    id: string; 
     user: string;
     title: string;
     rating: number;
@@ -54,7 +47,7 @@ export default function ReviewsScreen() {
   );
 
   return (
-    <BaseLayout scrollable={false}>
+    <BaseMain scrollable={false}>
       <View style={styles.mainWrapper}>
 
         {/* Header */}
@@ -107,7 +100,7 @@ export default function ReviewsScreen() {
         </View>
 
       </View>
-    </BaseLayout>
+    </BaseMain>
   );
 }
 

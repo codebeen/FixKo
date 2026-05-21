@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
+import BaseMain from '../../../components/layout/(base-main)/BaseMain'
 
 export default function BookingsScreen() {
   const [activeTab, setActiveTab] = useState('Online');
@@ -16,7 +16,7 @@ export default function BookingsScreen() {
   ];
 
   return (
-    <BaseLayout
+    <BaseMain
       theme="navy"
       scrollable={true}
       contentContainerStyle={styles.scrollContent}
@@ -89,7 +89,7 @@ export default function BookingsScreen() {
         ))}
       </View>
 
-    </BaseLayout>
+    </BaseMain>
   );
 }
 

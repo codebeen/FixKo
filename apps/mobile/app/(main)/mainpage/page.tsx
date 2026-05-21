@@ -4,8 +4,6 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import BaseMain from '../../../components/layout/(base-main)/BaseMain';
 
-// --- Reusable UI Pieces ---
-
 const StatusTab = ({ label, color, isActive, onPress, textColor, tabType }: { label: string; color: string; isActive: boolean; onPress: () => void; textColor: string; tabType: 'Online' | 'Offline' }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -39,43 +37,8 @@ export default function App() {
 
   return (
     <BaseMain>
-      <View style={[styles.rowBetween, { marginBottom: 30 }]}>
-        <MaterialCommunityIcons name="view-grid" size={30} color="white" />
-        <Text style={styles.header}>Home</Text>
-        <Ionicons name="notifications" size={26} color="white" />
-      </View>
-
       <Text style={styles.greeting}>Hi, Darben!</Text>
       <Text style={styles.subGreeting}>Goodmorning</Text>
-
-      <View style={styles.welcomeBox}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.welcomeTitle}>Welcome!</Text>
-          <Text style={styles.smallGray}>See what's relevant today!</Text>
-        </View>
-        <Text style={{ fontSize: 40 }}>💡</Text>
-      </View>
-
-      <View style={[styles.row, { marginBottom: 20 }]}>
-        <StatusTab
-          label="Online" color="#4CAF50" textColor={activeTab === 'Online' ? 'white' : '#999'}
-          isActive={activeTab === 'Online'} onPress={() => setActiveTab('Online')} tabType="Online"
-        />
-        <StatusTab
-          label="Offline" color="black" textColor={activeTab === 'Offline' ? 'black' : '#999'}
-          isActive={activeTab === 'Offline'} onPress={() => setActiveTab('Offline')} tabType="Offline"
-        />
-      </View>
-
-      <View style={styles.whiteCard}>
-        <ServiceEntry name="Shanella A. Cagulang" description="Perfect for condos, studio units, and small apartments" />
-        <View style={styles.hr} />
-        <ServiceEntry name="Nadine A. Borja" description="Perfect for condos, studio units, and small apartments" />
-      </View>
-
-      <TouchableOpacity style={styles.blueBtn} onPress={() => router.push('/(bookings)/mainpage/page')}>
-        <Text style={styles.blueBtnText}>See more</Text>
-      </TouchableOpacity>
 
     </BaseMain>
   );
