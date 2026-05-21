@@ -128,7 +128,7 @@ function BaseAuth({ children }: BaseAuthProps) {
                   Fix
                 </text>
                 
-                <text className="text-float-2 ko-text" x="260" y="150" fontFamily="'Arial Black', Impact, sans-serif" fontStyle="italic" fontWeight="900" fontSize="130" fill="url(#redGrad)" filter="url(#shadow)">
+                <text className="text-float-2 ko-text" x="250" y="150" fontFamily="'Arial Black', Impact, sans-serif" fontStyle="italic" fontWeight="900" fontSize="130" fill="url(#redGrad)" filter="url(#shadow)">
                   Ko
                 </text>
 
@@ -267,9 +267,9 @@ function BaseAuth({ children }: BaseAuthProps) {
 
           <Text
             ta="center"
-            c="slate.2"
+            c="white"
             mt="sm"
-            style={{ fontSize: "0.925rem", lineHeight: 1.6, opacity: 0.85, color: "#e2e8f0" }}
+            style={{ fontSize: "0.925rem", lineHeight: 1.6, opacity: 0.85, color: "#ffffff" }}
           >
             Empowering the hands that build our nation. We bridge the gap between the hardworking
             Filipino and the homes that need them most. Pinoy pride, professional service.
@@ -286,7 +286,6 @@ function BaseAuth({ children }: BaseAuthProps) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#ffffff",
         }}
       >
         <Box w="100%" maw={380} my={{ base: "3rem", md: "auto" }}>

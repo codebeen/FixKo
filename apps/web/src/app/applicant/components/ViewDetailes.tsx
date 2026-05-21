@@ -149,7 +149,7 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
           label: 'pup-back-button-label',
         }}
       >
-        Back
+        Back to applicant
       </Button>
 
       {/* ── Page Header ── */}
@@ -185,7 +185,7 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
           <Text size="xs" tt="uppercase" fw={700} c="dimmed" mb="lg" style={{ letterSpacing: '0.08em' }}>
             Personal Information
           </Text>
-          <Grid gutter="xl">
+          <Grid gap="xl">
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <Stack gap="xl">
                 <DetailRow icon={<IconUser size={16} />} label="Full Name" value={fullName} />
@@ -212,7 +212,7 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
           </Text>
 
           {isApplicant ? (
-            <Grid gutter="xl">
+            <Grid gap="xl">
               <Grid.Col span={{ base: 12, sm: 6 }}>
                 <Stack gap="xl">
                   <DetailRow icon={<IconTool size={16} />} label="Job Type" value={app.job_type} />
@@ -238,7 +238,7 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
               </Grid.Col>
             </Grid>
           ) : (
-            <Grid gutter="xl">
+            <Grid gap="xl">
               <Grid.Col span={{ base: 12, sm: 6 }}>
                 <Stack gap="xl">
                   <DetailRow icon={<IconTool size={16} />} label="Job Type" value={wrk.job_type} />

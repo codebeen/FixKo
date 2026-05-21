@@ -7,7 +7,24 @@ import EditUser from "./components/EditUser";
 import ViewUser from "./components/ViewUser";
 
 import { Box, Button, Flex, Menu, TextInput, Badge, rem, Text } from '@mantine/core';
+import Swal from 'sweetalert2';
 import { useState } from 'react';
+
+  const handleDeactivate = (row: any) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will deactivate the user.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, deactivate',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('Deactivate', row.original);
+      }
+    });
+  };
 import { useMantineReactTable, MantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
 import {
   IconSearch, IconFileExport, IconChevronDown, IconFileTypePdf,
@@ -205,7 +222,7 @@ export default function UserManagement() {
         <Menu.Item
           key="deactivate"
           className="pup-table-action-item"
-          onClick={() => console.log('Deactivate', row.original)}
+          onClick={() => handleDeactivate(row)}
           leftSection={<IconUserOff style={{ width: rem(16), height: rem(16) }} />}
           color="red"
         >
