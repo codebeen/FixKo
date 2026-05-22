@@ -72,7 +72,27 @@ export default function ReviewScreen() {
               </View>
               <View style={styles.detailItem}>
                 <Text style={styles.detailLabel}>Service Offer</Text>
-                <Text style={styles.detailValue}>{personalInfo.serviceOffer || 'Not provided'}</Text>
+                {personalInfo.serviceOffer.length > 0 ? (
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
+                    {personalInfo.serviceOffer.map((s) => (
+                      <View
+                        key={s}
+                        style={{
+                          backgroundColor: 'rgba(250, 204, 21, 0.12)',
+                          borderRadius: 20,
+                          borderWidth: 1,
+                          borderColor: 'rgba(250, 204, 21, 0.35)',
+                          paddingHorizontal: 10,
+                          paddingVertical: 4,
+                        }}
+                      >
+                        <Text style={{ color: '#FACC15', fontSize: 12, fontWeight: '700' }}>{s}</Text>
+                      </View>
+                    ))}
+                  </View>
+                ) : (
+                  <Text style={styles.detailValue}>Not provided</Text>
+                )}
               </View>
               <View style={styles.detailItem}>
                 <Text style={styles.detailLabel}>Short Bio</Text>

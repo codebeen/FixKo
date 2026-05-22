@@ -7,7 +7,7 @@ export interface PersonalInfoState {
   email: string;
   serviceLocation: string;
   shortBio: string;
-  serviceOffer: string;
+  serviceOffer: string[];
 }
 
 export interface ExperienceState {
@@ -44,7 +44,7 @@ const defaultPersonalInfo: PersonalInfoState = {
   email: '',
   serviceLocation: '',
   shortBio: '',
-  serviceOffer: '',
+  serviceOffer: [],
 };
 
 const defaultExperience: ExperienceState = {

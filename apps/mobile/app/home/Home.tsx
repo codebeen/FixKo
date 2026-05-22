@@ -37,6 +37,7 @@ export default function Home() {
 
   return (
     <BaseMain>
+
       <Text style={styles.greeting}>Hi, Darben!</Text>
       <Text style={styles.subGreeting}>Goodmorning</Text>
 

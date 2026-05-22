@@ -24,7 +24,7 @@ const JobDetail = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialC
   </View>
 );
 
-export default function JobUploadScreen() {
+export default function StartJob() {
   const router = useRouter();
 
   return (
@@ -61,7 +61,9 @@ export default function JobUploadScreen() {
           <JobDetail icon="account-outline" text="Client Name: Shanella A. Cagulang" isBold={false} />
 
           <TouchableOpacity
-            style={styles.startBtn} onPress={() => router.push('/(joboverview)/timer/page')}>
+            style={styles.startBtn}
+            onPress={() => router.push('/booking/Timer')}
+          >
             <Text style={styles.startBtnText}>Start Job</Text>
           </TouchableOpacity>
         </View>

@@ -22,7 +22,7 @@ const TaskRow = ({ label, isChecked, onToggle }: TaskRowProps) => (
   </TouchableOpacity>
 );
 
-export default function JobOverview() {
+export default function Timer() {
   const [tasks, setTasks] = useState([
     "Sweep & mop floors", "Clean bathroom", "Wipe surfaces", "Dispose trash", "Sweep & mop floors"
   ].map(t => ({ id: Math.random(), text: t, done: true })));
