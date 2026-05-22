@@ -19,9 +19,10 @@ export default function BackButton() {
 
 const styles = StyleSheet.create({
     backButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 20, 
-        paddingTop: 15,
+        position: 'absolute',
+        left: 4, // Pins it securely to the left side
+        top: 12, // Vertically aligns it nicely with the text
+        zIndex: 10, // Ensures it stays tappable on top of everything
+        padding: 16, // Healthy touch target size
     },
 });

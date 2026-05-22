@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
 
 export type TierType = {
@@ -16,13 +17,22 @@ type TierSelectorProps = {
 
 export default function TierSelector({ tiers, onSelectTier }: TierSelectorProps) {
     const [selectedTier, setSelectedTier] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleSelect = (title: string) => {
         setSelectedTier(title);
+        
         if (onSelectTier) {
             onSelectTier(title); 
         }
+
+        // Delay the push slightly so the user can actually see the card turn blue/glassy before the screen changes!
+        setTimeout(() => {
+            router.push('/(bookings)/mainpage/BookingPage'); // Put your exact route here
+        }, 150); 
     };
+
+    
 
     return (
         <View style={styles.container}>
