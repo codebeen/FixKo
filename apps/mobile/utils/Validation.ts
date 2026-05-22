@@ -1,14 +1,11 @@
 /**
  * Validates full name.
  * Ensures the name is not empty, is at least 2 characters, and contains only letters and spaces.
- * @param {string} value - The name string to validate
- * @returns {string|null} - Error message if invalid, otherwise null
  */
-export const validateName = (value) => {
+export const validateName = (value: string): string | null => {
   if (!value || !value.trim()) return "Full name is required";
   if (value.trim().length < 2) return "Name must be at least 2 characters long";
   
-  // Standard letters, spaces, and dot/comma (for junior/senior, etc.)
   const nameRegex = /^[a-zA-Z\s.,'-]+$/;
   if (!nameRegex.test(value)) {
     return "Name must only contain letters and standard characters";
@@ -19,10 +16,8 @@ export const validateName = (value) => {
 /** 
  * Validates email address.
  * Ensures it's not empty and matches a valid email regex pattern.
- * @param {string} value - The email string to validate
- * @returns {string|null} - Error message if invalid, otherwise null
  */
-export const validateEmail = (value) => {
+export const validateEmail = (value: string): string | null => {
   if (!value || !value.trim()) return "Email address is required";
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -35,10 +30,8 @@ export const validateEmail = (value) => {
 /**
  * Validates Philippine phone numbers.
  * Ensures it's a 10-digit number starting with '9' (e.g. 9123456789 or +639123456789).
- * @param {string} value - The phone number string to validate
- * @returns {string|null} - Error message if invalid, otherwise null
  */
-export const validatePhone = (value) => {
+export const validatePhone = (value: string): string | null => {
   if (!value || !value.trim()) return "Phone number is required";
   
   // Remove spaces, dashes, or +63 prefix to isolate the raw digits
@@ -54,10 +47,8 @@ export const validatePhone = (value) => {
 /**
  * Validates password input.
  * Ensures the password is not empty and is at least 6 characters long.
- * @param {string} value - The password string to validate
- * @returns {string|null} - Error message if invalid, otherwise null
  */
-export const validatePassword = (value) => {
+export const validatePassword = (value: string): string | null => {
   if (!value) return "Password is required";
   if (value.length < 6) return "Password must be at least 6 characters long";
   return null;
@@ -65,11 +56,8 @@ export const validatePassword = (value) => {
 
 /**
  * Validates password confirmation matching.
- * @param {string} password - The original password string
- * @param {string} confirmPassword - The confirmation password string
- * @returns {string|null} - Error message if invalid, otherwise null
  */
-export const validateConfirmPassword = (password, confirmPassword) => {
+export const validateConfirmPassword = (password: string, confirmPassword: string): string | null => {
   if (!confirmPassword) return "Confirm password is required";
   if (password !== confirmPassword) {
     return "Passwords do not match";
@@ -79,11 +67,8 @@ export const validateConfirmPassword = (password, confirmPassword) => {
 
 /**
  * Validates a generic required field (e.g., dropdowns, selections).
- * @param {any} value - The field value
- * @param {string} fieldName - The user-friendly field name for the error message
- * @returns {string|null} - Error message if invalid, otherwise null
  */
-export const validateRequired = (value, fieldName = "This field") => {
+export const validateRequired = (value: any, fieldName: string = "This field"): string | null => {
   if (value === undefined || value === null || (typeof value === "string" && !value.trim())) {
     return `${fieldName} is required`;
   }

@@ -1,23 +1,15 @@
 import React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  SafeAreaView, 
-  TouchableOpacity, 
-  FlatList, 
-  Dimensions 
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import BaseMain from '../../components/layout/(base-main)/BaseMain';
 
 const { width } = Dimensions.get('window');
-const COLUMN_WIDTH = (width - 60) / 2; // Accounting for screen padding and gap
+const COLUMN_WIDTH = (width - 60) / 2; 
 
-export default function ReviewsScreen() {
+export default function Reviews() {
   const router = useRouter();
-  
-  // Sample data for the grid
+
   const reviews = Array(6).fill({
     id: Math.random().toString(),
     user: 'Anonymous',
@@ -26,11 +18,19 @@ export default function ReviewsScreen() {
     status: 'Excellent'
   });
 
-  const renderReviewItem = ({ item }) => (
+  interface ReviewItem {
+    id: string; 
+    user: string;
+    title: string;
+    rating: number;
+    status: string;
+  }
+
+  const renderReviewItem = ({ item }: { item: ReviewItem }) => (
     <View style={styles.reviewCard}>
       <Text style={styles.reviewerName}>{item.user}</Text>
       <Text style={styles.reviewTitle} numberOfLines={2}>{item.title}</Text>
-      
+
       <View style={styles.cardFooter}>
         <View>
           <View style={styles.starRow}>
@@ -46,10 +46,9 @@ export default function ReviewsScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseMain>
       <View style={styles.mainWrapper}>
-        
-        {/* Header */}
+
         <View style={styles.header}>
           <TouchableOpacity>
             <Ionicons name="arrow-back" size={28} color="white" />
@@ -64,7 +63,7 @@ export default function ReviewsScreen() {
           <Text style={styles.profileName}>Shanella A. Cagulang</Text>
           <Text style={styles.locationText}>Rodriguez Rizal, Brgy. Burgos</Text>
           <Text style={styles.recommendText}>87% Recommends this person</Text>
-          
+
           <View style={styles.ratingBadgeRow}>
             <View style={styles.ratingBadge}>
               <Text style={styles.ratingBadgeText}>5.0</Text>
@@ -99,14 +98,13 @@ export default function ReviewsScreen() {
         </View>
 
       </View>
-    </SafeAreaView>
+    </BaseMain>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#001540' },
   mainWrapper: { flex: 1, paddingHorizontal: 20 },
-  
+
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
   profileName: { fontSize: 18, fontWeight: 'bold', color: '#001540' },
   locationText: { fontSize: 12, color: '#444', marginTop: 2 },
   recommendText: { fontSize: 10, fontStyle: 'italic', color: '#666', marginTop: 4 },
-  
+
   ratingBadgeRow: { flexDirection: 'row', alignItems: 'center', marginTop: 15, gap: 5 },
   ratingBadge: { backgroundColor: '#FFD700', borderRadius: 10, paddingHorizontal: 6, paddingVertical: 2 },
   ratingBadgeText: { fontSize: 10, fontWeight: 'bold' },

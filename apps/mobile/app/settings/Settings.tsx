@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-
-// --- Reusable UI Pieces ---
+import BaseMain from '../../components/layout/(base-main)/BaseMain';
 
 const StatusTab = ({ label, color, isActive, onPress, textColor, tabType }: { label: string; color: string; isActive: boolean; onPress: () => void; textColor: string; tabType: 'Online' | 'Offline' }) => (
-  <TouchableOpacity 
+  <TouchableOpacity
     onPress={onPress}
-    style={[styles.tab, isActive ? { backgroundColor: tabType === 'Offline' ? 'white' : '#001540' } : null]}
+    style={[styles.tab, isActive ? { backgroundColor: tabType === 'Offline' ? 'white' : '#001851' } : null]}
   >
     <Text style={[styles.tabText, { color: textColor }]}>{label}</Text>
     <View style={[styles.dot, { backgroundColor: color }]} />
@@ -32,63 +31,31 @@ const ServiceEntry = ({ name, description }: { name: string; description: string
 
 // --- Main Screen ---
 
-export default function App() {
+export default function Settings() {
   const [activeTab, setActiveTab] = useState('Online');
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
-        
-        <View style={[styles.rowBetween, { marginBottom: 30 }]}>
-          <MaterialCommunityIcons name="view-grid" size={30} color="white" />
-          <Text style={styles.header}>Home</Text>
-          <Ionicons name="notifications" size={26} color="white" />
-        </View>
+    <BaseMain>
+      <Text style={styles.greeting}>Hi, Darben!</Text>
+      <Text style={styles.subGreeting}>Goodmorning</Text>
+      
+      <View style={[styles.row, { marginBottom: 20 }]}>
+        <StatusTab
+          label="Online" color="#4CAF50" textColor={activeTab === 'Online' ? 'white' : '#999'}
+          isActive={activeTab === 'Online'} onPress={() => setActiveTab('Online')} tabType="Online"
+        />
+        <StatusTab
+          label="Offline" color="black" textColor={activeTab === 'Offline' ? 'black' : '#999'}
+          isActive={activeTab === 'Offline'} onPress={() => setActiveTab('Offline')} tabType="Offline"
+        />
+      </View>
 
-        <Text style={styles.greeting}>Hi, Darben!</Text>
-        <Text style={styles.subGreeting}>Goodmorning</Text>
-
-        <View style={styles.welcomeBox}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.welcomeTitle}>Welcome!</Text>
-            <Text style={styles.smallGray}>See what's relevant today!</Text>
-          </View>
-          <Text style={{ fontSize: 40 }}>💡</Text>
-        </View>
-
-        <View style={[styles.row, { marginBottom: 20 }]}>
-          <StatusTab 
-            label="Online" color="#4CAF50" textColor={activeTab === 'Online' ? 'white' : '#999'}
-            isActive={activeTab === 'Online'} onPress={() => setActiveTab('Online')} tabType="Online"
-          />
-          <StatusTab 
-            label="Offline" color="black" textColor={activeTab === 'Offline' ? 'black' : '#999'}
-            isActive={activeTab === 'Offline'} onPress={() => setActiveTab('Offline')} tabType="Offline"
-          />
-        </View>
-
-        <View style={styles.whiteCard}>
-          <ServiceEntry name="Shanella A. Cagulang" description="Perfect for condos, studio units, and small apartments" />
-          <View style={styles.hr} />
-          <ServiceEntry name="Nadine A. Borja" description="Perfect for condos, studio units, and small apartments" />
-        </View>
-
-        <TouchableOpacity style={styles.blueBtn} onPress={() => router.push('/(bookings)/mainpage/page')}>
-          <Text style={styles.blueBtnText}>See more</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.blueBtn} onPress={() => router.push('/(services)/page')}>
-          <Text style={styles.blueBtnText}>Explore our services</Text>
-        </TouchableOpacity>
-
-      </ScrollView>
-    </SafeAreaView>
+    </BaseMain>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#001540' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   header: { color: 'white', fontSize: 20, fontWeight: 'bold' },
