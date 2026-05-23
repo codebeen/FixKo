@@ -1,18 +1,22 @@
 "use client";
 
-import { Text, Container, Title, Paper } from "@mantine/core";
 import BaseLayout from "../components/layout/BaseLayout";
 import PageHeader from "../components/page-header/PageHeader";
+import ChatLayout from "./components/ChatLayout";
 
 export default function CustomerService() {
   return (
     <BaseLayout>
-      <PageHeader
+      {/* <PageHeader
         title="Customer Service"
-        description="Welcome to the Customer Service portal. This section is currently under development."
+        description="List of all concerns."
         area="FixKo PH"
         showArea={true}
-      />
+      /> */}
+      
+      <div className="h-full w-full">
+        <ChatLayout />
+      </div>
     </BaseLayout>
   );
 }

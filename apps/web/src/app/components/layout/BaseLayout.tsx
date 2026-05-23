@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Box, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import TopHeader from "./Header";
 import Sidebar from "../sidebar/Sidebar";
@@ -10,29 +9,34 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
     const [opened, { toggle, close }] = useDisclosure();
 
     return (
-        <Flex h="100vh" w="100%" style={{ overflowX: "hidden", background: "#F5F8FA" }}>
+        /* Full-screen shell — sidebar + main panel side by side */
+        <div className="flex h-screen w-full overflow-hidden bg-slate-50">
+
+            {/* Sidebar (sticky, full height) */}
             <Sidebar opened={opened} close={close} />
 
-            <Flex direction="column" flex={1} style={{ overflow: "visible", minWidth: 0 }}>
+            {/* Main panel — stretches to fill remaining width */}
+            <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
+
+                {/* Sticky top header */}
                 <TopHeader onBurgerClick={toggle} opened={opened} />
 
-                <Flex direction="column" flex={1} style={{ overflow: "auto" }}>
-                    <Box
-                        flex={1}
-                        m={{ base: "md", sm: 30 }}
-                        p="xl"
-                        style={{
-                            backgroundColor: "#FFFFFF",
-                            borderRadius: "17px",
-                            boxShadow: "0 10px 30px rgba(0,0,0,0.04), 0 1px 8px rgba(0,0,0,0.02)",
-                            border: "1px solid rgba(0,0,0,0.05)",
-                        }}
-                    >
-                        {children}
-                    </Box>
-                </Flex>
-            </Flex>
-        </Flex>
+                {/* Scrollable content area — NO white card, transparent background */}
+                <main className="
+                    flex-1
+                    overflow-y-auto
+                    overflow-x-hidden
+                    bg-slate-100
+                    px-4 py-4
+                    sm:px-6 sm:py-8
+                    md:px-8 md:py-8
+                    lg:px-10 lg:py-10
+                    xl:px-12 xl:py-10
+                ">
+                    {children}
+                </main>
+            </div>
+        </div>
     );
 }
 

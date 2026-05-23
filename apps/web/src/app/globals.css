@@ -1,8 +1,14 @@
-@tailwind utilities;
+@import "tailwindcss";
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
 
 @layer base {
   :root {
-    --font-family: 'Inter', sans-serif;
+    --font-family: var(--font-poppins), 'Poppins', sans-serif;
     --radius: 0.625rem;
 
     /* Brand Colors */
@@ -18,7 +24,7 @@
     --brand-danger:     #E74C3C;
     --brand-info:       #2980B9;
     --brand-hover:      #0b2361;  /* FixKo Dark Hover */
-    --font-family:      'Inter', sans-serif;
+    --font-family:      var(--font-poppins), 'Poppins', sans-serif;
 
     /* Status Colors */
     --status-available: #0EA5A4;
@@ -82,7 +88,7 @@
   }
 
   body {
-    font-family: var(--font-family);
+    font-family: var(--font-poppins), 'Poppins', sans-serif;
   }
 
   .dark {
@@ -100,4 +106,20 @@
     --muted-foreground:     var(--brand-mid-gray);
     --accent:               var(--brand-primary);
   }
+}
+
+/* ── Dashboard micro-animations ──────────────────────────── */
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.activity-row:hover {
+  background: #F8FAFF !important;
+}
+
+.quick-nav-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(24, 56, 140, 0.15) !important;
 }
