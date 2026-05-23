@@ -12,6 +12,7 @@
     "rate": "₱25-₱35 per sqm",
     "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["Inspect Pipes", "Replace Fittings", "Replace Fittings", "Replace Fittings", "Replace Fittings", "Replace Fittings", "Replace Fittings"],
     "contact": "123-456-7890"
   },
   {
@@ -27,6 +28,7 @@
     "rate": "₱25-₱35 per sqm",
     "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["General Clean", "Window Wash"],
     "contact": "123-456-7890"
   },
   {
@@ -42,6 +44,7 @@
     "rate": "₱25-₱35 per sqm",
     "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["Deep Clean", "Carpet Shampoo"],
     "contact": "123-456-7890"
   },
   {
@@ -57,6 +60,7 @@
     "rate": "₱25-₱35 per sqm",
     "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["Inspect Wiring", "Replace Fuse"],
     "contact": "123-456-7890"
   },
   {
@@ -72,6 +76,7 @@
     "rate": "₱25-₱35 per sqm",
     "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["Mow Lawn", "Trim Hedges"],
     "contact": "123-456-7890"
   },
   {
@@ -85,8 +90,9 @@
     "price": 400.0,
     "propertySize": "Small Home (0-50 sqm)",
     "rate": "₱25-₱35 per sqm",
-    "example": "40 sqm × �30 = �1,200",
+    "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["Filter Clean", "Chemical Balance"],
     "contact": "123-456-7890"
   },
   {
@@ -100,10 +106,9 @@
     "price": 1200.0,
     "propertySize": "Small Home (0-50 sqm)",
     "rate": "₱25-₱35 per sqm",
-    "example": "40 sqm × �30 = �1,200",
+    "example": "40 sqm × ₱30 = ₱1,200",
     "schedule": "Date & Time",
+    "tasks": ["Full House Clean", "Appliance Shine"],
     "contact": "123-456-7890"
   }
 ]
-
- 
