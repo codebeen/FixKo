@@ -87,16 +87,6 @@ export default function Reviews() {
           contentContainerStyle={{ paddingBottom: 100 }}
         />
 
-        {/* Bottom Action Button */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.acceptButton}
-            onPress={() => router.push('/(joboverview)/mainjoboverview/page')}
-          >
-            <Text style={styles.acceptButtonText}>Accept booking</Text>
-          </TouchableOpacity>
-        </View>
-
       </View>
     </BaseMain>
   );
