@@ -19,9 +19,7 @@ export default function BackButton() {
 
 const styles = StyleSheet.create({
     backButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 20, 
-        paddingTop: 15,
+        marginLeft: 10, 
+        padding: 15, 
     },
 });

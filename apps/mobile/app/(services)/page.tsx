@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 import SearchBar from './components/search-bar';
-import SectionHeader from './components/section-header';
-import GradientButton from './components/see-more-button';
+import SectionHeader from '../../components/section-header';
+import GradientButton from '../../components/gradient-button';
 import ServicesGrid from './components/services-grid';
 
 export default function ServicesLandingScreen() {

@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 
 import BackButton from '../../../components/back-button';
 import SearchBar from '../components/search-bar';
-import SectionHeader from '../components/section-header';
+import SectionHeader from '../../../components/section-header';
 import SectionLabel from '../components/section-label';
 import TierSelector from '../components/tier-selector';
 
