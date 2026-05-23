@@ -35,7 +35,7 @@ export default function NavigationMenu() {
     if (!segments?.length) return;
     const seg = segments[segments.length - 1];
     const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
-    const mappedSeg = cleanedSeg === 'JobOverview' || cleanedSeg === 'StartJob' || cleanedSeg === 'Timer' ? 'booking' : cleanedSeg;
+    const mappedSeg = cleanedSeg === 'JobOverview' || cleanedSeg === 'StartJob' || cleanedSeg === 'Timer' || cleanedSeg === 'UploadProof' || cleanedSeg === 'JobCompleted' ? 'booking' : cleanedSeg;
     const idx = routes.findIndex(r => r.name === mappedSeg);
     if (idx !== -1) {
       setActive(routes[idx].name);

@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -51,100 +52,106 @@ export default function StartJob() {
   return (
     <BaseMain
       theme="navy"
-      scrollable={true}
-      contentContainerStyle={styles.scrollContent}
+      scrollable={false}
     >
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.push({ pathname: '/booking', params: { activeTab } })}
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Job Overview</Text>
-        <View style={{ width: 40 }} /> {/* Keeps title centered */}
-      </View>
-
-      {/* Client Section */}
-      {client && (
-        <View style={styles.clientSection}>
-          <View style={styles.clientInfo}>
-            <Text style={styles.clientLabel}>CLIENT</Text>
-            <Text style={styles.clientName}>{client}</Text>
-          </View>
-
-          <TouchableOpacity activeOpacity={0.7} style={styles.messageButton}>
-            <MaterialIcons
-              name="message"
-              size={24}
-              color="white"
-            />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: '/booking', params: { activeTab } })}
+            style={styles.backButton}
+          >
+            <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
+          <Text style={styles.headerTitle}>Job Overview</Text>
+          <View style={{ width: 40 }} /> {/* Keeps title centered */}
         </View>
-      )}
 
-      {/* Main Info Card */}
-      <View style={styles.outlineCard}>
-        {title && <InfoItem icon="vacuum" text={`Service: ${title}`} isBold={true} />}
-        {address && <InfoItem icon="location-on" text={`Location: ${address}`} iconFamily={MaterialIcons} />}
-        {propertySize && <InfoItem icon="arrow-expand-all" text={`Property Size: ${propertySize}`} />}
-        {rate && <InfoItem icon="currency-php" text={`Rate: ${rate}`} />}
+        {/* Client Section */}
+        {client && (
+          <View style={styles.clientSection}>
+            <View style={styles.clientInfo}>
+              <Text style={styles.clientLabel}>CLIENT</Text>
+              <Text style={styles.clientName}>{client}</Text>
+            </View>
 
-        {/* Auto-calculated Total Row */}
-        <InfoItem icon="calculator" text="Estimated Total: (auto-calculated)" />
-        {example && <Text style={styles.exampleText}>{`Example: ${example}`}</Text>}
-
-        {schedule && <InfoItem icon="clock-outline" text={`Schedule: ${schedule}`} />}
-        {contact && <InfoItem icon="phone" text={`Contact: ${contact}`} />}
-        {status && <InfoItem icon="information-outline" text={`Status: ${status}`} />}
-      </View>
-
-      {/* Task Container List Section */}
-      {parsedTasks.length > 0 && (
-        <View style={styles.taskContainer}>
-          <Text style={styles.containerLabel}>Available Tasks</Text>
-          <View style={styles.listContainer}>
-            {parsedTasks.map((task, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.listItem,
-                  index === parsedTasks.length - 1 && { borderBottomWidth: 0 }
-                ]}
-              >
-                <Text style={styles.listItemText}>{task}</Text>
-                <Ionicons name="radio-button-on" size={16} color="rgba(255,255,255,0.4)" />
-              </View>
-            ))}
+            <TouchableOpacity activeOpacity={0.7} style={styles.messageButton}>
+              <MaterialIcons
+                name="message"
+                size={24}
+                color="white"
+              />
+            </TouchableOpacity>
           </View>
+        )}
+
+        {/* Main Info Card */}
+        <View style={styles.outlineCard}>
+          {title && <InfoItem icon="vacuum" text={`Service: ${title}`} isBold={true} />}
+          {address && <InfoItem icon="location-on" text={`Location: ${address}`} iconFamily={MaterialIcons} />}
+          {propertySize && <InfoItem icon="arrow-expand-all" text={`Property Size: ${propertySize}`} />}
+          {rate && <InfoItem icon="currency-php" text={`Rate: ${rate}`} />}
+
+          {/* Auto-calculated Total Row */}
+          <InfoItem icon="calculator" text="Estimated Total: (auto-calculated)" />
+          {example && <Text style={styles.exampleText}>{`Example: ${example}`}</Text>}
+
+          {schedule && <InfoItem icon="clock-outline" text={`Schedule: ${schedule}`} />}
+          {contact && <InfoItem icon="phone" text={`Contact: ${contact}`} />}
+          {status && <InfoItem icon="information-outline" text={`Status: ${status}`} />}
         </View>
-      )}
+
+        {/* Task Container List Section */}
+        {parsedTasks.length > 0 && (
+          <View style={styles.taskContainer}>
+            <Text style={styles.containerLabel}>Available Tasks</Text>
+            <View style={styles.listContainer}>
+              {parsedTasks.map((task, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.listItem,
+                    index === parsedTasks.length - 1 && { borderBottomWidth: 0 }
+                  ]}
+                >
+                  <Text style={styles.listItemText}>{task}</Text>
+                  <Ionicons name="radio-button-on" size={16} color="rgba(255,255,255,0.4)" />
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+      </ScrollView>
 
       {/* Footer Action Button */}
       {status !== 'completed' && (
-        <TouchableOpacity
-          style={styles.arrivedBtn}
-          activeOpacity={0.8}
-          onPress={() => router.push({
-            pathname: '/booking/Timer',
-            params: {
-              title: title || '',
-              client: client || '',
-              address: address || '',
-              propertySize: propertySize || '',
-              rate: rate || '',
-              example: example || '',
-              schedule: schedule || '',
-              contact: contact || '',
-              tasks: tasks || '',
-              status: status || '',
-              activeTab: activeTab || ''
-            }
-          })}
-        >
-          <Text style={styles.btnText}>Let's Get Started</Text>
-        </TouchableOpacity>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.arrivedBtn}
+            activeOpacity={0.8}
+            onPress={() => router.push({
+              pathname: '/booking/Timer',
+              params: {
+                title: title || '',
+                client: client || '',
+                address: address || '',
+                propertySize: propertySize || '',
+                rate: rate || '',
+                example: example || '',
+                schedule: schedule || '',
+                contact: contact || '',
+                tasks: tasks || '',
+                status: status || '',
+                activeTab: activeTab || ''
+              }
+            })}
+          >
+            <Text style={styles.btnText}>Let's Get Started</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </BaseMain>
   );
@@ -345,5 +352,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 2,
     lineHeight: 17,
+  },
+  footer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: '#001851',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
