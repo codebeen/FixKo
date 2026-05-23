@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import BackButton from '../../../components/back-button'; // Double-check file casing matches your disk
-import Button from '../../../components/gradient-button'; // Double-check file casing matches your disk 
-import BookingStepper, { StepType } from './components/BookingStepper'; // Import the new Stepper component
+import BackButton from '../../../components/back-button'; 
+import Button from '../../../components/gradient-button'; 
+import BookingStepper, { StepType } from './components/BookingStepper'; 
 
-// 2. Updated Data Array with icons and statuses
+
 const TIMELINE_STEPS: StepType[] = [
     { id: '1', title: 'Booking Confirmed', time: 'Time: 7:00 AM', icon: 'check', status: 'completed' },
     { id: '2', title: 'Helper Arrived', time: 'Time: 7:20 AM', icon: 'truck', status: 'upcoming' },
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     stepperCard: {
         backgroundColor: 'white',
         borderRadius: 16,
-        padding: 24, // Gives beautiful breathing room around the timeline
+        padding: 24, 
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,

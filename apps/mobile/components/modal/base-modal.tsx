@@ -1,4 +1,3 @@
-// components/BaseModal.tsx
 import React from 'react';
 import { Modal, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
@@ -35,9 +34,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContainer: {
-        width: '90%', // Slightly wider to fit the columns
+        width: '90%', 
         backgroundColor: 'white',
-        borderRadius: 20, // Adjusted to match the inspo's squarer corners
+        borderRadius: 20, 
         padding: 24,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },

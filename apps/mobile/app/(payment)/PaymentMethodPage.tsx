@@ -4,10 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-// Make sure this path matches where you saved your new PageHeader!
 import PageHeader from '../../components/page-header';
 
-// Data array for payment methods
 const PAYMENT_METHODS = [
     { id: 'credit_card', label: 'Credit Card', icon: 'credit-card', iconColor: '#FF5F00', iconBg: '#FFF0E6' },
     { id: 'apple_pay', label: 'Apple Pay', icon: 'apple', iconColor: '#000000', iconBg: '#F3F4F6' },
@@ -19,13 +17,12 @@ const PAYMENT_METHODS = [
 
 export default function PaymentMethodPage() {
     const router = useRouter();
-    // State to track which radio button is selected
+
     const [selectedMethod, setSelectedMethod] = useState('credit_card');
 
     const handleConfirm = () => {
-        // Handle your payment logic here!
         console.log("Confirmed payment with:", selectedMethod);
-        router.push('/(payment)/PaymentConfirmationPage'); // Navigate to a confirmation page (you'll create this next!)
+        router.push('/(payment)/PaymentConfirmationPage'); 
     };
 
     return (
@@ -42,7 +39,6 @@ export default function PaymentMethodPage() {
                     <Text style={styles.subTitle}>Add a new credit / debit card.</Text>
                 </View>
 
-                {/* Map through the payment options */}
                 {PAYMENT_METHODS.map((method) => {
                     const isSelected = selectedMethod === method.id;
 
@@ -51,7 +47,7 @@ export default function PaymentMethodPage() {
                             key={method.id}
                             style={[
                                 styles.card, 
-                                isSelected && styles.cardSelected // Optional: adds a subtle blue border when active
+                                isSelected && styles.cardSelected
                             ]}
                             activeOpacity={0.8}
                             onPress={() => setSelectedMethod(method.id)}
@@ -94,8 +90,9 @@ export default function PaymentMethodPage() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#001851', // FixKo Brand Dark Blue
+        backgroundColor: '#001851', 
     },
+
     scrollContent: {
         paddingHorizontal: 24,
         paddingTop: 10,
@@ -106,12 +103,14 @@ const styles = StyleSheet.create({
     headerTitles: {
         marginBottom: 24,
     },
+
     mainTitle: {
         color: 'white',
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 6,
     },
+
     subTitle: {
         color: 'white',
         fontSize: 14,
@@ -125,9 +124,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 14,
         paddingHorizontal: 16,
-        borderRadius: 16, // Beautiful rounded corners from your inspo image
+        borderRadius: 16, 
         marginBottom: 12,
-        // Soft shadow
+
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
     },
     cardSelected: {
-        borderColor: '#0037B7', // Subtle highlight when selected
+        borderColor: '#0037B7', 
     },
     
     // --- Mock Logos ---
@@ -149,9 +148,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 16,
     },
+
     cardLabel: {
         flex: 1,
-        color: '#111827', // Dark text on the white card
+        color: '#111827', 
         fontSize: 15,
         fontWeight: '600',
     },
@@ -166,16 +166,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     radioOuterInactive: {
-        borderColor: '#D1D5DB', // Gray outline when unselected
+        borderColor: '#D1D5DB', 
     },
     radioOuterActive: {
-        borderColor: '#0037B7', // Brand blue outline when selected
+        borderColor: '#0037B7', 
     },
     radioInner: {
         width: 12,
         height: 12,
         borderRadius: 6,
-        backgroundColor: '#0037B7', // Brand blue solid dot
+        backgroundColor: '#0037B7',
     },
 
     // --- Footer Button ---
@@ -184,17 +184,20 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         paddingTop: 10,
     },
+
     confirmButton: {
-        backgroundColor: '#4ade80', // Vibrant green from your mockup
+        backgroundColor: '#4ade80', 
         borderRadius: 30,
         paddingVertical: 16,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
     },
+
     confirmButtonText: {
-        color: '#001851', // Dark blue text for maximum readability
+        color: '#001851', 
         fontSize: 16,
         fontWeight: 'bold',
     },
+    
 });

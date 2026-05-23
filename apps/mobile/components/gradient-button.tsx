@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 type GradientButtonProps = {
     title: string;
     onPress: () => void;
-    compact?: boolean; // <-- NEW: Tells the button to shrink!
+    compact?: boolean; 
 };
 
 export default function GradientButton({ title, onPress, compact = false }: GradientButtonProps) {
@@ -30,12 +30,12 @@ export default function GradientButton({ title, onPress, compact = false }: Grad
 }
 
 const styles = StyleSheet.create({
-    // --- Default (Large) Styles ---
     buttonWrapper: {
         marginTop: 4,
         marginBottom: 10,
         width: '100%', 
     },
+
     button: {
         width: '100%', 
         padding: 15,
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
+
     buttonText: {
         backgroundColor: 'transparent',
         fontSize: 16,
@@ -56,14 +57,16 @@ const styles = StyleSheet.create({
 
     // --- Compact (Card) Styles ---
     wrapperCompact: {
-        width: 'auto', // Hugs the text instead of stretching across the screen
-        margin: 0,     // Removes margins so it aligns perfectly with the reviews
+        width: 'auto', 
+        margin: 0,   
     },
+
     buttonCompact: {
-        paddingVertical: 8,   // Exact padding from your old green button
+        paddingVertical: 8,   
         paddingHorizontal: 20,
-        borderRadius: 20,     // Exact border radius from your old green button
+        borderRadius: 20,     
     },
+    
     textCompact: {
         fontSize: 14,
         fontWeight: '600',

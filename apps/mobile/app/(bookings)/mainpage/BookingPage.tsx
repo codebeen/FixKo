@@ -131,7 +131,6 @@ export default function BookingPage() {
                     <Text style={styles.totalSubText}>1 Cleaner for 1 hour</Text>
                 </View>
 
-                {/* 2. Replaced old button with GradientButton and centered it */}
                 <View style={styles.buttonContainer}>
                     <Button 
                         title="Book a Service" 
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
 
     // --- New Button Container ---
     buttonContainer: {
-        alignItems: 'center', // This perfectly centers your 150px GradientButton
+        alignItems: 'center', 
         width: '100%',
         marginTop: 10,
     }

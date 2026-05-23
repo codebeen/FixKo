@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-// Make sure this path is correct for your project!
 import PageHeader from '../../components/page-header';
 
 export default function BookingConfirmationPage() {
@@ -75,7 +74,7 @@ export default function BookingConfirmationPage() {
                     <TouchableOpacity 
                         style={styles.redirectButton} 
                         activeOpacity={0.8}
-                        onPress={() => router.push('/')} // Route back to your actual homepage
+                        onPress={() => router.push('/')} 
                     >
                         <Text style={styles.redirectButtonText}>Redirect back to homepage</Text>
                     </TouchableOpacity>
@@ -89,12 +88,13 @@ export default function BookingConfirmationPage() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#001851', // FixKo Brand Blue
+        backgroundColor: '#001851', 
     },
+
     scrollContent: {
         paddingHorizontal: 24,
         paddingBottom: 40,
-        alignItems: 'center', // Centers everything in the scrollview
+        alignItems: 'center', 
     },
     
     // --- Headers & Badges ---
@@ -106,15 +106,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 24,
     },
+    
     badgeContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 16,
     },
+    
     badgeCheck: {
         position: 'absolute',
-        top: 32, // Adjust to center the checkmark perfectly inside the certificate
+        top: 32, 
     },
+
     serviceStatus: {
         color: 'white',
         fontSize: 16,
@@ -129,7 +132,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         padding: 20,
         marginBottom: 40,
-        // Soft shadow to make it pop off the background
+
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
@@ -143,9 +146,10 @@ const styles = StyleSheet.create({
         gap: 12,
         marginBottom: 12,
     },
+
     roomBox: {
         flex: 1,
-        backgroundColor: '#F3F4F6', // Very light gray to distinguish from the white card
+        backgroundColor: '#F3F4F6', 
         borderRadius: 12,
         paddingVertical: 16,
         alignItems: 'center',
@@ -153,6 +157,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#E5E7EB',
     },
+
     roomText: {
         color: '#111827',
         fontSize: 13,
@@ -169,12 +174,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#E5E7EB',
     },
+
     houseTitle: {
         color: '#111827',
         fontSize: 14,
         fontWeight: 'bold',
         marginBottom: 4,
     },
+
     houseDesc: {
         color: '#4B5563',
         fontSize: 12,
@@ -192,28 +199,32 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#E5E7EB',
     },
+
     footerItem: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
     },
+
     footerText: {
         color: '#111827',
         fontSize: 13,
         fontWeight: '500',
     },
+
     dotDivider: {
         width: 4,
         height: 4,
         borderRadius: 2,
         backgroundColor: '#9CA3AF',
-        marginHorizontal: 16, // Spaces the two items nicely
+        marginHorizontal: 16,
     },
 
     // --- Buttons ---
     buttonContainer: {
         width: '100%',
     },
+
     redirectButton: {
         backgroundColor: 'white',
         borderRadius: 30,
@@ -221,9 +232,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+
     redirectButtonText: {
         color: '#001851', // Brand blue text
         fontSize: 15,
         fontWeight: 'bold',
     },
+    
 });

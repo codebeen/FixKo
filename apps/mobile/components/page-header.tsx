@@ -1,4 +1,3 @@
-// components/PageHeader.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import BackButton from '../components/back-button';
@@ -22,16 +21,18 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center', // Centers the title
+        justifyContent: 'center', 
         paddingVertical: 16,
         width: '100%',
         position: 'relative',
     },
+
     leftSlot: {
         position: 'absolute',
-        left: 16,     // Pins to the left edge safely
-        zIndex: 10,   // Keeps it tappable
+        left: 16,     
+        zIndex: 10,   
     },
+    
     headerTitle: {
         color: 'white',
         fontSize: 18,

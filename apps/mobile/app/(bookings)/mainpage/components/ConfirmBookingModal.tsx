@@ -1,10 +1,9 @@
-// components/ConfirmBookingModal.tsx
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import BaseModal from '../../../../components/modal/base-modal'; // Adjust the path as needed
 
-// 1. Define the shape of an Add-on
+
 export type AddonItem = {
     id: string;
     name: string;
@@ -15,8 +14,8 @@ type ConfirmBookingModalProps = {
     visible: boolean;
     onClose: () => void;
     onConfirm: () => void;
-    basePrice?: number; // Defaults to 700 if not provided
-    addons?: AddonItem[]; // Optional array of selected add-ons
+    basePrice?: number; 
+    addons?: AddonItem[]; 
 };
 
 export default function ConfirmBookingModal({ 
@@ -27,7 +26,7 @@ export default function ConfirmBookingModal({
     addons = [] 
 }: ConfirmBookingModalProps) {
     
-    // 2. Automatically calculate the total based on the base price + any add-ons
+
     const totalCost = addons.reduce((sum, addon) => sum + addon.price, basePrice);
 
     return (
@@ -132,7 +131,7 @@ export default function ConfirmBookingModal({
 }
 
 const styles = StyleSheet.create({
-    // ... headerRow, mainTitle, serviceBlock, attributesGrid styles stay exactly the same ...
+    
     headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
     closeButton: { flexDirection: 'row', alignItems: 'center' },
     closeIcon: { fontSize: 14, color: '#111827', fontWeight: 'bold', marginRight: 6 },
@@ -158,41 +157,49 @@ const styles = StyleSheet.create({
         padding: 20,
         marginBottom: 24,
     },
+
     receiptRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 8,
     },
+
     receiptItem: {
         color: '#4B5563',
         fontSize: 14,
     },
+
     receiptAddon: {
-        color: '#6B7280', // Slightly lighter for add-ons
+        color: '#6B7280', 
         fontSize: 13,
-        paddingLeft: 8, // Indent add-ons slightly for visual hierarchy
+        paddingLeft: 8, 
     },
+
     receiptPrice: {
         color: '#111827',
         fontSize: 14,
         fontWeight: '500',
     },
+    
     addonsContainer: {
         marginTop: 4,
     },
+
     receiptDivider: {
         height: 1,
         backgroundColor: '#E5E7EB',
         marginVertical: 12,
     },
+
     receiptTotalLabel: {
         color: '#111827',
         fontSize: 16,
         fontWeight: 'bold',
     },
+
     receiptTotalValue: {
-        color: '#001851', // Brand blue for the final amount
+        color: '#001851', 
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -200,30 +207,35 @@ const styles = StyleSheet.create({
     // --- Action Buttons ---
     actionRow: {
         flexDirection: 'row',
-        gap: 12, // Spaces the buttons out cleanly
+        gap: 12, 
     },
+
     cancelButton: {
-        flex: 1, // Takes up half the space
-        backgroundColor: '#F3F4F6', // Light gray so it doesn't compete with primary button
+        flex: 1, 
+        backgroundColor: '#F3F4F6', 
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
     },
+
     cancelBtnText: {
         color: '#4B5563',
         fontSize: 15,
         fontWeight: 'bold',
     },
+
     confirmButton: {
-        flex: 1, // Takes up half the space
+        flex: 1, 
         backgroundColor: '#001851', 
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
     },
+
     confirmBtnText: {
         color: 'white',
         fontSize: 15,
         fontWeight: 'bold',
     },
+
 });

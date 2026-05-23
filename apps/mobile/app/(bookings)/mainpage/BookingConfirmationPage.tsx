@@ -14,7 +14,6 @@ export default function BookingConfirmationPage() {
     return (
         <SafeAreaView style={styles.safeArea}>
             {/* Header Area */}
-            {/* Drop your completely responsive, perfectly aligned header here! */}
             <PageHeader title="My bookings" />
 
 
@@ -116,14 +115,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingBottom: 40,
     },
+
     // --- Header ---
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center', // 1. Centers the text perfectly on the screen
+        justifyContent: 'center', 
         width: '100%',
         paddingVertical: 16,
-        position: 'relative',    // 2. Establishes a boundary for absolute positioning
+        position: 'relative', 
     },
 
     headerTitle: {
@@ -140,10 +140,12 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 24,
     },
+    
     badgeCheck: {
         position: 'absolute',
-        top: 35, // Adjust slightly if the check isn't perfectly centered vertically
+        top: 35, 
     },
+
     mainTitle: {
         color: 'white',
         fontSize: 26,
@@ -156,83 +158,99 @@ const styles = StyleSheet.create({
     detailsBlock: {
         paddingHorizontal: 10,
     },
+
     rowBetween: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 20,
-        paddingRight: 40, // Brings the "Details" closer to the center based on your mockup
+        paddingRight: 40, 
     },
+
     iconTextPair: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
     },
+
     primaryText: {
         color: 'white',
         fontSize: 16,
     },
+
     homeTypeRow: {
         flexDirection: 'row',
         alignItems: 'flex-start',
         marginBottom: 20,
     },
+
     homeIcon: {
         marginTop: 2,
         marginRight: 14,
     },
+
     homeTextCol: {
         flex: 1,
     },
+
     boldText: {
         color: 'white',
         fontSize: 14,
         fontWeight: 'bold',
         marginBottom: 4,
     },
+
     subText: {
         color: 'white',
         fontSize: 12,
         lineHeight: 18,
         opacity: 0.9,
     },
+    
     roomsRow: {
         flexDirection: 'row',
         gap: 40,
         marginBottom: 20,
     },
+
     roomItem: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,
     },
+
     roomCount: {
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     divider: {
         height: 1,
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         width: '100%',
         marginBottom: 16,
     },
+
     costTitle: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 8,
     },
+
     footerRow: {
         flexDirection: 'row',
         gap: 40,
         marginBottom: 30,
     },
+
     iconTextPairSmall: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
     },
+
     footerText: {
         color: 'white',
         fontSize: 12,
@@ -243,6 +261,7 @@ const styles = StyleSheet.create({
         gap: 12,
         marginTop: 10,
     },
+
     trackButton: {
         backgroundColor: 'white',
         borderRadius: 30,
@@ -250,18 +269,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+    
     trackButtonText: {
         color: '#111827',
         fontSize: 16,
         fontWeight: '600',
     },
+
     payButton: {
-        backgroundColor: '#4ade80', // Vibrant Green
+        backgroundColor: '#4ade80', 
         borderRadius: 30,
         paddingVertical: 14,
         alignItems: 'center',
         width: '100%',
     },
+    
     payButtonText: {
         color: '#111827',
         fontSize: 16,

@@ -1,4 +1,3 @@
-// components/BookingStepper.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -17,9 +16,8 @@ type BookingStepperProps = {
 
 export default function BookingStepper({ steps }: BookingStepperProps) {
     
-    // A tiny helper component to render a foolproof dashed line
     const DashedLine = ({ isCompleted }: { isCompleted: boolean }) => {
-        // Creates 6 tiny vertical dashes to form the line
+
         const dashes = Array.from({ length: 6 }); 
         return (
             <View style={styles.dashContainer}>
@@ -81,14 +79,17 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
     },
+
     stepRow: {
         flexDirection: 'row',
     },
+
     iconColumn: {
         alignItems: 'center',
         marginRight: 16,
         width: 44, 
     },
+
     circle: {
         width: 44,
         height: 44,
@@ -96,45 +97,53 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
     circleCompleted: {
-        backgroundColor: '#001851', // UPDATED to Brand Blue
+        backgroundColor: '#001851', 
     },
+    
     circleUpcoming: {
         backgroundColor: '#F3F4F6', 
     },
     
     // --- Custom Dash Line Styles ---
     dashContainer: {
-        height: 35, // Total height of the space between circles
-        justifyContent: 'space-evenly', // Spaces the dashes evenly
+        height: 35, 
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         marginVertical: 4,
     },
+
     dashDot: {
-        width: 2, // Thickness of the dash
-        height: 4, // Length of the dash
-        borderRadius: 1, // slightly rounds the edges of the dash
+        width: 2, 
+        height: 4, 
+        borderRadius: 1, 
     },
+
     dashCompleted: {
-        backgroundColor: '#001851', // UPDATED to Brand Blue
+        backgroundColor: '#001851', 
     },
+
     dashUpcoming: {
-        backgroundColor: '#D1D5DB', // Gray for upcoming
+        backgroundColor: '#D1D5DB', 
     },
-    // -------------------------------
+
 
     textColumn: {
         flex: 1,
         paddingTop: 4, 
     },
+
     title: {
         fontSize: 15,
         fontWeight: 'bold',
         color: '#111827', 
         marginBottom: 2,
     },
+
     time: {
         fontSize: 13,
         color: '#9CA3AF',
     },
+    
 });

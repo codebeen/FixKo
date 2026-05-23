@@ -8,8 +8,7 @@ import { useRouter } from 'expo-router';
 import ConfirmBookingModal from './components/ConfirmBookingModal';
 import Button from '../../../components/gradient-button';
 
-// --- MOCK DATA ---
-// Replace this with your actual fetched data
+
 const WORKERS = [
     {
         id: '1',
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: '#D1D5DB', // Light grey placeholder
+        backgroundColor: '#D1D5DB', 
         marginRight: 12,
     },
     infoColumn: {
@@ -276,7 +275,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         marginTop: 12,
-        marginLeft: 62, // Aligns exactly under the text, skipping the avatar width
+        marginLeft: 62, 
     },
     reviewsColumn: {
         flex: 1,
@@ -284,12 +283,12 @@ const styles = StyleSheet.create({
     },
     reviewText: {
         fontSize: 12,
-        color: '#9CA3AF', // Lighter grey for reviews
+        color: '#9CA3AF', 
         fontStyle: 'italic',
         lineHeight: 18,
     },
     bookButton: {
-        backgroundColor: '#4ade80', // Vibrant green from the mockup
+        backgroundColor: '#4ade80', 
         paddingVertical: 8,
         paddingHorizontal: 20,
         borderRadius: 20,

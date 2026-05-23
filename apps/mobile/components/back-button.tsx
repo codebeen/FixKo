@@ -19,7 +19,7 @@ export default function BackButton() {
 
 const styles = StyleSheet.create({
     backButton: {
-        marginLeft: 10, // Slight negative margin to counteract padding and keep it visually aligned    
-        padding: 15, // Just a healthy tap target, no layout math!
+        marginLeft: 10, 
+        padding: 15, 
     },
 });

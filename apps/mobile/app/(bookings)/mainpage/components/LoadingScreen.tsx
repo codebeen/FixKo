@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-// 1. Import the correct Native Lottie package
 import LottieView from 'lottie-react-native'; 
 
 export default function LoadingScreen() {

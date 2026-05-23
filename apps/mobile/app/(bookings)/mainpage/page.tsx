@@ -24,7 +24,7 @@ export default function BookingsScreen() {
             <Ionicons name="arrow-back" size={28} color="white" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Bookings</Text>
-          <View style={{ width: 28 }} /> {/* Spacer to center title */}
+          <View style={{ width: 28 }} /> 
         </View>
 
         {/* Welcome Card */}
