@@ -35,8 +35,7 @@ export default function NavigationMenu() {
     if (!segments?.length) return;
     const seg = segments[segments.length - 1];
     const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
-    // Map JobOverview to booking tab for proper highlight
-    const mappedSeg = cleanedSeg === 'JobOverview' ? 'booking' : cleanedSeg;
+    const mappedSeg = cleanedSeg === 'JobOverview' || cleanedSeg === 'StartJob' ? 'booking' : cleanedSeg;
     const idx = routes.findIndex(r => r.name === mappedSeg);
     if (idx !== -1) {
       setActive(routes[idx].name);
@@ -66,7 +65,7 @@ export default function NavigationMenu() {
   });
 
   // Simple solid background for the bar (no pocket)
-const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
+  const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
 
 
   return (
@@ -99,7 +98,7 @@ const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
 
           const iconScale = anim.interpolate({
             inputRange: [idx - 0.5, idx, idx + 0.5],
-            outputRange: [1, 1.3, 1], 
+            outputRange: [1, 1.3, 1],
             extrapolate: 'clamp',
           });
 
@@ -138,9 +137,9 @@ const styles = StyleSheet.create({
     right: 0,
     height: 48,
     borderRadius: 12,
-    overflow: 'hidden', 
+    overflow: 'hidden',
     alignItems: 'center',
-    backgroundColor: BG_COLOR, 
+    backgroundColor: BG_COLOR,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
     width: TAB_BAR_WIDTH,
     height: '100%',
     alignItems: 'center',
-    zIndex: 10, 
+    zIndex: 10,
   },
   item: {
     flex: 1,

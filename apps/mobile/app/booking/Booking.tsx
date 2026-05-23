@@ -13,7 +13,9 @@ type Booking = {
   client?: string;
   name?: string;
   address?: string;
+  propertySize?: string;
   status: string;
+
   price: number;
   tasks?: string[];
   rate?: string;
@@ -121,7 +123,30 @@ export default function Booking() {
                     <Text style={styles.priceText}>₱{item.price.toFixed(2)}</Text>
                   </View>
 
-                  <TouchableOpacity style={styles.seeMoreBtn} onPress={() => { router.push({ pathname: '/booking/JobOverview', params: { id: item.id, title: item.title, client: item.client, address: item.address, status: item.status, price: item.price.toString(), propertySize: item.propertySize, rate: item.rate, example: item.example, schedule: item.schedule, contact: item.contact, tasks: item.tasks, activeTab: activeTab } }); }}>
+                  <TouchableOpacity 
+                    style={styles.seeMoreBtn} 
+                    onPress={() => { 
+                      const targetPath = item.status !== 'pending' ? '/booking/StartJob' : '/booking/JobOverview';
+                      router.push({ 
+                        pathname: targetPath, 
+                        params: { 
+                          id: item.id, 
+                          title: item.title, 
+                          client: item.client, 
+                          address: item.address, 
+                          status: item.status, 
+                          price: item.price.toString(), 
+                          propertySize: item.propertySize, 
+                          rate: item.rate, 
+                          example: item.example, 
+                          schedule: item.schedule, 
+                          contact: item.contact, 
+                          tasks: item.tasks ? JSON.stringify(item.tasks) : undefined, 
+                          activeTab: activeTab 
+                        } 
+                      }); 
+                    }}
+                  >
                     <Text style={styles.seeMoreText}>Details</Text>
                     <Ionicons name="chevron-forward" size={11} color="white" />
                   </TouchableOpacity>
