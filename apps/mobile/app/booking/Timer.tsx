@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import BaseMain from '@/components/layout/(base-main)/BaseMain';
 
 const THEME = { bg: '#001540', accent: '#5CF263', blue: '#0047FF', border: 'rgba(255,255,255,0.5)' };
 
@@ -22,16 +22,47 @@ const TaskRow = ({ label, isChecked, onToggle }: TaskRowProps) => (
   </TouchableOpacity>
 );
 
+interface TaskItem {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
 export default function Timer() {
-  const [tasks, setTasks] = useState([
-    "Sweep & mop floors", "Clean bathroom", "Wipe surfaces", "Dispose trash", "Sweep & mop floors"
-  ].map(t => ({ id: Math.random(), text: t, done: true })));
   const router = useRouter();
+  const { tasks: tasksParam } = useLocalSearchParams();
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
+
+  useEffect(() => {
+    if (tasksParam) {
+      let list: string[] = [];
+      if (Array.isArray(tasksParam)) {
+        list = tasksParam;
+      } else if (typeof tasksParam === 'string') {
+        try {
+          const parsed = JSON.parse(tasksParam);
+          if (Array.isArray(parsed)) {
+            list = parsed;
+          }
+        } catch {
+          list = tasksParam.split(',').map(t => t.trim());
+        }
+      }
+      setTasks(list.map((t, index) => ({ id: `${index}-${t}`, text: t, done: false })));
+    } else {
+      // Fallback/Mock tasks if not provided
+      setTasks([
+        "Sweep & mop floors", "Clean bathroom", "Wipe surfaces", "Dispose trash"
+      ].map((t, index) => ({ id: `${index}-${t}`, text: t, done: false })));
+    }
+  }, [tasksParam]);
 
   return (
-    <BaseLayout scrollable={true} contentContainerStyle={{ padding: 20 }}>
+    <BaseMain scrollable={true} contentContainerStyle={{ padding: 20 }}>
       <View style={styles.header}>
-        <Feather name="chevron-left" color="white" size={28} />
+        <TouchableOpacity onPress={() => router.back()}>
+          <Feather name="chevron-left" color="white" size={28} />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Job Overview</Text>
         <View style={{ width: 28 }} />
       </View>
@@ -65,7 +96,7 @@ export default function Timer() {
       ))}
 
       <TouchableOpacity style={styles.btn} onPress={() => router.push('/(joboverview)/uploading/uploadingfile/page' as any)}><Text style={styles.btnText}>Mark as Completed</Text></TouchableOpacity>
-    </BaseLayout>
+    </BaseMain>
   );
 }
 

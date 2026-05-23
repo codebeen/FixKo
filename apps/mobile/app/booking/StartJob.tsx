@@ -126,6 +126,22 @@ export default function StartJob() {
         <TouchableOpacity
           style={styles.arrivedBtn}
           activeOpacity={0.8}
+          onPress={() => router.push({
+            pathname: '/booking/Timer',
+            params: {
+              title: title || '',
+              client: client || '',
+              address: address || '',
+              propertySize: propertySize || '',
+              rate: rate || '',
+              example: example || '',
+              schedule: schedule || '',
+              contact: contact || '',
+              tasks: tasks || '',
+              status: status || '',
+              activeTab: activeTab || ''
+            }
+          })}
         >
           <Text style={styles.btnText}>Let's Get Started</Text>
         </TouchableOpacity>
