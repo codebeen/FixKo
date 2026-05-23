@@ -15,7 +15,7 @@ const ACTIVE_COLOR = '#000000';   // Black active icon color
 const ACTIVE_BG_COLOR = '#FFEB3B'; // Yellow background for active tab
 const INACTIVE_COLOR = '#5A637A'; // Clean slate muted grey
 
-type TabName = 'home' | 'booking' | 'reviews' | 'settings';
+type TabName = 'home' | 'booking' | 'reviews' | 'message' | 'settings';
 
 export default function NavigationMenu() {
   const router = useRouter();
@@ -27,6 +27,7 @@ export default function NavigationMenu() {
     { name: 'home', path: '/home', icon: 'home-variant' },
     { name: 'booking', path: '/booking', icon: 'clock' },
     { name: 'reviews', path: '/reviews', icon: 'chart-pie' },
+    { name: 'message', path: '/message', icon: 'message' },
     { name: 'settings', path: '/settings', icon: 'account' },
   ] as const;
 
@@ -34,7 +35,8 @@ export default function NavigationMenu() {
     if (!segments?.length) return;
     const seg = segments[segments.length - 1];
     const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
-    const idx = routes.findIndex(r => r.name === cleanedSeg);
+    const mappedSeg = cleanedSeg === 'JobOverview' || cleanedSeg === 'StartJob' || cleanedSeg === 'Timer' || cleanedSeg === 'UploadProof' || cleanedSeg === 'JobCompleted' ? 'booking' : cleanedSeg;
+    const idx = routes.findIndex(r => r.name === mappedSeg);
     if (idx !== -1) {
       setActive(routes[idx].name);
       animateTo(idx);
@@ -63,7 +65,7 @@ export default function NavigationMenu() {
   });
 
   // Simple solid background for the bar (no pocket)
-const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
+  const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
 
 
   return (
@@ -96,7 +98,7 @@ const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
 
           const iconScale = anim.interpolate({
             inputRange: [idx - 0.5, idx, idx + 0.5],
-            outputRange: [1, 1.3, 1], 
+            outputRange: [1, 1.3, 1],
             extrapolate: 'clamp',
           });
 
@@ -135,9 +137,9 @@ const styles = StyleSheet.create({
     right: 0,
     height: 48,
     borderRadius: 12,
-    overflow: 'hidden', 
+    overflow: 'hidden',
     alignItems: 'center',
-    backgroundColor: BG_COLOR, 
+    backgroundColor: BG_COLOR,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     width: TAB_BAR_WIDTH,
     height: '100%',
     alignItems: 'center',
-    zIndex: 10, 
+    zIndex: 10,
   },
   item: {
     flex: 1,

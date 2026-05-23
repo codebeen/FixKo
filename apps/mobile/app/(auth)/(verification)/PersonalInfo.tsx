@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView,
+import {
+  Text, View, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView,
 } from 'react-native';
 
 const logo = require('../../../assets/logo_fixko.png');
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+
 import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 import { useVerification } from './_layout';
 import Stepper from './components/Stepper';
@@ -115,8 +118,8 @@ const ServiceOfferInput = ({ selected, onToggle, error }: ServiceOfferInputProps
 
   const filtered = query.trim().length > 0
     ? SERVICE_SUGGESTIONS.filter((s) =>
-        s.toLowerCase().includes(query.toLowerCase())
-      )
+      s.toLowerCase().includes(query.toLowerCase())
+    )
     : SERVICE_SUGGESTIONS;
 
   return (
@@ -164,6 +167,13 @@ const ServiceOfferInput = ({ selected, onToggle, error }: ServiceOfferInputProps
           onChangeText={(text) => {
             setQuery(text);
             setShowSuggestions(true);
+          }}
+          onSubmitEditing={() => {
+            if (query.trim().length > 0) {
+              onToggle(query.trim());
+              setQuery('');
+              setShowSuggestions(true);
+            }
           }}
           onFocus={() => {
             setIsFocused(true);
@@ -244,7 +254,10 @@ export default function PersonalInfoScreen() {
   const [phoneNumber, setPhoneNumber] = useState(personalInfo.phoneNumber);
   const [email, setEmail] = useState(personalInfo.email);
   const [serviceLocation, setServiceLocation] = useState(personalInfo.serviceLocation);
-  const [shortBio, setShortBio] = useState(personalInfo.shortBio);
+
+  // Sex field state
+  const [sex, setSex] = useState(personalInfo.sex);
+
   const [serviceOffer, setServiceOffer] = useState<string[]>(personalInfo.serviceOffer);
 
   const [errors, setErrors] = useState<Record<string, string | null>>({});
@@ -263,25 +276,28 @@ export default function PersonalInfoScreen() {
     const phoneErr = validatePhone(phoneNumber);
     const emailErr = validateEmail(email);
     const locationErr = validateRequired(serviceLocation, 'Service location');
-    const bioErr = validateRequired(shortBio, 'Short bio');
+
+    const sexErr = validateRequired(sex, 'Sex');
+
     const offerErr = serviceOffer.length === 0 ? 'Please select at least one service' : null;
 
-    if (nameErr || phoneErr || emailErr || locationErr || bioErr || offerErr) {
+    if (nameErr || phoneErr || emailErr || locationErr || sexErr || offerErr) {
       setErrors({
         fullName: nameErr,
         phoneNumber: phoneErr,
         email: emailErr,
         serviceLocation: locationErr,
-        shortBio: bioErr,
+        sex: sexErr,
         serviceOffer: offerErr,
       });
       return;
     }
-
     setErrors({});
-    setPersonalInfo({ fullName, phoneNumber, email, serviceLocation, shortBio, serviceOffer });
+    setPersonalInfo({ fullName, phoneNumber, email, serviceLocation, shortBio: '', serviceOffer, sex });
     router.push('/(auth)/(verification)/Experience' as any);
   };
+
+
 
   return (
     <BaseLayout align="center">
@@ -346,22 +362,64 @@ export default function PersonalInfoScreen() {
           error={errors.serviceLocation}
         />
 
+        {/* Sex Picker */}
+        <View style={styles.inputContainer}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
+            <Text style={[styles.inputLabel, { marginBottom: 0 }]}>Sex</Text>
+            <Text style={styles.requiredAsterisk}>*</Text>
+          </View>
+          <View style={[styles.inputWrapper, errors.sex && styles.inputError]}>
+            <Ionicons
+              name="transgender-outline"
+              size={18}
+              color={errors.sex ? '#EF4444' : 'rgba(255, 255, 255, 0.6)'}
+            />
+            <Picker
+              selectedValue={sex}
+              onValueChange={(itemValue) => {
+                setSex(itemValue);
+                setErrors((prev) => ({ ...prev, sex: null }));
+              }}
+              style={[
+                styles.textInput, 
+                { 
+                  backgroundColor: 'transparent', 
+                  borderWidth: 0,
+                  outlineStyle: 'none',
+                  // Keeps the main selection text gray if nothing is selected, otherwise turns white
+                  color: sex ? '#FFF' : '#A0A0A0'
+                } as any
+              ]}
+              dropdownIconColor={errors.sex ? '#EF4444' : '#FFF'}
+            >
+              <Picker.Item 
+                label="Select sex..." 
+                value="" 
+                      color="#A0A0A0" 
+                style={{ backgroundColor: '#07183B', color: '#A0A0A0' } as any} 
+              />
+              <Picker.Item 
+                label="Male" 
+                value="male" 
+                color="#A0A0A0" 
+                style={{ backgroundColor: '#07183B', color: '#A0A0A0' } as any} 
+              />
+              <Picker.Item 
+                label="Female" 
+                value="female" 
+                color="#A0A0A0" 
+                style={{ backgroundColor: '#07183B', color: '#A0A0A0' } as any} 
+              />
+            </Picker>
+          </View>
+          {errors.sex && <Text style={styles.errorText}>{errors.sex}</Text>}
+        </View>
+
         {/* Multi-select Service Offer */}
         <ServiceOfferInput
           selected={serviceOffer}
           onToggle={toggleService}
           error={errors.serviceOffer}
-        />
-
-        <InputField
-          label="Short Bio"
-          icon="document-text-outline"
-          placeholder="Describe your skills and background in a few sentences..."
-          value={shortBio}
-          onChangeText={setShortBio}
-          multiline
-          numberOfLines={3}
-          error={errors.shortBio}
         />
 
         {/* Action Buttons */}
@@ -403,12 +461,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#FFF',
+    color: '#A0A0A0',
     marginBottom: 6,
   },
   subtitle: {
     fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: '#A0A0A0',
     lineHeight: 18,
   },
   inputContainer: {
@@ -418,7 +476,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 12.5,
     fontWeight: '600',
-    color: '#FFF',
+    color: '#A0A0A0',
     marginBottom: 6,
   },
   inputWrapper: {
@@ -426,7 +484,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderWidth: 1,
-    borderColor: '#FFF',
+    borderColor: '#A0A0A0',
     borderRadius: 8,
     paddingHorizontal: 14,
     height: 42,
@@ -438,7 +496,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   inputFocused: {
-    borderColor: '#FFF',
+    borderColor: '#A0A0A0',
     backgroundColor: '#0E2250',
   },
   inputError: {

@@ -8,6 +8,7 @@ export interface PersonalInfoState {
   serviceLocation: string;
   shortBio: string;
   serviceOffer: string[];
+  sex: string;
 }
 
 export interface ExperienceState {
@@ -45,6 +46,8 @@ const defaultPersonalInfo: PersonalInfoState = {
   serviceLocation: '',
   shortBio: '',
   serviceOffer: [],
+  sex: '',
+
 };
 
 const defaultExperience: ExperienceState = {

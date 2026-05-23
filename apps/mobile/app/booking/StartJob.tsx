@@ -3,186 +3,362 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
+  ScrollView
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
+import { router, useLocalSearchParams } from 'expo-router';
+import BaseMain from '../../components/layout/(base-main)/BaseMain';
 
-// Reusable component for the job details
-interface JobDetailProps {
+
+const { width } = Dimensions.get('window');
+
+interface InfoItemProps {
   icon: string;
   text: string;
   isBold?: boolean;
   iconFamily?: any;
 }
 
-const JobDetail = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialCommunityIcons }: JobDetailProps) => (
-  <View style={styles.detailRow}>
-    <IconFam name={icon} size={20} color="#333" style={styles.detailIcon} />
-    <Text style={[styles.detailText, isBold && styles.boldText]}>{text}</Text>
+const InfoItem = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialCommunityIcons }: InfoItemProps) => (
+  <View style={styles.infoRow}>
+    <IconFam name={icon} size={20} color="white" style={styles.infoIcon} />
+    <Text style={[styles.infoText, isBold && styles.boldText]}>{text}</Text>
   </View>
 );
 
 export default function StartJob() {
-  const router = useRouter();
+  const {
+    title, client, address, status, propertySize,
+    rate, example, schedule, contact, tasks, activeTab
+  } = useLocalSearchParams();
+
+  // Safely parse tasks regardless of format
+  const parsedTasks = React.useMemo(() => {
+    if (!tasks) return [];
+    if (Array.isArray(tasks)) return tasks;
+    if (typeof tasks === 'string') {
+      try {
+        const parsed = JSON.parse(tasks);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {
+        return tasks.split(',').map(t => t.trim());
+      }
+    }
+    return [];
+  }, [tasks]);
 
   return (
-    <BaseLayout
+    <BaseMain
       theme="navy"
-      scrollable={true}
-      contentContainerStyle={styles.scrollContent}
+      scrollable={false}
     >
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Ionicons name="arrow-back" size={28} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Job Overview</Text>
-        <View style={{ width: 28 }} />
-      </View>
-
-      {/* Outer Container Frame */}
-      <View style={styles.outerFrame}>
-
-        {/* Summary Card */}
-        <View style={styles.whiteCard}>
-          <JobDetail icon="vacuum" text="Service: House Cleaning" isBold={true} />
-          <JobDetail icon="location-on" text="Location: (with map pin)" isBold={false} iconFamily={MaterialIcons as any} />
-          <JobDetail icon="arrow-expand-all" text="Property Size: Small Home (0–50 sqm)" isBold={false} />
-          <JobDetail icon="currency-php" text="Rate: ₱25–₱35 per sqm" isBold={false} />
-
-          <View style={styles.calcBox}>
-            <Text style={styles.calcLabel}>Estimated Total: (auto-calculated)</Text>
-            <Text style={styles.calcExample}>Example: 40 sqm × ₱30 = ₱1,200</Text>
-          </View>
-
-          <JobDetail icon="clock-outline" text="Schedule: Date & Time" isBold={false} />
-          <JobDetail icon="account-outline" text="Client Name: Shanella A. Cagulang" isBold={false} />
-
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Header */}
+        <View style={styles.header}>
           <TouchableOpacity
-            style={styles.startBtn}
-            onPress={() => router.push('/booking/Timer')}
+            onPress={() => router.push({ pathname: '/booking', params: { activeTab } })}
+            style={styles.backButton}
           >
-            <Text style={styles.startBtnText}>Start Job</Text>
+            <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
+          <Text style={styles.headerTitle}>Job Overview</Text>
+          <View style={{ width: 40 }} /> {/* Keeps title centered */}
         </View>
 
-        {/* Upload Section */}
-        <View style={styles.uploadSection}>
-          <Text style={styles.uploadTitle}>Upload Photos to Start Job</Text>
+        {/* Client Section */}
+        {client && (
+          <View style={styles.clientSection}>
+            <View style={styles.clientInfo}>
+              <Text style={styles.clientLabel}>CLIENT</Text>
+              <Text style={styles.clientName}>{client}</Text>
+            </View>
 
-          <TouchableOpacity style={styles.uploadPlaceholder}>
-            <MaterialCommunityIcons name="image-plus" size={50} color="white" />
-          </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} style={styles.messageButton}>
+              <MaterialIcons
+                name="message"
+                size={24}
+                color="white"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
 
-          <TouchableOpacity style={styles.uploadBtn}>
-            <Text style={styles.uploadBtnText}>Upload</Text>
-          </TouchableOpacity>
+        {/* Main Info Card */}
+        <View style={styles.outlineCard}>
+          {title && <InfoItem icon="vacuum" text={`Service: ${title}`} isBold={true} />}
+          {address && <InfoItem icon="location-on" text={`Location: ${address}`} iconFamily={MaterialIcons} />}
+          {propertySize && <InfoItem icon="arrow-expand-all" text={`Property Size: ${propertySize}`} />}
+          {rate && <InfoItem icon="currency-php" text={`Rate: ${rate}`} />}
+
+          {/* Auto-calculated Total Row */}
+          <InfoItem icon="calculator" text="Estimated Total: (auto-calculated)" />
+          {example && <Text style={styles.exampleText}>{`Example: ${example}`}</Text>}
+
+          {schedule && <InfoItem icon="clock-outline" text={`Schedule: ${schedule}`} />}
+          {contact && <InfoItem icon="phone" text={`Contact: ${contact}`} />}
+          {status && <InfoItem icon="information-outline" text={`Status: ${status}`} />}
         </View>
 
-      </View>
-    </BaseLayout>
+        {/* Task Container List Section */}
+        {parsedTasks.length > 0 && (
+          <View style={styles.taskContainer}>
+            <Text style={styles.containerLabel}>Available Tasks</Text>
+            <View style={styles.listContainer}>
+              {parsedTasks.map((task, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.listItem,
+                    index === parsedTasks.length - 1 && { borderBottomWidth: 0 }
+                  ]}
+                >
+                  <Text style={styles.listItemText}>{task}</Text>
+                  <Ionicons name="radio-button-on" size={16} color="rgba(255,255,255,0.4)" />
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+      </ScrollView>
+
+      {/* Footer Action Button */}
+      {status !== 'completed' && (
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.arrivedBtn}
+            activeOpacity={0.8}
+            onPress={() => router.push({
+              pathname: '/booking/Timer',
+              params: {
+                title: title || '',
+                client: client || '',
+                address: address || '',
+                propertySize: propertySize || '',
+                rate: rate || '',
+                example: example || '',
+                schedule: schedule || '',
+                contact: contact || '',
+                tasks: tasks || '',
+                status: status || '',
+                activeTab: activeTab || ''
+              }
+            })}
+          >
+            <Text style={styles.btnText}>Let's Get Started</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </BaseMain>
   );
 }
 
 const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: 20,
-    paddingBottom: 40
+    paddingBottom: 40,
+    alignItems: 'center'
   },
+
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 25,
+    width: '100%'
+  },
+  backButton: {
+    padding: 5
   },
   headerTitle: {
     color: 'white',
     fontSize: 22,
-    fontWeight: 'bold'
-  },
-  outerFrame: {
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: 20,
-    padding: 15,
-    minHeight: 600,
-  },
-  whiteCard: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    marginBottom: 25,
-  },
-  detailRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10
-  },
-  detailIcon: {
-    width: 30
-  },
-  detailText: {
-    fontSize: 14,
-    color: '#333'
-  },
-  boldText: {
-    fontWeight: 'bold'
-  },
-  calcBox: {
-    marginLeft: 30,
-    marginBottom: 10
-  },
-  calcLabel: {
-    fontSize: 13,
-    color: '#333'
-  },
-  calcExample: {
-    fontSize: 12,
-    color: '#666'
-  },
-  startBtn: {
-    backgroundColor: '#66EE66',
-    borderRadius: 25,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginTop: 15,
-  },
-  startBtnText: {
-    color: '#001540',
     fontWeight: 'bold',
-    fontSize: 16
+    textAlign: 'center',
+    flex: 1
   },
-  uploadSection: {
-    alignItems: 'center',
-  },
-  uploadTitle: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  uploadPlaceholder: {
+
+  clientSection: {
     width: '100%',
-    height: 180,
+    marginBottom: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: 12,
+    padding: 16,
     borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 15,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  clientInfo: {
+    flex: 1,
+  },
+  clientLabel: {
+    color: '#66EE66',
+    fontSize: 11,
+    fontWeight: 'bold',
+    letterSpacing: 1.5,
+    marginBottom: 4,
+  },
+  clientName: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  messageButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
   },
-  uploadBtn: {
-    backgroundColor: 'white',
-    width: '80%',
-    paddingVertical: 12,
-    borderRadius: 25,
+
+  outlineCard: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.03)'
+  },
+
+  infoRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
+  infoIcon: { width: 30 },
+  infoText: { color: 'white', fontSize: 14, flex: 1 },
+  boldText: { fontWeight: 'bold', fontSize: 15 },
+  exampleText: { color: '#CCC', fontSize: 12, marginLeft: 30, marginBottom: 12, marginTop: -8 },
+
+  taskContainer: {
+    width: '100%',
+    marginVertical: 15,
+  },
+  containerLabel: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  listContainer: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    overflow: 'hidden',
+  },
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.1)',
+  },
+  listItemText: {
+    color: 'white',
+    fontSize: 14,
+    flex: 1,
+    marginRight: 10
+  },
+
+  mapContainer: {
+    width: '100%',
+    borderRadius: 15,
+    overflow: 'hidden',
+    height: 180,
+    marginBottom: 25,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)'
+  },
+  mapPlaceholder: {
+    flex: 1,
+    backgroundColor: '#1E2D4A',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  uploadBtnText: {
-    color: '#001540',
+  mapPin: { marginBottom: 8 },
+  mapLabel: { color: 'white', opacity: 0.5, fontSize: 13 },
+
+  // Fixed & Responsive Button Styling matching Screenshot 2026-05-23 155940.png
+  arrivedBtn: {
+    backgroundColor: '#66EE66',
+    borderRadius: 25,
+    paddingVertical: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width > 500 ? '60%' : '85%', // Scaled perfectly down for mobile and looks smart on tablets
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 4,
+    marginTop: 10
+  },
+  btnText: { color: '#001540', fontWeight: 'bold', fontSize: 16 },
+
+  // Sileo Toast Alert Styles
+  sileoOverlay: {
+    justifyContent: 'flex-start', // Position vertically at the top
+    alignItems: 'flex-end', // Position horizontally on the right side
+    paddingTop: 60, // Clear status bar
+    paddingRight: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+  },
+  sileoCard: {
+    backgroundColor: '#07183B', // Beautiful dark navy matching the app card background
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    width: 320,
+    maxWidth: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.4,
+    shadowRadius: 15,
+    elevation: 10,
+  },
+  sileoContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sileoBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(102, 238, 102, 0.15)', // Circular translucent success-green badge
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  sileoTextContainer: {
+    flex: 1,
+  },
+  sileoTitle: {
+    color: 'white',
+    fontSize: 15,
     fontWeight: 'bold',
-    fontSize: 16
+    letterSpacing: 0.3,
+  },
+  sileoDescription: {
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontSize: 12,
+    marginTop: 2,
+    lineHeight: 17,
+  },
+  footer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: '#001851',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

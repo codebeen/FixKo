@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import BaseMain from '../../components/layout/(base-main)/BaseMain';
 import bookings from '../data/Bookings.json';
 
@@ -13,9 +13,11 @@ type Booking = {
   client?: string;
   name?: string;
   address?: string;
-  status: string;
-  price: number;
   propertySize?: string;
+  status: string;
+
+  price: number;
+  tasks?: string[];
   rate?: string;
   example?: string;
   schedule?: string;
@@ -23,7 +25,8 @@ type Booking = {
 };
 
 export default function Booking() {
-  const [activeTab, setActiveTab] = useState('Active schedule');
+  const { activeTab: incomingTab } = useLocalSearchParams();
+  const [activeTab, setActiveTab] = useState(incomingTab ?? 'Active schedule');
   const router = useRouter();
 
   const bookingData: Booking[] = bookings as Booking[];
@@ -45,7 +48,7 @@ export default function Booking() {
     <BaseMain>
       {/* Header */}
       <View style={styles.headerRow}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.push({ pathname: '/booking', params: { activeTab } })}>
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Bookings</Text>
@@ -120,7 +123,30 @@ export default function Booking() {
                     <Text style={styles.priceText}>₱{item.price.toFixed(2)}</Text>
                   </View>
 
-                  <TouchableOpacity style={styles.seeMoreBtn} onPress={() => { router.push({ pathname: '/booking/JobOverview', params: { id: item.id, title: item.title, client: item.client, address: item.address, status: item.status, price: item.price.toString(), propertySize: item.propertySize, rate: item.rate, example: item.example, schedule: item.schedule, contact: item.contact } }); }}>
+                  <TouchableOpacity 
+                    style={styles.seeMoreBtn} 
+                    onPress={() => { 
+                      const targetPath = item.status !== 'pending' ? '/booking/StartJob' : '/booking/JobOverview';
+                      router.push({ 
+                        pathname: targetPath, 
+                        params: { 
+                          id: item.id, 
+                          title: item.title, 
+                          client: item.client, 
+                          address: item.address, 
+                          status: item.status, 
+                          price: item.price.toString(), 
+                          propertySize: item.propertySize, 
+                          rate: item.rate, 
+                          example: item.example, 
+                          schedule: item.schedule, 
+                          contact: item.contact, 
+                          tasks: item.tasks ? JSON.stringify(item.tasks) : undefined, 
+                          activeTab: activeTab 
+                        } 
+                      }); 
+                    }}
+                  >
                     <Text style={styles.seeMoreText}>Details</Text>
                     <Ionicons name="chevron-forward" size={11} color="white" />
                   </TouchableOpacity>
