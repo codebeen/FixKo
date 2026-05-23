@@ -1,0 +1,51 @@
+[
+  {
+    "label": "Connection",
+    "type": "dashed",
+    "title": "Bridging the Gap",
+    "desc": "Connecting skilled Filipino workers directly with homes and businesses that need them.",
+    "icon": "🤝"
+  },
+  {
+    "label": "Trust",
+    "type": "dashed",
+    "title": "Vetted & Verified",
+    "desc": "Building a secure community with background checks, ratings, and verified credentials.",
+    "icon": "⭐"
+  },
+  {
+    "label": "Consistency",
+    "type": "solid",
+    "title": "Always Dependable",
+    "desc": "Delivering stable, reliable, and high-quality services every single day.",
+    "icon": "📈"
+  },
+  {
+    "label": "Bridging Filipinos",
+    "type": "solid",
+    "title": "Empowering Communities",
+    "desc": "Upholding local talent and matching local service providers with client needs.",
+    "icon": "🇵🇭"
+  },
+  {
+    "label": "Reliability",
+    "type": "dashed",
+    "title": "Always On Time",
+    "desc": "Service providers who show up and deliver standard-setting performance.",
+    "icon": "🛡️"
+  },
+  {
+    "label": "Opportunity",
+    "type": "dashed",
+    "title": "Livelihood & Growth",
+    "desc": "Opening new streams of income and professional growth for Filipino workers.",
+    "icon": "💼"
+  },
+  {
+    "label": "Efficiency",
+    "type": "solid",
+    "title": "Seamless Matching",
+    "desc": "Fast, hassle-free bookings and instant communications within the platform.",
+    "icon": "⚡"
+  }
+]

@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 
 export default function IdenticalSimplified() {
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseLayout scrollable={false}>
       {/* Header */}
       <View style={styles.header}>
         <Ionicons name="arrow-back" size={26} color="white" style={styles.back} />
@@ -13,7 +14,7 @@ export default function IdenticalSimplified() {
 
       <View style={styles.content}>
         <MaterialCommunityIcons name="check-decagram" size={130} color="#5df260" style={styles.mainIcon} />
-        
+
         <Text style={styles.statusText}>Work submitted. Awaiting{"\n"}approval to release payment.</Text>
 
         {/* Info Grid */}
@@ -36,19 +37,30 @@ export default function IdenticalSimplified() {
           <Text style={styles.btnText}>Back to Home</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </BaseLayout>
   );
 }
 
 // Internal Mini-Components to reduce JSX clutter
-const InfoBox = ({ icon, label, half }) => (
+interface InfoBoxProps {
+  icon: React.ReactNode;
+  label: string;
+  half?: boolean;
+}
+
+const InfoBox = ({ icon, label, half }: InfoBoxProps) => (
   <View style={[styles.card, half && { width: '48%', height: 90 }]}>
     {icon}
     <Text style={[styles.whiteText, { marginTop: 8, fontSize: 13 }]}>{label}</Text>
   </View>
 );
 
-const StatItem = ({ icon, label }) => (
+interface StatItemProps {
+  icon: any;
+  label: string;
+}
+
+const StatItem = ({ icon, label }: StatItemProps) => (
   <View style={styles.row}>
     <Ionicons name={icon} size={18} color="white" />
     <Text style={[styles.whiteText, { marginLeft: 10 }]}>{label}</Text>
@@ -56,7 +68,6 @@ const StatItem = ({ icon, label }) => (
 );
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#001a4d' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 20 },
   back: { position: 'absolute', left: 20 },
   headerTitle: { color: 'white', fontSize: 18, fontWeight: '700' },
@@ -64,27 +75,27 @@ const styles = StyleSheet.create({
   mainIcon: { marginTop: 30, marginBottom: 20 },
   statusText: { color: 'white', textAlign: 'center', fontSize: 16, lineHeight: 22, marginBottom: 30 },
   row: { flexDirection: 'row', alignItems: 'center' },
-  card: { 
-    width: '100%', 
-    borderWidth: 1, 
-    borderColor: 'rgba(255,255,255,0.4)', 
-    borderRadius: 12, 
-    padding: 15, 
-    marginBottom: 12, 
-    justifyContent: 'center', 
-    alignItems: 'flex-start' 
+  card: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.4)',
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 12,
+    justifyContent: 'center',
+    alignItems: 'flex-start'
   },
   boldLabel: { color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 4 },
   whiteText: { color: 'white', fontSize: 13 },
   mutedText: { color: 'rgba(255,255,255,0.7)', fontSize: 12, lineHeight: 18 },
-  btn: { 
-    backgroundColor: '#5df260', 
-    width: '100%', 
-    padding: 16, 
-    borderRadius: 30, 
-    alignItems: 'center', 
-    marginTop: 'auto', 
-    marginBottom: 40 
+  btn: {
+    backgroundColor: '#5df260',
+    width: '100%',
+    padding: 16,
+    borderRadius: 30,
+    alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 40
   },
   btnText: { color: '#001a4d', fontWeight: 'bold', fontSize: 16 }
 });
