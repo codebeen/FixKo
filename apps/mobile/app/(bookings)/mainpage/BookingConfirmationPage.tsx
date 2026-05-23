@@ -5,19 +5,17 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 import BackButton from '../../../components/back-button';
+import PageHeader from '../../../components/page-header';
+import Button from '../../../components/gradient-button';
 
 export default function BookingConfirmationPage() {
     const router = useRouter();
 
-
-
     return (
         <SafeAreaView style={styles.safeArea}>
             {/* Header Area */}
-            <View style={styles.header}>
-                <BackButton />
-                <Text style={styles.headerTitle}>My bookings</Text>
-            </View>
+            {/* Drop your completely responsive, perfectly aligned header here! */}
+            <PageHeader title="My bookings" />
 
 
             <ScrollView 
@@ -92,10 +90,16 @@ export default function BookingConfirmationPage() {
                     <TouchableOpacity style={styles.trackButton} activeOpacity={0.8} onPress={() => router.push('/(bookings)/mainpage/TrackBookingPage')}>
                         <Text style={styles.trackButtonText}>Track</Text>
                     </TouchableOpacity>
+                    
 
-                    <TouchableOpacity style={styles.payButton} activeOpacity={0.8}>
+                    <TouchableOpacity style={styles.payButton} activeOpacity={0.8} onPress={() => router.push('/(payment)/PaymentMethodPage')}>
                         <Text style={styles.payButtonText}>Pay</Text>
                     </TouchableOpacity>
+
+                    {/* <Button 
+                        title="Pay" 
+                    /> */}
+
                 </View>
 
             </ScrollView>

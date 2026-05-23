@@ -19,10 +19,7 @@ export default function BackButton() {
 
 const styles = StyleSheet.create({
     backButton: {
-        position: 'absolute',
-        left: 4, // Pins it securely to the left side
-        top: 12, // Vertically aligns it nicely with the text
-        zIndex: 10, // Ensures it stays tappable on top of everything
-        padding: 16, // Healthy touch target size
+        marginLeft: 10, // Slight negative margin to counteract padding and keep it visually aligned    
+        padding: 15, // Just a healthy tap target, no layout math!
     },
 });

@@ -12,13 +12,10 @@ import Button from '../../../components/gradient-button';
 
 export default function BookingPage() {
     const router = useRouter();
-    // Counter states for details section
+
     const [bathrooms, setBathrooms] = useState(1);
     const [bedrooms, setBedrooms] = useState(1);
-
-    // Mock states for chosen add-ons (toggles selection styling)
     const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
-
 
     const toggleAddon = (name: string) => {
         if (selectedAddons.includes(name)) {
@@ -28,17 +25,12 @@ export default function BookingPage() {
         }
     };
 
-    // Simplified handle function!
     const handleBookService = () => {
-        // Just push to the dedicated loading route instantly
         router.push('/(bookings)/mainpage/components/LoadingScreen'); 
     };
 
-
     return (
         <SafeAreaView style={styles.safeArea}>
-
-            {/* Back button */}
             <BackButton />
 
             <ScrollView 
@@ -62,12 +54,12 @@ export default function BookingPage() {
                         </View>
                     </View>
                     
-                    <View style={styles.glassCard}>
-                        <Text style={styles.glassCardTitle}>Small Homes (0–50 sqm)</Text>
-                        <Text style={styles.glassCardDesc}>
+                    <View style={styles.whiteCard}>
+                        <Text style={styles.whiteCardTitle}>Small Homes (0–50 sqm)</Text>
+                        <Text style={styles.whiteCardDesc}>
                             Perfect for condos, studio units, and small apartments
                         </Text>
-                        <Text style={styles.glassCardRate}>Rate: ₱25–₱35 per sqm</Text>
+                        <Text style={styles.whiteCardRate}>Rate: ₱25–₱35 per sqm</Text>
                     </View>
                 </View>
 
@@ -77,28 +69,30 @@ export default function BookingPage() {
                     <Text style={styles.sectionSubLabel}>How many rooms:</Text>
 
                     <View style={styles.counterRow}>
-                        {/* Bathroom Counter */}
-                        <View style={styles.counterBox}>
-                            <Text style={styles.counterText}>Bathroom {bathrooms}</Text>
-                            <View style={styles.actions}>
-                                <TouchableOpacity onPress={() => setBathrooms(Math.max(0, bathrooms + 1))}>
-                                    <FontAwesome5 name="plus" size={12} color="white" style={styles.iconPadding} />
+                        {/* Bathroom Counter Row */}
+                        <View style={styles.stepperContainer}>
+                            <Text style={styles.stepperLabel}>Bathroom</Text>
+                            <View style={styles.stepperControls}>
+                                <TouchableOpacity style={styles.stepperButton} onPress={() => setBathrooms(Math.max(0, bathrooms - 1))}>
+                                    <Text style={styles.stepperSymbol}>–</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setBathrooms(Math.max(0, bathrooms - 1))}>
-                                    <FontAwesome5 name="minus" size={12} color="white" />
+                                <Text style={styles.stepperValue}>{bathrooms}</Text>
+                                <TouchableOpacity style={styles.stepperButton} onPress={() => setBathrooms(bathrooms + 1)}>
+                                    <Text style={styles.stepperSymbol}>+</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
 
-                        {/* Bedroom Counter */}
-                        <View style={styles.counterBox}>
-                            <Text style={styles.counterText}>Bedroom {bedrooms}</Text>
-                            <View style={styles.actions}>
-                                <TouchableOpacity onPress={() => setBedrooms(Math.max(0, bedrooms + 1))}>
-                                    <FontAwesome5 name="plus" size={12} color="white" style={styles.iconPadding} />
+                        {/* Bedroom Counter Row */}
+                        <View style={styles.stepperContainer}>
+                            <Text style={styles.stepperLabel}>Bedroom</Text>
+                            <View style={styles.stepperControls}>
+                                <TouchableOpacity style={styles.stepperButton} onPress={() => setBedrooms(Math.max(0, bedrooms - 1))}>
+                                    <Text style={styles.stepperSymbol}>–</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setBedrooms(Math.max(0, bedrooms - 1))}>
-                                    <FontAwesome5 name="minus" size={12} color="white" />
+                                <Text style={styles.stepperValue}>{bedrooms}</Text>
+                                <TouchableOpacity style={styles.stepperButton} onPress={() => setBedrooms(bedrooms + 1)}>
+                                    <Text style={styles.stepperSymbol}>+</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -130,21 +124,20 @@ export default function BookingPage() {
                     </ScrollView>
                 </View>
 
-                {/* Pricing Calculation Divider Line */}
                 <View style={styles.divider} />
 
-                {/* Total Cost Presentation Footer Block */}
                 <View style={styles.totalBlock}>
                     <Text style={styles.totalText}>Total Cost: 700 pesos</Text>
                     <Text style={styles.totalSubText}>1 Cleaner for 1 hour</Text>
                 </View>
 
-                {/* Final Primary Submission Button */}
-                <Button 
-                    title="Book a Service" 
-                    onPress={handleBookService} // Use the new function here!
-                />
-
+                {/* 2. Replaced old button with GradientButton and centered it */}
+                <View style={styles.buttonContainer}>
+                    <Button 
+                        title="Book a Service" 
+                        onPress={handleBookService} 
+                    />
+                </View>
 
             </ScrollView>
         </SafeAreaView>
@@ -152,181 +145,52 @@ export default function BookingPage() {
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#001851',
-    },
-    scrollView: {
-        flex: 1,
-    },
-    scrollContent: {
-        paddingHorizontal: 24,
-        paddingBottom: 40,
-    },
-    summaryCardRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 24,
-        gap: 16,
-    },
-    serviceIconContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-    },
-    serviceBadge: {
-        backgroundColor: '#7AB1F5',
-        borderRadius: 20,
-        paddingVertical: 4,
-        paddingHorizontal: 12,
-        marginTop: 8,
-        width: '100%',
-        alignItems: 'center',
-    },
-    serviceBadgeText: {
-        color: 'white',
-        fontSize: 12,
-        fontWeight: 'bold',
-    },
-    glassCard: {
-        flex: 2.5,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)', 
-        borderColor: 'rgba(255, 255, 255, 0.4)',      
-        borderWidth: 1,                               
-        borderRadius: 16,
-        padding: 16,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.15,
-        shadowRadius: 20,
-    },
-    glassCardTitle: {
-        color: 'white',
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    glassCardDesc: {
-        color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: 12,
-        lineHeight: 16,
-        marginBottom: 6,
-    },
-    glassCardRate: {
-        color: 'white',
-        fontSize: 13,
-        fontWeight: '600',
-    },
-    sectionBlock: {
-        marginTop: 28,
-    },
-    sectionLabel: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    sectionSubLabel: {
-        color: 'white',
-        fontSize: 14,
-        marginTop: 4,
-        opacity: 0.9,
-    },
-    counterRow: {
-        flexDirection: 'row',
-        gap: 12,
-        marginTop: 14,
-    },
-    counterBox: {
-        flex: 1,
-        flexDirection: 'row',
-        borderWidth: 1,
-        borderColor: 'white',
-        borderRadius: 8,
-        paddingVertical: 10,
-        paddingHorizontal: 14,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    counterText: {
-        color: 'white',
-        fontSize: 14,
-        fontWeight: '500',
-    },
-    actions: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    iconPadding: {
-        marginRight: 14,
-    },
-    sectionLabelHeader: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 14,
-    },
-    addonsScroll: {
-        flexDirection: 'row',
-    },
-    addonCard: {
-        backgroundColor: 'white',
-        borderRadius: 8,
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-        marginRight: 10,
-        width: 145,
-        height: 70,
-        justifyContent: 'center',
-    },
-    addonCardSelected: {
-        backgroundColor: '#d9eafb',
-        borderWidth: 1,
-        borderColor: '#0037B7',
-    },
-    addonTitle: {
-        color: '#001851',
-        fontSize: 12,
-        fontWeight: 'bold',
-    },
-    addonMeta: {
-        color: '#4B5563',
-        fontSize: 11,
-        marginTop: 2,
-    },
-    divider: {
-        borderBottomWidth: 1,
-        borderBottomColor: 'white',
-        opacity: 0.4,
-        marginVertical: 24,
-    },
-    totalBlock: {
-        marginBottom: 28,
-    },
-    totalText: {
-        color: 'white',
-        fontSize: 22,
-        fontWeight: 'bold',
-    },
-    totalSubText: {
-        color: 'white',
-        fontSize: 14,
-        marginTop: 4,
-        opacity: 0.8,
-    },
-    bookButton: {
-        backgroundColor: '#1cc824',
-        borderRadius: 30,
-        paddingVertical: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
+    safeArea: { flex: 1, backgroundColor: '#001851' },
+    scrollView: { flex: 1 },
+    scrollContent: { paddingHorizontal: 24, paddingBottom: 40 },
+    
+    // --- Service Card ---
+    summaryCardRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 24, gap: 16 },
+    serviceIconContainer: { alignItems: 'center', justifyContent: 'center', flex: 1 },
+    serviceBadge: { backgroundColor: '#7AB1F5', borderRadius: 20, paddingVertical: 4, paddingHorizontal: 12, marginTop: 8, width: '100%', alignItems: 'center' },
+    serviceBadgeText: { color: 'white', fontSize: 12, fontWeight: 'bold' },
+    whiteCard: { flex: 2.5, backgroundColor: 'white', borderRadius: 16, padding: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 4 },
+    whiteCardTitle: { color: '#001851', fontSize: 15, fontWeight: 'bold', marginBottom: 4 },
+    whiteCardDesc: { color: '#4B5563', fontSize: 12, lineHeight: 16, marginBottom: 6 },
+    whiteCardRate: { color: '#111827', fontSize: 13, fontWeight: '600' },
+    
+    // --- Section Headers ---
+    sectionBlock: { marginTop: 28 },
+    sectionLabel: { color: 'white', fontSize: 16, fontWeight: 'bold' },
+    sectionSubLabel: { color: 'white', fontSize: 14, marginTop: 4, opacity: 0.9 },
+    sectionLabelHeader: { color: 'white', fontSize: 18, fontWeight: 'bold', marginBottom: 14 },
+
+    // --- Steppers ---
+    counterRow: { gap: 16, marginTop: 20 },
+    stepperContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: 12, paddingVertical: 12, paddingHorizontal: 16 },
+    stepperLabel: { color: 'white', fontSize: 16, fontWeight: '500' },
+    stepperControls: { flexDirection: 'row', alignItems: 'center', gap: 16 },
+    stepperButton: { backgroundColor: '#F3F4F6', width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+    stepperSymbol: { color: '#111827', fontSize: 18, fontWeight: '600', marginTop: -2 },
+    stepperValue: { color: 'white', fontSize: 18, fontWeight: 'bold', width: 24, textAlign: 'center' },
+
+    // --- Addons ---
+    addonsScroll: { flexDirection: 'row' },
+    addonCard: { backgroundColor: 'white', borderRadius: 8, paddingVertical: 14, paddingHorizontal: 16, marginRight: 10, width: 145, height: 70, justifyContent: 'center' },
+    addonCardSelected: { backgroundColor: '#d9eafb', borderWidth: 1, borderColor: '#0037B7' },
+    addonTitle: { color: '#001851', fontSize: 12, fontWeight: 'bold' },
+    addonMeta: { color: '#4B5563', fontSize: 11, marginTop: 2 },
+
+    // --- Footer ---
+    divider: { borderBottomWidth: 1, borderBottomColor: 'white', opacity: 0.4, marginVertical: 24 },
+    totalBlock: { marginBottom: 16, alignItems: 'center' },
+    totalText: { color: 'white', fontSize: 22, fontWeight: 'bold' },
+    totalSubText: { color: 'white', fontSize: 14, marginTop: 4, opacity: 0.8 },
+
+    // --- New Button Container ---
+    buttonContainer: {
+        alignItems: 'center', // This perfectly centers your 150px GradientButton
         width: '100%',
         marginTop: 10,
-    },
-    bookButtonText: {
-        color: '#001851',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-
+    }
 });

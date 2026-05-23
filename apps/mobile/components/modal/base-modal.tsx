@@ -14,18 +14,14 @@ export default function BaseModal({ visible, onClose, children }: BaseModalProps
             transparent={true}
             visible={visible}
             animationType="fade"
-            onRequestClose={onClose} // Handles hardware back button on Android
+            onRequestClose={onClose} 
         >
-            {/* The active overlay closes the modal when tapping outside the white box */}
             <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={onClose}>
-                
-                {/* This prevents taps inside the white box from closing the modal */}
                 <TouchableWithoutFeedback>
                     <View style={styles.modalContainer}>
                         {children}
                     </View>
                 </TouchableWithoutFeedback>
-                
             </TouchableOpacity>
         </Modal>
     );
@@ -34,20 +30,19 @@ export default function BaseModal({ visible, onClose, children }: BaseModalProps
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        // Uses your app's dark blue theme color with 60% opacity for the backdrop
         backgroundColor: 'rgba(0, 24, 81, 0.6)', 
         justifyContent: 'center',
         alignItems: 'center',
     },
     modalContainer: {
-        width: '85%',
+        width: '90%', // Slightly wider to fit the columns
         backgroundColor: 'white',
-        borderRadius: 36, // Very round corners to match the mockup
-        padding: 30,
+        borderRadius: 20, // Adjusted to match the inspo's squarer corners
+        padding: 24,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
-        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 20,
         elevation: 10,
     },
 });

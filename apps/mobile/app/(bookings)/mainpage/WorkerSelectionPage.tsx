@@ -5,8 +5,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 
-
 import ConfirmBookingModal from './components/ConfirmBookingModal';
+import Button from '../../../components/gradient-button';
 
 // --- MOCK DATA ---
 // Replace this with your actual fetched data
@@ -43,9 +43,6 @@ const WORKERS = [
 export default function WorkerSelectionPage() {
     const router = useRouter();
     const [isModalVisible, setModalVisible] = useState(false);
-
-
-
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -97,6 +94,7 @@ export default function WorkerSelectionPage() {
 
                             {/* Bottom Row: Reviews and Action Button */}
                             <View style={styles.cardBottomRow}>
+
                                 <View style={styles.reviewsColumn}>
                                     {worker.reviews.map((review, index) => (
                                         <Text key={index} style={styles.reviewText}>{review}</Text>
@@ -104,13 +102,22 @@ export default function WorkerSelectionPage() {
                                 </View>
 
                                 {/* 3. Change onPress to open the modal */}
-                                <TouchableOpacity 
+                                {/* Using the custom Gradient Button using Props! */}
+                                <Button 
+                                    title="Book now" 
+                                    compact={true} 
+                                    onPress={() => setModalVisible(true)} 
+                                />
+
+
+                                {/* <TouchableOpacity 
                                     style={styles.bookButton} 
                                     activeOpacity={0.8} 
                                     onPress={() => setModalVisible(true)} 
                                 >
                                     <Text style={styles.bookButtonText}>Book now</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
+
                             </View>
 
                         </View>
@@ -119,17 +126,20 @@ export default function WorkerSelectionPage() {
 
             </ScrollView>
 
+            {/* Example usage inside your WorkerSelectionPage */}
             <ConfirmBookingModal 
                 visible={isModalVisible} 
                 onClose={() => setModalVisible(false)} 
+                basePrice={700}
+                addons={[
+                    { id: 'iron', name: 'Clothes Ironing', price: 400 },
+                    { id: 'disinfect', name: 'Disinfectant', price: 400 }
+                ]}
                 onConfirm={() => {
-                    setModalVisible(false); // Close modal first
+                    setModalVisible(false);
                     router.push('/(bookings)/mainpage/BookingConfirmationPage'); // Then navigate!
                 }}
             />
-
-
-
 
         </SafeAreaView>
     );
