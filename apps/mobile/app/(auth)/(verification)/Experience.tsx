@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import BaseLayout from '@/components/layout/(base-auth)/BaseLayout';
 import { useVerification } from './_layout';
 import Stepper from './components/Stepper';
@@ -52,10 +53,35 @@ export default function ExperienceScreen() {
   };
 
   const handlePickCertification = () => {
-    requestPermissionAndPickImage((uri) => {
-      setCertification(uri);
-      setErrors((prev) => ({ ...prev, certification: null }));
-    });
+    Alert.alert('Select file type', 'Choose image or PDF', [
+      {
+        text: 'Image',
+        onPress: () => {
+          requestPermissionAndPickImage((uri) => {
+            setCertification(uri);
+            setErrors((prev) => ({ ...prev, certification: null }));
+          });
+        },
+      },
+      {
+        text: 'PDF',
+        onPress: async () => {
+          try {
+            const result = await DocumentPicker.getDocumentAsync({
+              type: 'application/pdf',
+              copyToCacheDirectory: true,
+            });
+            if (result.assets && result.assets.length > 0) {
+              setCertification(result.assets[0].uri);
+              setErrors((prev) => ({ ...prev, certification: null }));
+            }
+          } catch (err) {
+            Alert.alert('Error', 'Failed to pick document');
+          }
+        },
+      },
+      { text: 'Cancel', style: 'cancel' },
+    ]);
   };
 
   const handlePickProofImage = () => {
@@ -152,11 +178,15 @@ export default function ExperienceScreen() {
           <Text style={styles.inputLabel}>Certification (Optional)</Text>
           {certification ? (
             <View style={styles.imagePreviewContainer}>
-              <Image source={{ uri: certification }} style={styles.imagePreview} />
-              <TouchableOpacity
-                style={styles.deleteBadge}
-                onPress={() => setCertification(null)}
-              >
+              {certification.toLowerCase().endsWith('.pdf') ? (
+                <View style={styles.pdfPlaceholder}>
+                  <Ionicons name="document-outline" size={48} color="#FFF" />
+                  <Text style={styles.pdfLabel}>PDF Document</Text>
+                </View>
+              ) : (
+                <Image source={{ uri: certification }} style={styles.imagePreview} />
+              )}
+              <TouchableOpacity style={styles.deleteBadge} onPress={() => setCertification(null)}>
                 <Ionicons name="close" size={16} color="#FFF" />
               </TouchableOpacity>
             </View>
@@ -164,7 +194,7 @@ export default function ExperienceScreen() {
             <TouchableOpacity style={styles.uploadBox} onPress={handlePickCertification}>
               <Ionicons name="document-attach-outline" size={26} color="#DBA92E" />
               <Text style={styles.uploadBoxText}>Upload Certificate or License</Text>
-              <Text style={styles.uploadBoxSubtext}>Supports JPG, PNG (Max 5MB)</Text>
+              <Text style={styles.uploadBoxSubtext}>Supports JPG, PNG, PDF (Max 5MB)</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -319,6 +349,19 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.15)',
+  },
+  pdfPlaceholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#07183B',
+    borderRadius: 12,
+    height: '100%',
+  },
+  pdfLabel: {
+    color: '#FFF',
+    marginTop: 4,
+    fontSize: 12,
   },
   imagePreview: {
     width: '100%',

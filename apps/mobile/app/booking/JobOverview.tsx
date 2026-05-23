@@ -7,6 +7,7 @@ import {
     Image
 } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 import { router, useLocalSearchParams } from 'expo-router';
 import BaseMain from '../../components/layout/(base-main)/BaseMain';
 
@@ -26,8 +27,9 @@ const InfoItem = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialCo
 );
 
 export default function JobOverview() {
-    const { title, client, address, status, price, propertySize, rate, example, schedule, contact } = useLocalSearchParams();
-    return (
+    const { title, client, address, status, price, propertySize, rate, example, schedule, contact, tasks, activeTab } = useLocalSearchParams();
+    const [selectedTask, setSelectedTask] = React.useState('');
+return (
         <BaseMain
             theme="navy"
             scrollable={true}
@@ -35,7 +37,7 @@ export default function JobOverview() {
         >
             {/* Header */}
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.push('/booking')}>
+                <TouchableOpacity onPress={() => router.push({ pathname: '/booking', params: { activeTab } })}>
                     <Ionicons name="arrow-back" size={24} color="white" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Job Overview</Text>
@@ -51,10 +53,10 @@ export default function JobOverview() {
                 <InfoItem icon="calculator" text="Estimated Total: (auto-calculated)" isBold={false} />
                 <Text style={styles.exampleText}>{example ? `Example: ${example}` : ''}</Text>
                 <InfoItem icon="clock-outline" text={schedule ? `Schedule: ${schedule}` : ''} isBold={false} />
-                                <InfoItem icon="phone" text={contact ? `Contact: ${contact}` : ''} isBold={false} />
+                <InfoItem icon="phone" text={contact ? `Contact: ${contact}` : ''} isBold={false} />
                 <InfoItem icon="information-outline" text={status ? `Status: ${status}` : ''} isBold={false} />
             </View>
-            
+
             {/* Map Section */}
             <View style={styles.mapContainer}>
                 {/* For real implementation, use <MapView /> from react-native-maps */}
@@ -63,15 +65,29 @@ export default function JobOverview() {
                     <Text style={styles.mapLabel}>Map Preview</Text>
                 </View>
             </View>
-
+            {/* Task Dropdown */}
+            {Array.isArray(tasks) && (
+                <View style={styles.taskDropdown}>
+                    <Picker
+                        selectedValue={selectedTask}
+                        onValueChange={(itemValue) => setSelectedTask(itemValue)}
+                        style={{ color: 'white' }}
+                    >
+                        <Picker.Item label="Select Task" value="" />
+                        {tasks.map((t, i) => (
+                            <Picker.Item label={t} value={t} key={i} />
+                        ))}
+                    </Picker>
+                </View>
+            )}
             {/* Footer Action */}
             {status !== 'completed' && (
-            <TouchableOpacity
-                style={styles.arrivedBtn}
-                onPress={() => router.push('/booking/StartJob')}
-            >
-                <Text style={styles.btnText}>Arrived</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.arrivedBtn}
+                    onPress={() => router.push('/booking/StartJob')}
+                >
+                    <Text style={styles.btnText}>Accept Booking</Text>
+                </TouchableOpacity>
             )}
         </BaseMain>
     );
@@ -112,12 +128,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10,
     },
+    taskDropdown: {
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 10,
+        marginVertical: 10,
+        marginHorizontal: 20,
+    },
     arrivedBtn: {
+        position: 'absolute',
+        bottom: 20,
+        alignSelf: 'center',
         backgroundColor: '#66EE66',
         borderRadius: 25,
         paddingVertical: 15,
         alignItems: 'center',
-        marginTop: 20,
+        width: '90%',
     },
     btnText: { color: '#001540', fontWeight: 'bold', fontSize: 16 },
 

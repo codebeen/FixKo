@@ -15,7 +15,7 @@ const ACTIVE_COLOR = '#000000';   // Black active icon color
 const ACTIVE_BG_COLOR = '#FFEB3B'; // Yellow background for active tab
 const INACTIVE_COLOR = '#5A637A'; // Clean slate muted grey
 
-type TabName = 'home' | 'booking' | 'reviews' | 'settings';
+type TabName = 'home' | 'booking' | 'reviews' | 'message' | 'settings';
 
 export default function NavigationMenu() {
   const router = useRouter();
@@ -27,6 +27,7 @@ export default function NavigationMenu() {
     { name: 'home', path: '/home', icon: 'home-variant' },
     { name: 'booking', path: '/booking', icon: 'clock' },
     { name: 'reviews', path: '/reviews', icon: 'chart-pie' },
+    { name: 'message', path: '/message', icon: 'message' },
     { name: 'settings', path: '/settings', icon: 'account' },
   ] as const;
 
@@ -34,7 +35,9 @@ export default function NavigationMenu() {
     if (!segments?.length) return;
     const seg = segments[segments.length - 1];
     const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
-    const idx = routes.findIndex(r => r.name === cleanedSeg);
+    // Map JobOverview to booking tab for proper highlight
+    const mappedSeg = cleanedSeg === 'JobOverview' ? 'booking' : cleanedSeg;
+    const idx = routes.findIndex(r => r.name === mappedSeg);
     if (idx !== -1) {
       setActive(routes[idx].name);
       animateTo(idx);
