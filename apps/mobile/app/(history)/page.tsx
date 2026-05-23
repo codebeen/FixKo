@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     // --- Reviews Section ---
     reviewsBox: {
         marginTop: 16,
-        backgroundColor: '#F9FAFB', // Very soft gray to separate it from the main white
+        backgroundColor: '#F9FAFB', 
         padding: 12,
         borderRadius: 8,
     },

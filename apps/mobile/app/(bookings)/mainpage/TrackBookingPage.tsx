@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import BackButton from '../../../components/back-button'; 
+
+import PageHeader from '../../../components/page-header';
 import Button from '../../../components/gradient-button'; 
 import BookingStepper, { StepType } from './components/BookingStepper'; 
 
@@ -19,10 +20,8 @@ export default function TrackBookingPage() {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.header}>
-                <BackButton />
-                <Text style={styles.headerTitle}>Track Booking</Text>
-            </View>
+            {/* Header Area */}
+                <PageHeader title="Track Booking" />
 
             <ScrollView 
                 contentContainerStyle={styles.scrollContent}
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
         color: '#111827',
     },
     
-    // --- NEW: White Wrapper Card for the Stepper Component ---
+    // White Wrapper Card for the Stepper Component ---
     stepperCard: {
         backgroundColor: 'white',
         borderRadius: 16,
