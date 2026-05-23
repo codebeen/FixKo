@@ -138,7 +138,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
       {/* Desktop Sidebar */}
       {!isMobile && (
         <Box
-          w={isNarrow ? 130 : 360}
+          w={isNarrow ? 100 : 320}
           h="100vh"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

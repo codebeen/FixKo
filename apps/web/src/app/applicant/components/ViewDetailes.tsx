@@ -8,6 +8,7 @@ import {
   IconCalendar, IconBriefcase, IconStar, IconTool, IconCheck, IconX
 } from '@tabler/icons-react';
 import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 import Remarks from './Remarks';
 
 import '../../styles/Index.css';
@@ -118,22 +119,24 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
 
   const handleApprove = () => {
     Swal.fire({
-      icon: 'success',
-      title: 'Applicant Approved!',
-      text: `${fullName} has been successfully approved.`,
+      title: 'Approve Applicant?',
+      text: `Are you sure you want to approve ${fullName}?`,
+      icon: 'question',
+      showCancelButton: true,
       confirmButtonColor: '#0f2044',
-      confirmButtonText: 'Done',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, approve'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toast.success(`${fullName} has been successfully approved.`, { id: 'status-toast' });
+        onBack();
+      }
     });
   };
 
   const handleRejectConfirm = (remarks: string) => {
-    Swal.fire({
-      icon: 'info',
-      title: 'Applicant Rejected',
-      text: `${fullName} has been rejected. Reason: ${remarks}`,
-      confirmButtonColor: '#0f2044',
-      confirmButtonText: 'OK',
-    });
+    toast.error(`${fullName} has been rejected.`, { id: 'status-toast' });
+    onBack();
   };
 
   return (
@@ -149,7 +152,7 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
           label: 'pup-back-button-label',
         }}
       >
-        Back to applicant
+        Back
       </Button>
 
       {/* ── Page Header ── */}

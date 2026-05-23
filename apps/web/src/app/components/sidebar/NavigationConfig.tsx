@@ -12,7 +12,7 @@ export const NAV_CONFIG = [
   },
   {
     link: 'applicant',
-    label: 'Applicant',
+    label: 'Applicants',
     icon: IconUserFilled,
   },
   {

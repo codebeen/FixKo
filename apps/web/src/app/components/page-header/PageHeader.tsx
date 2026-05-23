@@ -9,7 +9,7 @@ export default function PageHeader({ title, description, area, showArea = true, 
             <Group justify="space-between" align="flex-end">
                 <Box>
                     <Group gap="sm" mb={4}>
-                        <Title order={2} fw={800} c="#001851" style={{ letterSpacing: '-0.5px' }}>
+                        <Title order={2} size="xl" fw={600} c="#001851" style={{ letterSpacing: '-0.5px' }}>
                             {title}
                         </Title>
                     </Group>

@@ -295,7 +295,7 @@ function BaseAuth({ children }: BaseAuthProps) {
         {/* Footer legal notices */}
         <Box w="100%" maw={380}>
           <Text c="dimmed" size="xs" ta="center" style={{ lineHeight: 1.5, fontSize: "11px" }}>
-            By using this service, you understand and agree to the PUP Online Services{" "}
+            By using this service, you understand and agree to the FixKoPH{" "}
             <Text
               component="a"
               href="#"

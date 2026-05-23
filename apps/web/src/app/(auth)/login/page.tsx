@@ -53,8 +53,8 @@ function Login() {
             form.setFieldValue('email', val);
           }}
           styles={{
-            label: { color: '#1A1A2E', fontWeight: 500, fontSize: '11px' },
-            input: { fontSize: '11px', '&::placeholder': { fontSize: '11px' } }
+            label: { color: '#1A1A2E', fontWeight: 500, fontSize: '12px' },
+            input: { fontSize: '12px', '&::placeholder': { fontSize: '12px' } }
           }}
         />
 
@@ -69,8 +69,8 @@ function Login() {
             form.setFieldValue('password', val);
           }}
           styles={{
-            label: { color: '#1A1A2E', fontWeight: 500, fontSize: '11px' },
-            innerInput: { fontSize: '11px', '&::placeholder': { fontSize: '11px' } }
+            label: { color: '#1A1A2E', fontWeight: 500, fontSize: '12px' },
+            innerInput: { fontSize: '12px', '&::placeholder': { fontSize: '12px' } }
           }}
         />
 
@@ -79,7 +79,7 @@ function Login() {
             component="button"
             type="button"
             c="#061C48"
-            style={{ fontSize: '11px' }}
+            style={{ fontSize: '12px' }}
             onClick={() => router.push("/enter-email")}
           >
             Forgot Password?
