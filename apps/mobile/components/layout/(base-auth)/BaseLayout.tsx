@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, ScrollView, View, StyleProp, ViewStyle} from 'react-native';
+import { ScrollView, View, StyleProp, ViewStyle, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { useSegments } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
+import Svg, {
+  Circle,
+  Defs,
+  Pattern,
+  Rect,
+} from 'react-native-svg';
 
 export type BaseLayoutTheme = 'navy' | 'blue' | 'darkNavy' | 'light' | 'accentNavy';
 
@@ -19,13 +25,19 @@ export interface BaseLayoutProps {
   align?: 'center' | 'left' | 'right';
 }
 
-const GRADIENT_COLORS: Record<BaseLayoutTheme, string[]> = {
-  navy: ['#061C48', '#5893DF'],       
-  blue: ['#061C48', '#5893DF'],      
-  darkNavy: ['#061C48', '#5893DF'],  
-  accentNavy: ['#061C48', '#5893DF'],
-  light: ['#061C48', '#5893DF'],     
-};
+function BaseLayoutBackground() {
+  return (
+    <Svg style={StyleSheet.absoluteFillObject} width="100%" height="100%" preserveAspectRatio="none">
+      <Defs>
+        <Pattern id="authDotPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+          <Circle cx="4" cy="3" r="1.35" fill="#FFFFFF" opacity="0.1" />
+        </Pattern>
+      </Defs>
+      <Rect width="100%" height="100%" fill="#12357F" />
+      <Rect width="100%" height="100%" fill="url(#authDotPattern)" />
+    </Svg>
+  );
+}
 
 export default function BaseLayout({
   children,
@@ -55,22 +67,14 @@ export default function BaseLayout({
 
   const activeTheme = theme || detectedTheme;
 
-  const solidColor = backgroundColor ?? '#001851';
-  const finalColors = [solidColor, solidColor] as [string, string, ...string[]];
-
   // Determine status bar style based on background brightness
   const finalStatusBarStyle = statusBarStyle || (activeTheme === 'light' ? 'dark' : 'light');
 
-  const containerStyle = [
-    styles.container,
-    padding !== undefined ? { padding } : null,
-    style,
-  ];
-
   const content = scrollable ? (
     <ScrollView
+      className="flex-1"
+      contentContainerClassName="flex-grow"
       contentContainerStyle={[
-        styles.scrollContent,
         { padding: 25, paddingTop: 40 },
         padding !== undefined ? { padding } : null,
         align === 'center' ? { alignItems: 'center' } : null,
@@ -81,36 +85,31 @@ export default function BaseLayout({
       {children}
     </ScrollView>
   ) : (
-    <View style={[
-      styles.flexOne,
-      align === 'center' ? { alignItems: 'center', justifyContent: 'center' } : null,
-      contentContainerStyle
-    ]}>
+    <View
+      className="flex-1"
+      style={[
+        align === 'center' ? { alignItems: 'center', justifyContent: 'center' } : null,
+        contentContainerStyle
+      ]}
+    >
       {children}
     </View>
   );
 
   return (
-    <LinearGradient
-      colors={finalColors}
-      style={containerStyle}
+    <View
+      className={`flex-1 ${backgroundColor ? '' : 'bg-[#12357F]'}`}
+      style={[
+        backgroundColor ? { backgroundColor } : null,
+        padding !== undefined ? { padding } : null,
+        style,
+      ]}
     >
-      <SafeAreaView style={styles.flexOne}>
+      {!backgroundColor ? <BaseLayoutBackground /> : null}
+      <SafeAreaView className="flex-1" style={{ zIndex: 1 }}>
         <StatusBar style={finalStatusBarStyle} />
         {content}
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-  },
-  flexOne: {
-    flex: 1,
-  },
-});

@@ -248,10 +248,10 @@ export default function LogoAnimation() {
   });
 
   return (
-    <View style={styles.container}>
+    <View className="w-full max-w-[380px] aspect-[5/4] justify-center items-center overflow-visible self-center">
       <Svg
         viewBox="0 0 600 480"
-        style={styles.svg}
+        className="w-full h-full overflow-visible"
       >
         <Defs>
           <SvgLinearGradient id="primaryGrad" x1="0" y1="0" x2="1" y2="0">
@@ -454,20 +454,3 @@ export default function LogoAnimation() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    maxWidth: 380,
-    aspectRatio: 600 / 480,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'visible',
-    alignSelf: 'center',
-  },
-  svg: {
-    width: '100%',
-    height: '100%',
-    overflow: 'visible',
-  },
-});

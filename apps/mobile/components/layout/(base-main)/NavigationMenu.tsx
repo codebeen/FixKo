@@ -1,126 +1,93 @@
-import React, { useEffect, useRef } from 'react';
-import { View, TouchableOpacity, StyleSheet, Animated, Dimensions, Platform, Easing } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { useRouter, useSegments } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Svg, { Path } from 'react-native-svg';
 
-const { width: windowWidth } = Dimensions.get('window');
-const TAB_BAR_WIDTH = windowWidth - 32;
-const TABS_COUNT = 4;
-const TAB_WIDTH = TAB_BAR_WIDTH / TABS_COUNT;
+// Icon colors mapping
+const ACTIVE_COLOR = '#FFEB3B';
+const INACTIVE_COLOR = '#5A637A';
 
-// Preserving your exact colors
-const BG_COLOR = '#121624';       // Deep premium midnight navy
-const ACTIVE_COLOR = '#000000';   // Black active icon color
-const ACTIVE_BG_COLOR = '#FFEB3B'; // Yellow background for active tab
-const INACTIVE_COLOR = '#5A637A'; // Clean slate muted grey
+type TabName = 'home' | 'booking' | 'explore' | 'message' | 'bookings' | 'reviews' | 'history' | 'profile';
 
-type TabName = 'home' | 'booking' | 'reviews' | 'message' | 'settings';
+const clientRoutes = [
+  { name: 'home', path: '/(client)/(tabs)/home', activeIcon: 'home', inactiveIcon: 'home-outline', label: 'Home' },
+  { name: 'explore', path: '/(client)/(tabs)/explore', activeIcon: 'compass', inactiveIcon: 'compass-outline', label: 'Explore' },
+  { name: 'booking', path: '/(client)/(tabs)/booking', activeIcon: 'calendar-clock', inactiveIcon: 'calendar-clock-outline', label: 'Booking' },
+  { name: 'message', path: '/(client)/(tabs)/message', activeIcon: 'message', inactiveIcon: 'message-outline', label: 'Message' },
+] as const;
+
+const workerRoutes = [
+  { name: 'home', path: '/(worker)/(tabs)/home', activeIcon: 'home', inactiveIcon: 'home-outline', label: 'Home' },
+  { name: 'bookings', path: '/(worker)/(tabs)/bookings', activeIcon: 'calendar-clock', inactiveIcon: 'calendar-clock-outline', label: 'Bookings' },
+  { name: 'message', path: '/(worker)/(tabs)/message', activeIcon: 'message', inactiveIcon: 'message-outline', label: 'Messages' },
+  { name: 'reviews', path: '/(worker)/(tabs)/reviews', activeIcon: 'star', inactiveIcon: 'star-outline', label: 'Reviews' },
+  { name: 'history', path: '/(worker)/(tabs)/history', activeIcon: 'history', inactiveIcon: 'history-outline', label: 'History' },
+] as const;
 
 export default function NavigationMenu() {
   const router = useRouter();
   const segments = useSegments() as string[];
   const [active, setActive] = React.useState<TabName>('home');
-  const anim = useRef(new Animated.Value(0)).current;
 
-  const routes = [
-    { name: 'home', path: '/home', icon: 'home-variant' },
-    { name: 'booking', path: '/booking', icon: 'clock' },
-    { name: 'reviews', path: '/reviews', icon: 'chart-pie' },
-    { name: 'message', path: '/message', icon: 'message' },
-    { name: 'settings', path: '/settings', icon: 'account' },
-  ] as const;
+  const isWorker = segments.includes('(worker)');
+  const routes = isWorker ? workerRoutes : clientRoutes;
 
   useEffect(() => {
     if (!segments?.length) return;
     const seg = segments[segments.length - 1];
     const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
-    const mappedSeg = cleanedSeg === 'JobOverview' || cleanedSeg === 'StartJob' || cleanedSeg === 'Timer' || cleanedSeg === 'UploadProof' || cleanedSeg === 'JobCompleted' ? 'booking' : cleanedSeg;
+    const mappedSeg =
+      cleanedSeg === 'JobOverview' ||
+      cleanedSeg === 'StartJob' ||
+      cleanedSeg === 'Timer' ||
+      cleanedSeg === 'UploadProof' ||
+      cleanedSeg === 'JobCompleted'
+        ? 'bookings'
+        : cleanedSeg;
     const idx = routes.findIndex(r => r.name === mappedSeg);
     if (idx !== -1) {
       setActive(routes[idx].name);
-      animateTo(idx);
     }
-  }, [segments]);
+  }, [segments, routes]);
 
-  const animateTo = (index: number) => {
-    Animated.timing(anim, {
-      toValue: index,
-      duration: 300,
-      easing: Easing.out(Easing.quad),
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePress = (path: string, idx: number, name: TabName) => {
+  const handlePress = (path: string, name: TabName) => {
     setActive(name);
-    animateTo(idx);
     router.replace(path as any);
   };
 
-  // Move the sliding curved pocket across the screen
-  const translateX = anim.interpolate({
-    inputRange: [0, 1, 2, 3],
-    outputRange: [0, TAB_WIDTH, TAB_WIDTH * 2, TAB_WIDTH * 3],
-  });
-
-  // Simple solid background for the bar (no pocket)
-  const d = `M 0 0 H ${TAB_WIDTH} V 64 H 0 Z`;
-
-
   return (
-    <View style={styles.wrapper}>
-      <Animated.View
-        style={[
-          styles.slidingWrapper,
-          { width: TAB_WIDTH, transform: [{ translateX }] }
-        ]}
-      >
-        <View style={[styles.wingFiller, { left: -TAB_BAR_WIDTH, right: TAB_WIDTH }]} />
-
-        <View style={[styles.wingFiller, { left: TAB_WIDTH, right: -TAB_BAR_WIDTH }]} />
-
-        <Svg width={TAB_WIDTH} height={64}>
-          <Path d={d} fill={BG_COLOR} />
-        </Svg>
-
-      </Animated.View>
-
-      <View style={styles.tabsContainer}>
-        {routes.map((tab, idx) => {
+    <View className="absolute bottom-[12px] left-[16px] right-[16px] h-[64px] rounded-[24px] items-center justify-center bg-brand-navy border border-white/10 shadow-lg shadow-black/30 elevation-8">
+      <View className="flex-row justify-around items-center h-full w-full px-[8px]">
+        {routes.map((tab) => {
           const isActive = active === tab.name;
-
-          const labelOpacity = anim.interpolate({
-            inputRange: [idx - 0.3, idx, idx + 0.3],
-            outputRange: [0, 1, 0],
-            extrapolate: 'clamp',
-          });
-
-          const iconScale = anim.interpolate({
-            inputRange: [idx - 0.5, idx, idx + 0.5],
-            outputRange: [1, 1.3, 1],
-            extrapolate: 'clamp',
-          });
 
           return (
             <TouchableOpacity
               key={tab.name}
-              onPress={() => handlePress(tab.path, idx, tab.name)}
-              style={styles.item}
-              activeOpacity={1}
+              onPress={() => handlePress(tab.path, tab.name)}
+              className="items-center justify-center"
+              activeOpacity={0.7}
             >
-              <Animated.View style={[styles.inlineContainer, isActive && styles.activeItem]}>
-                <Animated.View style={[styles.iconWrapper, { transform: [{ scale: iconScale }] }]}>
+              {isActive ? (
+                <View className="flex-row items-center bg-brand-yellow/10 px-[12px] py-[8px] rounded-full">
                   <MaterialCommunityIcons
-                    name={tab.icon as any}
-                    size={26}
-                    color={isActive ? ACTIVE_COLOR : INACTIVE_COLOR} // Active icons turn yellow
+                    name={tab.activeIcon as any}
+                    size={20}
+                    color={ACTIVE_COLOR}
                   />
-                </Animated.View>
-                <Animated.Text style={[styles.label, { opacity: labelOpacity, color: isActive ? ACTIVE_COLOR : '#FFF' }]}>
-                  {tab.name.charAt(0).toUpperCase() + tab.name.slice(1)}
-                </Animated.Text>
-              </Animated.View>
+                  <Text className="text-brand-yellow font-bold text-[12px] ml-[6px]">
+                    {tab.label}
+                  </Text>
+                </View>
+              ) : (
+                <View className="p-[8px]">
+                  <MaterialCommunityIcons
+                    name={tab.inactiveIcon as any}
+                    size={20}
+                    color={INACTIVE_COLOR}
+                  />
+                </View>
+              )}
             </TouchableOpacity>
           );
         })}
@@ -128,93 +95,3 @@ export default function NavigationMenu() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 48,
-    borderRadius: 12,
-    overflow: 'hidden',
-    alignItems: 'center',
-    backgroundColor: BG_COLOR,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.25,
-        shadowRadius: 15,
-      },
-      android: {
-        elevation: 10,
-      },
-    }),
-  },
-  slidingWrapper: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    height: 64,
-    zIndex: 1,
-  },
-  wingFiller: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    backgroundColor: BG_COLOR,
-  },
-
-  tabsContainer: {
-    flexDirection: 'row',
-    width: TAB_BAR_WIDTH,
-    height: '100%',
-    alignItems: 'center',
-    zIndex: 10,
-  },
-  item: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  },
-  iconWrapper: {
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 0,
-    paddingTop: 8,
-  },
-  activeItem: {
-    backgroundColor: ACTIVE_BG_COLOR,
-    borderRadius: 16,
-    alignSelf: 'center',
-    width: TAB_WIDTH - 20,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    marginHorizontal: 8,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: { elevation: 4 },
-    }),
-  },
-  inlineContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: {
-    color: '#FFF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.4,
-    marginTop: -6,
-    paddingBottom: 4,
-  },
-});
