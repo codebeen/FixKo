@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView, TextInput, KeyboardAvoidingVi
 import { Ionicons } from '@expo/vector-icons';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
 import { useUserRole } from '../hooks/useUserRole';
+const messagesData = require('../../../data/Message.json');
 
 interface ChatMessage {
   id: string;
@@ -13,24 +14,12 @@ interface ChatMessage {
 
 export default function MessageView() {
   const role = useUserRole();
+  const roleData = (messagesData as any)[role] || {};
   const [selectedInboxUser, setSelectedInboxUser] = useState<string | null>(null);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { id: '1', sender: 'other', text: 'Hello! I am on my way to your location.', timestamp: '10:02 AM' },
-    { id: '2', sender: 'me', text: 'Hi! Great, thanks for the update. Please let me know once you arrive.', timestamp: '10:05 AM' },
-    { id: '3', sender: 'other', text: 'Sure thing, I will call you when I am outside.', timestamp: '10:06 AM' }
-  ]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(roleData.initialMessages || []);
   const [newMessageText, setNewMessageText] = useState('');
-
-  // Inbox contacts based on role
-  const contacts = role === 'worker'
-    ? [
-      { id: '1', name: 'Darben Client', avatarLetter: 'D', service: 'House Cleaning', lastMsg: 'Please let me know once you arrive.', time: '10:05 AM', unread: 0, distance: '2.5 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' },
-      { id: '2', name: 'Nadine Borja', avatarLetter: 'N', service: 'Plumbing Service', lastMsg: 'Okay, sounds good.', time: 'Yesterday', unread: 1, distance: '5.2 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' }
-    ]
-    : [
-      { id: '1', name: 'Shanella Cagulang (Worker)', avatarLetter: 'S', service: 'House Cleaning', lastMsg: 'Sure thing, I will call you when I am outside.', time: '10:06 AM', unread: 0, distance: '2.5 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' },
-      { id: '2', name: 'Tessa Cruz (Worker)', avatarLetter: 'T', service: 'Cleaning Variation', lastMsg: 'Booking confirmed!', time: 'May 25', unread: 0, distance: '5.5 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' }
-    ];
+  // Inbox contacts based on role from JSON
+  const contacts = roleData.contacts || [];
 
   const handleSendMessage = () => {
     if (!newMessageText.trim()) return;
@@ -106,7 +95,7 @@ export default function MessageView() {
                 </TouchableOpacity>
                 <View className="flex-1">
                   <Text className="text-white text-lg font-bold">{selectedInboxUser}</Text>
-                  <Text className="text-brand-green text-xs font-semibold">Active Booking</Text>
+                  <Text className="text-[#4ade80] text-xs font-semibold">Active Booking</Text>
                 </View>
                 <TouchableOpacity className="p-2">
                   <Ionicons name="call" size={20} color="#7EB1F1" />
@@ -123,8 +112,8 @@ export default function MessageView() {
                   <View
                     key={msg.id}
                     className={`max-w-[80%] rounded-2xl p-3.5 mb-3 ${msg.sender === 'me'
-                        ? 'bg-brand-blue self-end rounded-tr-none'
-                        : 'bg-white/10 self-start rounded-tl-none border border-white/5'
+                      ? 'bg-brand-blue self-end rounded-tr-none'
+                      : 'bg-white/10 self-start rounded-tl-none border border-white/5'
                       }`}
                   >
                     <Text className={`text-sm ${msg.sender === 'me' ? 'text-[#001449] font-medium' : 'text-white'}`}>

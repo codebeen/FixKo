@@ -1,0 +1,149 @@
+{
+  "worker": {
+    "contacts": [
+      {
+        "id": "1",
+        "name": "Darben Client",
+        "avatarLetter": "D",
+        "service": "House Cleaning",
+        "lastMsg": "Please let me know once you arrive.",
+        "time": "10:05 AM",
+        "unread": 0,
+        "distance": "2.5 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-30T01:01:01+08:00"
+      },
+      {
+        "id": "2",
+        "name": "Nadine Borja",
+        "avatarLetter": "N",
+        "service": "Plumbing Service",
+        "lastMsg": "Okay, sounds good.",
+        "time": "Yesterday",
+        "unread": 1,
+        "distance": "5.2 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-30T01:01:01+08:00"
+      },
+      {
+        "id": "3",
+        "name": "Loraine Mercado",
+        "avatarLetter": "L",
+        "service": "Cleaning",
+        "lastMsg": "Are you on your way?",
+        "time": "May 28",
+        "unread": 2,
+        "distance": "3.8 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-28T09:00:00+08:00"
+      },
+      {
+        "id": "4",
+        "name": "Ericka Johnson",
+        "avatarLetter": "E",
+        "service": "Deep Cleaning",
+        "lastMsg": "Can we reschedule for tomorrow?",
+        "time": "May 27",
+        "unread": 0,
+        "distance": "7.1 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-27T14:30:00+08:00"
+      },
+      {
+        "id": "5",
+        "name": "Marcus Reyes",
+        "avatarLetter": "M",
+        "service": "Electrical Repair",
+        "lastMsg": "The outlet is sparking.",
+        "time": "May 25",
+        "unread": 1,
+        "distance": "1.2 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-25T11:15:00+08:00"
+      }
+    ],
+    "initialMessages": [
+      { "id": "1", "sender": "other", "text": "Hello! I am on my way to your location.", "timestamp": "10:02 AM" },
+      { "id": "2", "sender": "me", "text": "Hi! Great, thanks for the update. Please let me know once you arrive.", "timestamp": "10:05 AM" },
+      { "id": "3", "sender": "other", "text": "Sure thing, I will call you when I am outside.", "timestamp": "10:06 AM" },
+      { "id": "4", "sender": "me", "text": "Perfect. See you soon.", "timestamp": "10:07 AM" }
+    ]
+  },
+  "client": {
+    "contacts": [
+      {
+        "id": "1",
+        "name": "Shanella Cagulang (Worker)",
+        "avatarLetter": "S",
+        "service": "House Cleaning",
+        "lastMsg": "Sure thing, I will call you when I am outside.",
+        "time": "10:06 AM",
+        "unread": 0,
+        "distance": "2.5 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-30T01:01:01+08:00"
+      },
+      {
+        "id": "2",
+        "name": "Tessa Cruz (Worker)",
+        "avatarLetter": "T",
+        "service": "Cleaning Variation",
+        "lastMsg": "Booking confirmed!",
+        "time": "May 25",
+        "unread": 0,
+        "distance": "5.5 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-30T01:01:01+08:00"
+      },
+      {
+        "id": "3",
+        "name": "Miguel Bernardo (Worker)",
+        "avatarLetter": "M",
+        "service": "Aircon Cleaning",
+        "lastMsg": "I will arrive in 10 minutes.",
+        "time": "May 27",
+        "unread": 1,
+        "distance": "3.1 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-27T08:00:00+08:00"
+      },
+      {
+        "id": "4",
+        "name": "John Doe (Worker)",
+        "avatarLetter": "J",
+        "service": "Carpet Cleaning",
+        "lastMsg": "I have finished the job.",
+        "time": "May 26",
+        "unread": 0,
+        "distance": "4.2 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-26T16:45:00+08:00"
+      },
+      {
+        "id": "5",
+        "name": "Sarah Smith (Worker)",
+        "avatarLetter": "S",
+        "service": "Roof Repair",
+        "lastMsg": "Can you send me a picture of the leak?",
+        "time": "May 24",
+        "unread": 2,
+        "distance": "8.9 km",
+        "text": "Job scheduled",
+        "timestamp": "2026-05-24T09:20:00+08:00"
+      }
+    ],
+    "initialMessages": [
+      { "id": "1", "sender": "other", "text": "Hello! I am on my way to your location.", "timestamp": "10:02 AM" },
+      { "id": "2", "sender": "me", "text": "Hi! Great, thanks for the update. Please let me know once you arrive.", "timestamp": "10:05 AM" },
+      { "id": "3", "sender": "other", "text": "Sure thing, I will call you when I am outside.", "timestamp": "10:06 AM" },
+      { "id": "4", "sender": "me", "text": "Awesome! I will leave the gate unlocked.", "timestamp": "10:08 AM" },
+      { "id": "5", "sender": "other", "text": "Thanks! Just turning onto your street now.", "timestamp": "10:12 AM" }
+    ]
+  },
+  "chatInitialMessages": [
+    { "id": "1", "sender": "other", "text": "Hello! Just confirming our booking for today.", "timestamp": "09:55 AM" },
+    { "id": "2", "sender": "me", "text": "Hi! Yes, I am already on my way to your location.", "timestamp": "09:57 AM" },
+    { "id": "3", "sender": "other", "text": "Great! The gate code is 4521. See you soon!", "timestamp": "09:58 AM" },
+    { "id": "4", "sender": "me", "text": "Noted, thank you.", "timestamp": "09:59 AM" }
+  ]
+}
