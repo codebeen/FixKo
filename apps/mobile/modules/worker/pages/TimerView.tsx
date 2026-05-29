@@ -38,6 +38,8 @@ interface TaskItem {
     done: boolean;
 }
 
+import Stepper from '@/modules/worker/components/stepper/Stepper';
+
 export default function TimerView() {
     const router = useRouter();
     const {
@@ -127,6 +129,8 @@ export default function TimerView() {
                     paddingBottom: 30,
                 }}
             >
+                <Stepper currentStep={3} />
+
                 <View className="items-center">
                     <Text className="text-white text-2xl font-bold">
                         Working Hours
@@ -203,44 +207,42 @@ export default function TimerView() {
                         />
                     ))}
                 </View>
-            </ScrollView>
 
-            {/* Sticky Footer */}
-            <View className="w-full px-5 py-3.75  items-center justify-center">
-                <TouchableOpacity
-                    className={`p-4 rounded-full items-center w-[90%] ${
-                        allTasksChecked ? "bg-[#5CF263]" : "bg-white/10"
-                    }`}
-                    disabled={!allTasksChecked}
-                    onPress={() =>
-                        router.push({
-                            pathname: "/booking/UploadProof",
-                            params: {
-                                title: title || "",
-                                client: client || "",
-                                address: address || "",
-                                propertySize: propertySize || "",
-                                rate: rate || "",
-                                example: example || "",
-                                schedule: schedule || "",
-                                contact: contact || "",
-                                tasks: tasksParam || "",
-                                status: status || "",
-                                activeTab: activeTab || "",
-                            },
-                        })
-                    }
-                    activeOpacity={allTasksChecked ? 0.8 : 1}
-                >
-                    <Text
-                        className={`font-bold text-base ${
-                            allTasksChecked ? "text-[#001540]" : "text-white/30"
-                        }`}
+                {/* Sticky Footer */}
+                <View className="w-full px-5 py-3.75  items-center justify-center">
+                    <TouchableOpacity
+                        className={`p-4 rounded-full items-center w-[90%] ${allTasksChecked ? "bg-[#5CF263]" : "bg-white/10"
+                            }`}
+                        disabled={!allTasksChecked}
+                        onPress={() =>
+                            router.push({
+                                pathname: "/booking/UploadProof",
+                                params: {
+                                    title: title || "",
+                                    client: client || "",
+                                    address: address || "",
+                                    propertySize: propertySize || "",
+                                    rate: rate || "",
+                                    example: example || "",
+                                    schedule: schedule || "",
+                                    contact: contact || "",
+                                    tasks: tasksParam || "",
+                                    status: status || "",
+                                    activeTab: activeTab || "",
+                                },
+                            })
+                        }
+                        activeOpacity={allTasksChecked ? 0.8 : 1}
                     >
-                        Mark as Completed
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                        <Text
+                            className={`font-bold text-base ${allTasksChecked ? "text-[#001540]" : "text-white/30"
+                                }`}
+                        >
+                            Mark as Completed
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </BaseMain>
     );
 }

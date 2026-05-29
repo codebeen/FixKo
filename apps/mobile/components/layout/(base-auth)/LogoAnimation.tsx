@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, View, StyleSheet } from 'react-native';
+import { Animated, Easing, View } from 'react-native';
 import Svg, {
   G,
   Path,
@@ -32,7 +32,6 @@ export default function LogoAnimation() {
   // Text float and scaling animations
   const textFloat1Anim = useRef(new Animated.Value(0)).current;
   const textFloat2Anim = useRef(new Animated.Value(0)).current;
-  const phPulseAnim = useRef(new Animated.Value(0)).current;
   const sunWaggleAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -41,13 +40,13 @@ export default function LogoAnimation() {
       Animated.sequence([
         Animated.timing(gearAnim, {
           toValue: 1,
-          duration: 2000,
+          duration: 2500,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(gearAnim, {
           toValue: 0,
-          duration: 2000,
+          duration: 2500,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
@@ -59,33 +58,33 @@ export default function LogoAnimation() {
       Animated.sequence([
         Animated.timing(wrenchAnim, {
           toValue: 1,
-          duration: 1600,
-          easing: Easing.inOut(Easing.quad),
+          duration: 2000,
+          easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(wrenchAnim, {
           toValue: 0,
-          duration: 1600,
-          easing: Easing.inOut(Easing.quad),
+          duration: 2000,
+          easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
       ])
     );
 
-    // Helper for sparkle loop with stagger/delay
+    // Helper for sparkle loop
     const startSparkle = (anim: Animated.Value, delay: number) => {
       return Animated.loop(
         Animated.sequence([
           Animated.delay(delay),
           Animated.timing(anim, {
             toValue: 1,
-            duration: 1000,
+            duration: 1200,
             easing: Easing.inOut(Easing.sin),
             useNativeDriver: true,
           }),
           Animated.timing(anim, {
             toValue: 0,
-            duration: 1000,
+            duration: 1200,
             easing: Easing.inOut(Easing.sin),
             useNativeDriver: true,
           }),
@@ -100,13 +99,13 @@ export default function LogoAnimation() {
           Animated.delay(delay),
           Animated.timing(anim, {
             toValue: 1,
-            duration: 2500,
+            duration: 3000,
             easing: Easing.inOut(Easing.ease),
             useNativeDriver: true,
           }),
           Animated.timing(anim, {
             toValue: 0,
-            duration: 2500,
+            duration: 3000,
             easing: Easing.inOut(Easing.ease),
             useNativeDriver: true,
           }),
@@ -114,36 +113,18 @@ export default function LogoAnimation() {
       );
     };
 
-    // 5. PH pulse loop
-    const phLoop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(phPulseAnim, {
-          toValue: 1,
-          duration: 1200,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-        Animated.timing(phPulseAnim, {
-          toValue: 0,
-          duration: 1200,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-      ])
-    );
-
-    // 6. Sun waggle loop
+    // 5. Sun waggle loop
     const sunLoop = Animated.loop(
       Animated.sequence([
         Animated.timing(sunWaggleAnim, {
           toValue: 1,
-          duration: 2000,
+          duration: 2500,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(sunWaggleAnim, {
           toValue: 0,
-          duration: 2000,
+          duration: 2500,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
@@ -151,24 +132,23 @@ export default function LogoAnimation() {
     );
 
     const s1 = startSparkle(sparkle1Anim, 0);
-    const s2 = startSparkle(sparkle2Anim, 300);
-    const s3 = startSparkle(sparkle3Anim, 600);
+    const s2 = startSparkle(sparkle2Anim, 400);
+    const s3 = startSparkle(sparkle3Anim, 800);
     
-    const st1 = startSparkle(sparkleText1Anim, 150);
-    const st2 = startSparkle(sparkleText2Anim, 450);
-    const st3 = startSparkle(sparkleText3Anim, 750);
+    const st1 = startSparkle(sparkleText1Anim, 200);
+    const st2 = startSparkle(sparkleText2Anim, 600);
+    const st3 = startSparkle(sparkleText3Anim, 1000);
 
     const f1 = startFloat(textFloat1Anim, 0);
-    const f2 = startFloat(textFloat2Anim, 500);
+    const f2 = startFloat(textFloat2Anim, 600);
 
-    // Start all animations parallelly
+    // Start all remaining animations parallelly
     Animated.parallel([
       gearLoop,
       wrenchLoop,
       s1, s2, s3,
       st1, st2, st3,
       f1, f2,
-      phLoop,
       sunLoop,
     ]).start();
 
@@ -178,7 +158,6 @@ export default function LogoAnimation() {
       s1.stop(); s2.stop(); s3.stop();
       st1.stop(); st2.stop(); st3.stop();
       f1.stop(); f2.stop();
-      phLoop.stop();
       sunLoop.stop();
     };
   }, []);
@@ -186,13 +165,13 @@ export default function LogoAnimation() {
   // Interpolate Gear Rocking
   const gearRotation = gearAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['-12deg', '12deg'],
+    outputRange: ['-4deg', '4deg'],
   });
 
   // Interpolate Wrench Swing
   const wrenchRotation = wrenchAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['-15deg', '25deg'],
+    outputRange: ['2deg', '12deg'],
   });
 
   // Sparkles Interpolations
@@ -200,7 +179,7 @@ export default function LogoAnimation() {
     return {
       opacity: anim.interpolate({
         inputRange: [0, 1],
-        outputRange: [0.3, 1],
+        outputRange: [0.4, 0.9],
       }),
       transform: [
         { translateX: tx },
@@ -208,13 +187,13 @@ export default function LogoAnimation() {
         {
           scale: anim.interpolate({
             inputRange: [0, 1],
-            outputRange: [0.5 * baseScale, 1.3 * baseScale],
+            outputRange: [0.7 * baseScale, 1.05 * baseScale],
           }),
         },
         {
           rotate: anim.interpolate({
             inputRange: [0, 1],
-            outputRange: ['-20deg', '45deg'],
+            outputRange: ['-5deg', '10deg'],
           }),
         },
       ],
@@ -224,27 +203,17 @@ export default function LogoAnimation() {
   // Text Floating
   const textFloat1 = textFloat1Anim.interpolate({
     inputRange: [0, 1],
-    outputRange: [3, -3],
+    outputRange: [1.2, -1.2],
   });
   const textFloat2 = textFloat2Anim.interpolate({
     inputRange: [0, 1],
-    outputRange: [3, -3],
-  });
-
-  // PH pulse
-  const phScale = phPulseAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.95, 1.08],
-  });
-  const phRotate = phPulseAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '4deg'],
+    outputRange: [1.2, -1.2],
   });
 
   // Sun waggle
   const sunRotation = sunWaggleAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['-8deg', '8deg'],
+    outputRange: ['-2.5deg', '2.5deg'],
   });
 
   return (
@@ -279,7 +248,7 @@ export default function LogoAnimation() {
 
         {/* HOUSE AND SPARKLES GROUP */}
         <G transform="translate(120, 10)">
-          {/* Twinkling Sparkles (Left, Top Right, Bottom Right) */}
+          {/* Twinkling Sparkles */}
           <AnimatedG style={getSparkleStyle(sparkle1Anim, 60, 40, 1.0)}>
             <Path d="M 0 -15 Q 0 0 15 0 Q 0 0 0 15 Q 0 0 -15 0 Q 0 0 0 -15 Z" fill="#DBA92E" />
           </AnimatedG>
@@ -357,7 +326,7 @@ export default function LogoAnimation() {
             }}
           >
             <SvgText
-              x="30"
+              x="74"
               y="150"
               fontFamily="System"
               fontWeight="900"
@@ -378,7 +347,7 @@ export default function LogoAnimation() {
             }}
           >
             <SvgText
-              x="220"
+              x="244"
               y="150"
               fontFamily="System"
               fontWeight="900"
@@ -390,20 +359,11 @@ export default function LogoAnimation() {
             </SvgText>
           </AnimatedG>
 
-          {/* Animated pulsing "PH" */}
-          <AnimatedG
-            style={{
-              transform: [
-                { scale: phScale },
-                { rotate: phRotate }
-              ]
-            }}
-            originX={425}
-            originY={90}
-          >
+          {/* STABILIZED "PH" - Animation logic entirely removed from here */}
+          <G>
             <SvgText
               x="400"
-              y="110"
+              y="80"
               fontFamily="System"
               fontWeight="900"
               fontStyle="italic"
@@ -412,7 +372,7 @@ export default function LogoAnimation() {
             >
               PH
             </SvgText>
-          </AnimatedG>
+          </G>
 
           {/* Waggling Half Sun */}
           <AnimatedG
@@ -422,9 +382,9 @@ export default function LogoAnimation() {
               ]
             }}
             originX={430}
-            originY={50}
+            originY={1}
           >
-            <G transform="translate(430, 50)">
+            <G transform="translate(430, 20)">
               <Path d="M -30 0 A 30 30 0 0 1 30 0 Z" fill="#FACC15" />
               {[-70, -45, -20, 0, 20, 45, 70].map((angle, i) => (
                 <Polygon

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, View, ViewStyle } from 'react-native';
 
 interface BaseModalProps {
@@ -9,6 +9,8 @@ interface BaseModalProps {
   cardStyle?: ViewStyle;
   overlayClassName?: string;
   cardClassName?: string;
+  /** Auto-dismiss after this many milliseconds when visible */
+  autoDismiss?: number;
 }
 
 export default function BaseModal({
@@ -19,7 +21,13 @@ export default function BaseModal({
   cardStyle,
   overlayClassName = '',
   cardClassName = '',
+  autoDismiss,
 }: BaseModalProps) {
+  useEffect(() => {
+    if (!visible || !autoDismiss || !onClose) return;
+    const timer = setTimeout(onClose, autoDismiss);
+    return () => clearTimeout(timer);
+  }, [visible, autoDismiss, onClose]);
   return (
     <Modal
       visible={visible}

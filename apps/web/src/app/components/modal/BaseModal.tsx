@@ -49,7 +49,7 @@ const BaseModal = ({ opened, onClose, title, children, footer, width = "md", }: 
                     overflow: 'hidden',
                 },
                 header: {
-                    backgroundColor: '#001851', // Dark Blue
+                    backgroundColor: '#001851', 
                     padding: '24px 32px',
                     margin: 0,
                 },

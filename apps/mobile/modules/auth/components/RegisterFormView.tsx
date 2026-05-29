@@ -29,22 +29,18 @@ const InputGroup = ({ label, icon, placeholder, isPassword, showPass, setShowPas
   const [isFocused, setIsFocused] = useState(false);
   return (
     <View className="mt-3 w-full">
-      <Text 
+      <Text
         className="text-[12.5px] font-semibold mb-1.5"
         style={{ color: labelColor || '#ffffffa8' }}
       >
         {label}
       </Text>
       <View
-        className={`flex-row items-center rounded-lg px-3.5 h-[42px] gap-2 border ${
-          isFocused ? 'bg-white' : 'bg-slate-50'
-        } ${
-          error ? 'border-[#EF4444]' : (isFocused ? 'border-[#1A56DB]' : 'border-slate-200')
-        } ${
-          isFocused ? 'shadow-sm shadow-[#1A56DB]/8 elevation-1' : ''
-        } ${
-          error && isFocused ? 'shadow-sm shadow-[#EF4444]/8' : ''
-        }`}
+        className={`flex-row items-center rounded-lg px-3.5 h-[42px] gap-2 border ${isFocused ? 'bg-white' : 'bg-slate-50'
+          } ${error ? 'border-[#EF4444]' : (isFocused ? 'border-[#1A56DB]' : 'border-slate-200')
+          } ${isFocused ? 'shadow-sm shadow-[#1A56DB]/8 elevation-1' : ''
+          } ${error && isFocused ? 'shadow-sm shadow-[#EF4444]/8' : ''
+          }`}
       >
         <Ionicons name={icon} size={18} color={error ? '#EF4444' : (isFocused ? '#1A56DB' : '#888')} />
         <TextInput
@@ -74,7 +70,7 @@ const PhoneInputGroup = ({ labelColor, value, onChangeText, error }: { labelColo
   const [isFocused, setIsFocused] = useState(false);
   return (
     <View className="mt-3 w-full">
-      <Text 
+      <Text
         className="text-[12.5px] font-semibold mb-1.5"
         style={{ color: labelColor || '#ffffffa8' }}
       >
@@ -82,15 +78,11 @@ const PhoneInputGroup = ({ labelColor, value, onChangeText, error }: { labelColo
       </Text>
       <View className="flex-row items-center gap-2.5 w-full">
         <View
-          className={`flex-1 flex-row items-center rounded-lg px-3.5 h-[42px] gap-2 border ${
-            isFocused ? 'bg-white' : 'bg-slate-50'
-          } ${
-            error ? 'border-[#EF4444]' : (isFocused ? 'border-[#1A56DB]' : 'border-slate-200')
-          } ${
-            isFocused ? 'shadow-sm shadow-[#1A56DB]/8 elevation-1' : ''
-          } ${
-            error && isFocused ? 'shadow-sm shadow-[#EF4444]/8' : ''
-          }`}
+          className={`flex-1 flex-row items-center rounded-lg px-3.5 h-[42px] gap-2 border ${isFocused ? 'bg-white' : 'bg-slate-50'
+            } ${error ? 'border-[#EF4444]' : (isFocused ? 'border-[#1A56DB]' : 'border-slate-200')
+            } ${isFocused ? 'shadow-sm shadow-[#1A56DB]/8 elevation-1' : ''
+            } ${error && isFocused ? 'shadow-sm shadow-[#EF4444]/8' : ''
+            }`}
         >
           <Text className="text-[#333] text-[13.5px] font-semibold">+63</Text>
           <TextInput
@@ -134,9 +126,15 @@ export default function RegisterFormView() {
   const router = useRouter();
   const { role } = useLocalSearchParams<{ role?: string }>();
 
+  // FIX: Wrapped navigation inside a short timeout to push execution 
+  // to the next frame tick, letting Expo Router load its context first.
   useEffect(() => {
     if (!role || (role !== 'client' && role !== 'worker')) {
-      router.replace('/(auth)/User-Type' as any);
+      const timeoutId = setTimeout(() => {
+        router.replace('/(auth)/User-Type' as any);
+      }, 0);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [role, router]);
 

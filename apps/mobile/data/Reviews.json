@@ -1,0 +1,81 @@
+{
+  "workersToReview": [
+    {
+      "id": "1",
+      "name": "Tessa Cruz",
+      "service": "Deep Home Cleaning",
+      "date": "May 24, 2026"
+    },
+    {
+      "id": "2",
+      "name": "Nadine A. Borja",
+      "service": "Plumbing Repair",
+      "date": "May 20, 2026"
+    },
+    {
+      "id": "3",
+      "name": "Shanella Cagulang",
+      "service": "General Cleaning",
+      "date": "May 22, 2026"
+    },
+    {
+      "id": "4",
+      "name": "Marcus Reyes",
+      "service": "Electrical Installation",
+      "date": "May 18, 2026"
+    },
+    {
+      "id": "5",
+      "name": "Ericka Johnson",
+      "service": "Carpet Washing",
+      "date": "May 15, 2026"
+    }
+  ],
+  "workerReviews": [
+    {
+      "id": "1",
+      "user": "Darben Client",
+      "title": "Highly professional work",
+      "comment": "Very meticulous cleaning. Arrived on time and completed the entire checklist correctly. Highly recommended!",
+      "rating": 5,
+      "status": "Excellent",
+      "date": "May 26, 2026"
+    },
+    {
+      "id": "2",
+      "user": "Nadine",
+      "title": "Extremely polite & helpful",
+      "comment": "Super helper, cleaned up my kitchen. Very friendly and helpful.",
+      "rating": 5,
+      "status": "Excellent",
+      "date": "May 24, 2026"
+    },
+    {
+      "id": "3",
+      "user": "Anonymous",
+      "title": "Good work",
+      "comment": "Good cleaning, though they took a bit longer than expected.",
+      "rating": 4,
+      "status": "Good",
+      "date": "May 18, 2026"
+    },
+    {
+      "id": "4",
+      "user": "Althea",
+      "title": "Fantastic Job",
+      "comment": "Fixed the leaking pipe under the sink within 30 minutes. Was very polite and even cleaned up the water mess.",
+      "rating": 5,
+      "status": "Excellent",
+      "date": "May 15, 2026"
+    },
+    {
+      "id": "5",
+      "user": "John D.",
+      "title": "Could be better",
+      "comment": "The service was okay, but they forgot to bring the correct tools initially which caused a delay.",
+      "rating": 3,
+      "status": "Average",
+      "date": "May 10, 2026"
+    }
+  ]
+}

@@ -17,9 +17,8 @@ interface InfoBoxProps {
 
 const InfoBox = ({ icon, label, half }: InfoBoxProps) => (
     <View
-        className={`border border-white/40 rounded-xl p-[15px] mb-3 justify-center items-start ${
-            half ? "w-[48%] h-[90px]" : "w-full"
-        }`}
+        className={`border border-white/40 rounded-xl p-[15px] mb-3 justify-center items-start ${half ? "w-[48%] h-[90px]" : "w-full"
+            }`}
     >
         {icon}
         <Text className="text-white text-[13px] mt-2">{label}</Text>
@@ -37,6 +36,8 @@ const StatItem = ({ icon, label }: StatItemProps) => (
         <Text className="text-white text-[13px] ml-2.5">{label}</Text>
     </View>
 );
+
+import Stepper from '@/modules/worker/components/stepper/Stepper';
 
 export default function JobCompletedView() {
     const router = useRouter();
@@ -74,14 +75,16 @@ export default function JobCompletedView() {
 
     return (
         <BaseMain scrollable={false}>
-            <TopBar title="Completed" onBack={() => router.replace("/home")} />
+            <TopBar title="Completed" />
 
-            <View className="flex-1 items-center px-[30px]">
+            <View className="flex-1 items-center px-[30px] pt-4">
+                <Stepper currentStep={5} />
+
                 <MaterialCommunityIcons
                     name="check-decagram"
-                    size={130}
+                    size={100}
                     color="#5df260"
-                    className="mt-[30px] mb-5"
+                    className="mt-2 mb-4"
                 />
 
                 <Text className="text-white text-center text-base leading-[22px] mb-[30px]">

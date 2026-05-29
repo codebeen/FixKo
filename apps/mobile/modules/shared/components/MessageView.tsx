@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView, TextInput, KeyboardAvoidingVi
 import { Ionicons } from '@expo/vector-icons';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
 import { useUserRole } from '../hooks/useUserRole';
+const messagesData = require('../../../data/Message.json');
 
 interface ChatMessage {
   id: string;
@@ -13,24 +14,20 @@ interface ChatMessage {
 
 export default function MessageView() {
   const role = useUserRole();
+  const roleData = (messagesData as any)[role] || {};
   const [selectedInboxUser, setSelectedInboxUser] = useState<string | null>(null);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { id: '1', sender: 'other', text: 'Hello! I am on my way to your location.', timestamp: '10:02 AM' },
-    { id: '2', sender: 'me', text: 'Hi! Great, thanks for the update. Please let me know once you arrive.', timestamp: '10:05 AM' },
-    { id: '3', sender: 'other', text: 'Sure thing, I will call you when I am outside.', timestamp: '10:06 AM' }
-  ]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(roleData.initialMessages || []);
   const [newMessageText, setNewMessageText] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Inbox contacts based on role
-  const contacts = role === 'worker' 
-    ? [
-        { id: '1', name: 'Darben Client', avatarLetter: 'D', service: 'House Cleaning', lastMsg: 'Please let me know once you arrive.', time: '10:05 AM', unread: 0 },
-        { id: '2', name: 'Nadine Borja', avatarLetter: 'N', service: 'Plumbing Service', lastMsg: 'Okay, sounds good.', time: 'Yesterday', unread: 1 },
-      ]
-    : [
-        { id: '1', name: 'Shanella Cagulang (Worker)', avatarLetter: 'S', service: 'House Cleaning', lastMsg: 'Sure thing, I will call you when I am outside.', time: '10:06 AM', unread: 0 },
-        { id: '2', name: 'Tessa Cruz (Worker)', avatarLetter: 'T', service: 'Cleaning Variation', lastMsg: 'Booking confirmed!', time: 'May 25', unread: 0 },
-      ];
+  // Inbox contacts based on role from JSON
+  const contacts = roleData.contacts || [];
+  
+  // Filter contacts based on search query
+  const filteredContacts = contacts.filter((c: any) => 
+    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    c.service.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSendMessage = () => {
     if (!newMessageText.trim()) return;
@@ -58,7 +55,7 @@ export default function MessageView() {
   };
 
   const renderInboxItem = ({ item }: { item: typeof contacts[0] }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       onPress={() => setSelectedInboxUser(item.name)}
       className="flex-row items-center bg-white/10 border border-white/10 rounded-2xl p-4 mb-3"
     >
@@ -87,18 +84,18 @@ export default function MessageView() {
 
   return (
     <BaseMain>
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         className="flex-1"
       >
         <View className="flex-1 px-5 pt-4">
-          
+
           {selectedInboxUser ? (
             /* Chat Screen */
             <View className="flex-1">
               {/* Header */}
               <View className="flex-row items-center border-b border-white/10 pb-4 mb-4">
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => setSelectedInboxUser(null)}
                   className="mr-3 p-1"
                 >
@@ -106,7 +103,7 @@ export default function MessageView() {
                 </TouchableOpacity>
                 <View className="flex-1">
                   <Text className="text-white text-lg font-bold">{selectedInboxUser}</Text>
-                  <Text className="text-brand-green text-xs font-semibold">Active Booking</Text>
+                  <Text className="text-[#4ade80] text-xs font-semibold">Active Booking</Text>
                 </View>
                 <TouchableOpacity className="p-2">
                   <Ionicons name="call" size={20} color="#7EB1F1" />
@@ -114,19 +111,18 @@ export default function MessageView() {
               </View>
 
               {/* Message List */}
-              <ScrollView 
+              <ScrollView
                 ref={ref => ref?.scrollToEnd({ animated: true })}
                 className="flex-1 mb-4"
                 showsVerticalScrollIndicator={false}
               >
                 {chatMessages.map(msg => (
-                  <View 
-                    key={msg.id} 
-                    className={`max-w-[80%] rounded-2xl p-3.5 mb-3 ${
-                      msg.sender === 'me' 
-                        ? 'bg-brand-blue self-end rounded-tr-none' 
-                        : 'bg-white/10 self-start rounded-tl-none border border-white/5'
-                    }`}
+                  <View
+                    key={msg.id}
+                    className={`max-w-[80%] rounded-2xl p-3.5 mb-3 ${msg.sender === 'me'
+                      ? 'bg-brand-blue self-end rounded-tr-none'
+                      : 'bg-white/10 self-start rounded-tl-none border border-white/5'
+                      }`}
                   >
                     <Text className={`text-sm ${msg.sender === 'me' ? 'text-[#001449] font-medium' : 'text-white'}`}>
                       {msg.text}
@@ -140,17 +136,23 @@ export default function MessageView() {
 
               {/* Chat Input Bar */}
               <View className="flex-row items-center bg-white/5 border border-white/10 rounded-full p-2 mb-6">
+                <TouchableOpacity className="p-2">
+                  <Ionicons name="add-circle-outline" size={22} color="#AAB8C2" />
+                </TouchableOpacity>
                 <TextInput
                   placeholder="Type a message..."
                   placeholderTextColor="#888"
                   value={newMessageText}
                   onChangeText={setNewMessageText}
-                  className="flex-1 text-white text-sm px-3 py-2 outline-none"
+                  className="flex-1 text-white text-sm px-2 py-2 outline-none"
                   onSubmitEditing={handleSendMessage}
                 />
-                <TouchableOpacity 
+                <TouchableOpacity className="p-2 mr-1">
+                  <Ionicons name="camera-outline" size={20} color="#AAB8C2" />
+                </TouchableOpacity>
+                <TouchableOpacity
                   onPress={handleSendMessage}
-                  className="w-10 h-10 bg-brand-blue rounded-full justify-center items-center ml-2"
+                  className="w-10 h-10 bg-brand-blue rounded-full justify-center items-center"
                 >
                   <Ionicons name="send" size={16} color="#001449" />
                 </TouchableOpacity>
@@ -159,7 +161,7 @@ export default function MessageView() {
           ) : (
             /* Inbox List Screen */
             <View className="flex-1">
-              <View className="flex-row justify-between items-center mb-6">
+              <View className="flex-row justify-between items-center mb-4">
                 <Text className="text-white text-2xl font-bold">Messages</Text>
                 <View className="bg-brand-blue/15 px-3 py-1 rounded-full border border-brand-blue/20">
                   <Text className="text-[#7EB1F1] text-[10px] font-bold uppercase tracking-wider">
@@ -168,8 +170,20 @@ export default function MessageView() {
                 </View>
               </View>
 
+              {/* Search Bar */}
+              <View className="flex-row items-center bg-white/10 rounded-xl px-4 py-3 mb-4">
+                <Ionicons name="search" size={18} color="#AAB8C2" />
+                <TextInput
+                  placeholder="Search messages..."
+                  placeholderTextColor="#AAB8C2"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  className="flex-1 text-white text-sm ml-2 outline-none"
+                />
+              </View>
+
               <FlatList
-                data={contacts}
+                data={filteredContacts}
                 renderItem={renderInboxItem}
                 keyExtractor={item => item.id}
                 showsVerticalScrollIndicator={false}
