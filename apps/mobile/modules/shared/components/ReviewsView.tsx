@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-import {
-    Text,
-    View,
-    TouchableOpacity,
-    ScrollView,
-    TextInput,
-    FlatList,
-} from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, TextInput, FlatList,} from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import BaseMain from "@/components/layout/(base-main)/BaseMain";
 import { useUserRole } from "../hooks/useUserRole";
 import TabTopBar from "@/components/ui/TabTopBar";
+const reviewsData = require("../../../data/Reviews.json");
 
 interface WorkerToReview {
     id: string;
     name: string;
     service: string;
+    date: string;
+}
+
+interface WorkerReview {
+    id: string;
+    user: string;
+    title: string;
+    comment: string;
+    rating: number;
+    status: string;
     date: string;
 }
 
@@ -33,54 +37,8 @@ export default function ReviewsView() {
     const [comment, setComment] = useState("");
     const [submittedReviews, setSubmittedReviews] = useState<any[]>([]);
 
-    const workersToReview: WorkerToReview[] = [
-        {
-            id: "1",
-            name: "Tessa Cruz",
-            service: "Deep Home Cleaning",
-            date: "May 24, 2026",
-        },
-        {
-            id: "2",
-            name: "Nadine A. Borja",
-            service: "Plumbing Repair",
-            date: "May 20, 2026",
-        },
-    ];
-
-    // Worker static reviews data
-    const workerReviews = [
-        {
-            id: "1",
-            user: "Darben Client",
-            title: "Highly professional work",
-            comment:
-                "Very meticulous cleaning. Arrived on time and completed the entire checklist correctly. Highly recommended!",
-            rating: 5,
-            status: "Excellent",
-            date: "May 26, 2026",
-        },
-        {
-            id: "2",
-            user: "N Nadine",
-            title: "Extremely polite & helpful",
-            comment:
-                "Super helper, cleaned up my kitchen. Very friendly and helpful.",
-            rating: 5,
-            status: "Excellent",
-            date: "May 24, 2026",
-        },
-        {
-            id: "3",
-            user: "Anonymous",
-            title: "Good work",
-            comment:
-                "Good cleaning, though they took a bit longer than expected.",
-            rating: 4,
-            status: "Good",
-            date: "May 18, 2026",
-        },
-    ];
+    const workersToReview: WorkerToReview[] = reviewsData.workersToReview || [];
+    const workerReviews: WorkerReview[] = reviewsData.workerReviews || [];
 
     const handleReviewSubmit = () => {
         if (!selectedWorker) return;

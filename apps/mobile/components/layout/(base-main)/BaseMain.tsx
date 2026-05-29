@@ -46,7 +46,7 @@ export default function BaseMain({
       className="flex-1"
       contentContainerClassName="flex-grow"
       contentContainerStyle={[
-        { paddingHorizontal: 20, paddingTop: 10, paddingBottom: 40 },
+        { paddingHorizontal: 20, paddingTop: 5, paddingBottom: 10 },
         padding !== undefined ? { padding } : null,
         align === 'center' ? { alignItems: 'center' } : null,
         contentContainerStyle,

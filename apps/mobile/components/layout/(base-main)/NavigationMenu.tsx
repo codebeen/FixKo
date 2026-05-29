@@ -38,10 +38,10 @@ export default function NavigationMenu() {
     const cleanedSeg = seg ? seg.replace(/[()]/g, '') : 'home';
     const mappedSeg =
       cleanedSeg === 'JobOverview' ||
-      cleanedSeg === 'StartJob' ||
-      cleanedSeg === 'Timer' ||
-      cleanedSeg === 'UploadProof' ||
-      cleanedSeg === 'JobCompleted'
+        cleanedSeg === 'StartJob' ||
+        cleanedSeg === 'Timer' ||
+        cleanedSeg === 'UploadProof' ||
+        cleanedSeg === 'JobCompleted'
         ? 'bookings'
         : cleanedSeg;
     const idx = routes.findIndex(r => r.name === mappedSeg);
@@ -56,7 +56,7 @@ export default function NavigationMenu() {
   };
 
   return (
-    <View className="absolute bottom-[12px] left-[16px] right-[16px] h-[64px] rounded-[24px] items-center justify-center bg-brand-navy border border-white/10 shadow-lg shadow-black/30 elevation-8">
+    <View className="absolute bottom-[4px] left-[16px] right-[16px] h-[64px] rounded-[24px] items-center justify-center bg-brand-navy border border-white/10 shadow-lg shadow-black/30 elevation-8">
       <View className="flex-row justify-around items-center h-full w-full px-[8px]">
         {routes.map((tab) => {
           const isActive = active === tab.name;

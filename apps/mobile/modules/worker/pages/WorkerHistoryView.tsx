@@ -56,20 +56,87 @@ export default function WorkerHistoryView() {
                 showsVerticalScrollIndicator={false}
             >
                 {/* ── Earnings Summary Card ── */}
-                <View className="bg-white rounded-3xl p-6 items-center mb-6">
-                    <Text className="text-[#4B5563] text-xs font-semibold uppercase tracking-wider">
-                        Total Lifetime Payout
-                    </Text>
-                    <Text className="text-[#001449] text-3xl font-black mt-1">
-                        ₱{totalPayout.toLocaleString("en-PH", { minimumFractionDigits: 2 })}
-                    </Text>
-                    <Text className="text-[#4ade80] text-xs font-bold mt-1.5">
-                        {completedBookings.length} job{completedBookings.length !== 1 ? "s" : ""} successfully delivered
-                    </Text>
+                <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm">
+                    <View className="items-center">
+                        <Text className="text-[#4B5563] text-xs font-semibold uppercase tracking-wider">
+                            Available Balance
+                        </Text>
+                        <Text className="text-[#001449] text-4xl font-black mt-1">
+                            ₱{ (totalPayout * 0.65).toLocaleString("en-PH", { minimumFractionDigits: 2 }) }
+                        </Text>
+                        <Text className="text-[#4B5563] text-xs mt-1.5">
+                            Total Earnings: <Text className="font-bold">₱{totalPayout.toLocaleString("en-PH", { minimumFractionDigits: 2 })}</Text>
+                        </Text>
+                    </View>
+
+                    <View className="w-full flex-row mt-6 pt-6 border-t border-gray-100 justify-between px-2">
+                         <TouchableOpacity className="items-center active:opacity-70 flex-1">
+                             <View className="w-12 h-12 rounded-full bg-[#001449]/10 items-center justify-center mb-2">
+                                <Ionicons name="cash-outline" size={24} color="#001449" />
+                             </View>
+                             <Text className="text-[#001449] text-xs font-bold">Cash Out</Text>
+                         </TouchableOpacity>
+                         
+                         <TouchableOpacity className="items-center active:opacity-70 flex-1">
+                             <View className="w-12 h-12 rounded-full bg-[#001449]/10 items-center justify-center mb-2">
+                                <Ionicons name="swap-horizontal-outline" size={24} color="#001449" />
+                             </View>
+                             <Text className="text-[#001449] text-xs font-bold">Transfer</Text>
+                         </TouchableOpacity>
+                         
+                         <TouchableOpacity className="items-center active:opacity-70 flex-1">
+                             <View className="w-12 h-12 rounded-full bg-[#001449]/10 items-center justify-center mb-2">
+                                <Ionicons name="pie-chart-outline" size={24} color="#001449" />
+                             </View>
+                             <Text className="text-[#001449] text-xs font-bold">Analytics</Text>
+                         </TouchableOpacity>
+                    </View>
                 </View>
 
-                <Text className="text-brand-yellow text-xs font-bold uppercase tracking-wider mb-4 px-1">
-                    Job History
+                <View className="flex-row justify-between items-center mb-4 px-1">
+                    <Text className="text-brand-yellow text-xs font-bold uppercase tracking-wider">
+                        Recent Transactions
+                    </Text>
+                    <TouchableOpacity>
+                        <Text className="text-white/60 text-xs font-semibold">View All</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* Dummy Cashout / Transfer Records */}
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-3 flex-row items-center justify-between"
+                >
+                    <View className="flex-row items-center flex-1 mr-3">
+                        <View className="w-10 h-10 rounded-full bg-[#4ade80]/20 items-center justify-center mr-3">
+                            <Ionicons name="cash" size={20} color="#4ade80" />
+                        </View>
+                        <View className="flex-1">
+                            <Text className="text-white text-sm font-bold">GCash Cash Out</Text>
+                            <Text className="text-white/50 text-[10px] mt-0.5">Today, 2:30 PM • 0917 •••• 1234</Text>
+                        </View>
+                    </View>
+                    <Text className="text-white text-sm font-bold">- ₱1,500.00</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-6 flex-row items-center justify-between"
+                >
+                    <View className="flex-row items-center flex-1 mr-3">
+                        <View className="w-10 h-10 rounded-full bg-[#F59E0B]/20 items-center justify-center mr-3">
+                            <Ionicons name="business" size={20} color="#F59E0B" />
+                        </View>
+                        <View className="flex-1">
+                            <Text className="text-white text-sm font-bold">Bank Transfer</Text>
+                            <Text className="text-white/50 text-[10px] mt-0.5">Yesterday, 10:15 AM • BDO Unibank</Text>
+                        </View>
+                    </View>
+                    <Text className="text-white text-sm font-bold">- ₱3,000.00</Text>
+                </TouchableOpacity>
+
+                <Text className="text-brand-yellow text-xs font-bold uppercase tracking-wider mb-4 px-1 mt-2">
+                    Job Earnings History
                 </Text>
 
                 {completedBookings.length === 0 ? (
@@ -116,8 +183,8 @@ export default function WorkerHistoryView() {
                                         {item.address}
                                     </Text>
                                 </View>
-                                <Text className="text-white text-base font-bold">
-                                    ₱{(item.price ?? 0).toLocaleString()}
+                                <Text className="text-[#4ade80] text-base font-bold">
+                                    + ₱{(item.price ?? 0).toLocaleString()}
                                 </Text>
                             </View>
                         </TouchableOpacity>

@@ -14,16 +14,14 @@ interface ChatMessage {
   timestamp: string;
 }
 
-const INITIAL_MESSAGES: ChatMessage[] = [
-  { id: '1', sender: 'other', text: 'Hello! Just confirming our booking for today.', timestamp: '09:55 AM' },
-  { id: '2', sender: 'me',    text: 'Hi! Yes, I am already on my way to your location.', timestamp: '09:57 AM' },
-  { id: '3', sender: 'other', text: 'Great! The gate code is 4521. See you soon!', timestamp: '09:58 AM' },
-];
+const messagesData = require('../../../data/Message.json');
 
 export default function ChatView() {
   const { client, title } = useLocalSearchParams<{ client: string; title: string }>();
 
-  const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
+  // Use centralized chat initial messages
+  const initialMessages = messagesData.chatInitialMessages || [];
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [inputText, setInputText]   = useState('');
   const scrollRef = useRef<ScrollView>(null);
 
@@ -147,6 +145,9 @@ export default function ChatView() {
             borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.08)',
           }}
         >
+          <TouchableOpacity style={{ padding: 8 }}>
+            <Ionicons name="add-circle-outline" size={24} color="rgba(255,255,255,0.6)" />
+          </TouchableOpacity>
           <TextInput
             placeholder="Type a message..."
             placeholderTextColor="rgba(255,255,255,0.35)"
@@ -159,9 +160,12 @@ export default function ChatView() {
               backgroundColor: 'rgba(255,255,255,0.06)',
               borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)',
               borderRadius: 24, paddingHorizontal: 16, paddingVertical: 10,
-              color: 'white', fontSize: 14, marginRight: 8,
+              color: 'white', fontSize: 14, marginHorizontal: 8,
             }}
           />
+          <TouchableOpacity style={{ padding: 8, marginRight: 4 }}>
+            <Ionicons name="camera-outline" size={22} color="rgba(255,255,255,0.6)" />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={sendMessage}
             style={{
