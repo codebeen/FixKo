@@ -6,7 +6,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { usePathname } from "next/navigation";
 import { IconChevronLeft, IconChevronRight, IconCopyright, IconX } from "@tabler/icons-react";
 
-import fixkoLogo from "../../assets/logo_fixko.png";
+import Logo from "../logo/Logo";
 import { NAV_CONFIG } from "./NavigationConfig";
 import { SidebarLink } from "./SidebarLink";
 
@@ -81,7 +81,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
       {/* Sidebar Header */}
       <Box pt="md" px="md" pb={0} style={{ position: 'relative' }}>
         <Group justify="center" wrap="nowrap">
-          <Image src={fixkoLogo.src} w={isNarrow ? 105 : 190} h={isNarrow ? 60 : 85} fit="contain" />
+          <Logo variant="light" size={isNarrow ? "sm" : "lg"} />
         </Group>
         
         {(isMobile || !isNarrow) && (
