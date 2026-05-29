@@ -14,11 +14,16 @@ export default function UserTypeView() {
     const isTabletOrWeb = screenWidth > 768;
     const isRowLayout = screenWidth > 640;
 
+
     const handleRolePress = (role: RoleType) => {
+        if (!router) {
+            console.warn('Router not available – ensure the component is rendered inside a route layout');
+            return;
+        }
         router.push({
             pathname: "/(auth)/register",
             params: { role },
-        } as any);
+        });
     };
 
     return (

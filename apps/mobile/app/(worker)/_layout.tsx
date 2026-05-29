@@ -5,10 +5,13 @@ export default function WorkerLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="booking/JobOverview" />
+      <Stack.Screen name="booking/ArrivedWorker" />
       <Stack.Screen name="booking/StartJob" />
       <Stack.Screen name="booking/Timer" />
       <Stack.Screen name="booking/UploadProof" />
+      <Stack.Screen name="booking/Payment" />
       <Stack.Screen name="booking/JobCompleted" />
+      <Stack.Screen name="booking/Chat" />
       <Stack.Screen name="notification" />
     </Stack>
   );

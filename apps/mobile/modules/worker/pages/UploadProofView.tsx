@@ -13,6 +13,8 @@ interface ButtonProps {
     color: string;
 }
 
+import Stepper from '@/modules/worker/components/stepper/Stepper';
+
 export default function UploadProofView() {
     const [images, setImages] = useState<string[]>([]);
     const router = useRouter();
@@ -69,6 +71,7 @@ export default function UploadProofView() {
                     paddingBottom: 40,
                 }}
             >
+                <Stepper currentStep={4} />
 
                 {images.length > 0 ? (
                     <View className="w-full h-[160px] mb-[30px]">
@@ -148,7 +151,7 @@ export default function UploadProofView() {
                     disabled={images.length === 0}
                     onPress={() =>
                         router.push({
-                            pathname: "/booking/JobCompleted",
+                            pathname: "/booking/Payment",
                             params: {
                                 title: title || "",
                                 client: client || "",
@@ -176,7 +179,7 @@ export default function UploadProofView() {
                         Mark as Completed
                     </Text>
                 </TouchableOpacity>
-            </ScrollView>
+            </ScrollView>   
         </BaseMain>
     );
 }

@@ -22,15 +22,15 @@ export default function MessageView() {
   const [newMessageText, setNewMessageText] = useState('');
 
   // Inbox contacts based on role
-  const contacts = role === 'worker' 
+  const contacts = role === 'worker'
     ? [
-        { id: '1', name: 'Darben Client', avatarLetter: 'D', service: 'House Cleaning', lastMsg: 'Please let me know once you arrive.', time: '10:05 AM', unread: 0 },
-        { id: '2', name: 'Nadine Borja', avatarLetter: 'N', service: 'Plumbing Service', lastMsg: 'Okay, sounds good.', time: 'Yesterday', unread: 1 },
-      ]
+      { id: '1', name: 'Darben Client', avatarLetter: 'D', service: 'House Cleaning', lastMsg: 'Please let me know once you arrive.', time: '10:05 AM', unread: 0, distance: '2.5 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' },
+      { id: '2', name: 'Nadine Borja', avatarLetter: 'N', service: 'Plumbing Service', lastMsg: 'Okay, sounds good.', time: 'Yesterday', unread: 1, distance: '5.2 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' }
+    ]
     : [
-        { id: '1', name: 'Shanella Cagulang (Worker)', avatarLetter: 'S', service: 'House Cleaning', lastMsg: 'Sure thing, I will call you when I am outside.', time: '10:06 AM', unread: 0 },
-        { id: '2', name: 'Tessa Cruz (Worker)', avatarLetter: 'T', service: 'Cleaning Variation', lastMsg: 'Booking confirmed!', time: 'May 25', unread: 0 },
-      ];
+      { id: '1', name: 'Shanella Cagulang (Worker)', avatarLetter: 'S', service: 'House Cleaning', lastMsg: 'Sure thing, I will call you when I am outside.', time: '10:06 AM', unread: 0, distance: '2.5 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' },
+      { id: '2', name: 'Tessa Cruz (Worker)', avatarLetter: 'T', service: 'Cleaning Variation', lastMsg: 'Booking confirmed!', time: 'May 25', unread: 0, distance: '5.5 km', text: 'Job scheduled', timestamp: '2026-05-30T01:01:01+08:00' }
+    ];
 
   const handleSendMessage = () => {
     if (!newMessageText.trim()) return;
@@ -58,7 +58,7 @@ export default function MessageView() {
   };
 
   const renderInboxItem = ({ item }: { item: typeof contacts[0] }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       onPress={() => setSelectedInboxUser(item.name)}
       className="flex-row items-center bg-white/10 border border-white/10 rounded-2xl p-4 mb-3"
     >
@@ -87,18 +87,18 @@ export default function MessageView() {
 
   return (
     <BaseMain>
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         className="flex-1"
       >
         <View className="flex-1 px-5 pt-4">
-          
+
           {selectedInboxUser ? (
             /* Chat Screen */
             <View className="flex-1">
               {/* Header */}
               <View className="flex-row items-center border-b border-white/10 pb-4 mb-4">
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => setSelectedInboxUser(null)}
                   className="mr-3 p-1"
                 >
@@ -114,19 +114,18 @@ export default function MessageView() {
               </View>
 
               {/* Message List */}
-              <ScrollView 
+              <ScrollView
                 ref={ref => ref?.scrollToEnd({ animated: true })}
                 className="flex-1 mb-4"
                 showsVerticalScrollIndicator={false}
               >
                 {chatMessages.map(msg => (
-                  <View 
-                    key={msg.id} 
-                    className={`max-w-[80%] rounded-2xl p-3.5 mb-3 ${
-                      msg.sender === 'me' 
-                        ? 'bg-brand-blue self-end rounded-tr-none' 
+                  <View
+                    key={msg.id}
+                    className={`max-w-[80%] rounded-2xl p-3.5 mb-3 ${msg.sender === 'me'
+                        ? 'bg-brand-blue self-end rounded-tr-none'
                         : 'bg-white/10 self-start rounded-tl-none border border-white/5'
-                    }`}
+                      }`}
                   >
                     <Text className={`text-sm ${msg.sender === 'me' ? 'text-[#001449] font-medium' : 'text-white'}`}>
                       {msg.text}
@@ -148,7 +147,7 @@ export default function MessageView() {
                   className="flex-1 text-white text-sm px-3 py-2 outline-none"
                   onSubmitEditing={handleSendMessage}
                 />
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={handleSendMessage}
                   className="w-10 h-10 bg-brand-blue rounded-full justify-center items-center ml-2"
                 >

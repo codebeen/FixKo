@@ -59,7 +59,7 @@ export default function WorkerBookingsDashboardView() {
     return (
         <BaseMain>
             {/* Header */}
-            <TabTopBar title="Bookings"  rightElement={<Ionicons name="calendar-outline" size={24} color="white" />} />
+            <TabTopBar title="Bookings" rightElement={<Ionicons name="calendar-outline" size={24} color="white" />} />
 
             {/* Tab Row */}
             <View
@@ -73,11 +73,10 @@ export default function WorkerBookingsDashboardView() {
                             <TouchableOpacity
                                 key={tab}
                                 onPress={() => setActiveTab(tab)}
-                                className={`flex-1 items-center justify-center border ${
-                                    isActive
-                                        ? "bg-white border-white"
-                                        : "bg-transparent border-white/30"
-                                }`}
+                                className={`flex-1 items-center justify-center border ${isActive
+                                    ? "bg-white border-white"
+                                    : "bg-transparent border-white/30"
+                                    }`}
                                 style={{
                                     paddingVertical: s(8),
                                     borderRadius: s(20),
@@ -88,7 +87,7 @@ export default function WorkerBookingsDashboardView() {
                                 >
                                     {tab}
                                     {tab === "Incoming request" &&
-                                    pendingCount > 0
+                                        pendingCount > 0
                                         ? ` (${pendingCount})`
                                         : ""}
                                 </Text>
@@ -228,8 +227,8 @@ export default function WorkerBookingsDashboardView() {
                                         }}
                                         onPress={() => {
                                             const targetPath =
-                                                item.status !== "pending"
-                                                    ? "/booking/StartJob"
+                                                item.status !== "pending" && item.status !== "completed"
+                                                    ? "/booking/ArrivedWorker"
                                                     : "/booking/JobOverview";
                                             router.push({
                                                 pathname: targetPath,
@@ -248,8 +247,8 @@ export default function WorkerBookingsDashboardView() {
                                                     contact: item.contact,
                                                     tasks: item.tasks
                                                         ? JSON.stringify(
-                                                              item.tasks,
-                                                          )
+                                                            item.tasks,
+                                                        )
                                                         : undefined,
                                                     activeTab: activeTab,
                                                 },

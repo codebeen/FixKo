@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-  ScrollView
-} from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
 import TopBar from '@/components/ui/top-bar';
+import ClientName from '@/modules/worker/components/bookingheader/ClientName';
 
 const { width } = Dimensions.get('window');
 
@@ -26,6 +21,8 @@ const InfoItem = ({ icon, text, isBold = false, iconFamily: IconFam = MaterialCo
     <Text className={`text-md flex-1 ${isBold ? 'font-bold text-md' : ''}`}>{text}</Text>
   </View>
 );
+
+import Stepper from '@/modules/worker/components/stepper/Stepper';
 
 export default function StartJobView() {
   const {
@@ -48,33 +45,13 @@ export default function StartJobView() {
   }, [tasks]);
 
   return (
-    <BaseMain
-      theme="navy"
-      scrollable={false}
-    >
+    <BaseMain theme="navy" scrollable={false}>
       <TopBar title="Job Overview" />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        className="p-5"
-      >
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20, alignItems: 'center' }}>
+        <Stepper currentStep={2} />
 
         {/* Client Section */}
-        {client && (
-          <View className="w-full mb-5 bg-white rounded-xl p-4 border border-white/15 flex-row justify-between items-center">
-            <View className="flex-1">
-              <Text className="text-yellow-800 text-[11px] font-bold tracking-[1.5px] mb-1">CLIENT</Text>
-              <Text className="text-black text-[22px] font-bold">{client}</Text>
-            </View>
-
-            <TouchableOpacity activeOpacity={0.7} className="w-11 h-11 rounded-full bg-black/75 justify-center items-center">
-              <MaterialIcons
-                name="message"
-                size={20}
-                color="white"
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+        <ClientName />
 
         {/* Main Info Card */}
         <View className="w-full border border-white/30 rounded-[15px] p-4 bg-white text-brand-navy-dark">
@@ -94,14 +71,13 @@ export default function StartJobView() {
         {/* Task Container List Section */}
         {parsedTasks.length > 0 && (
           <View className="w-full">
-            <Text className="text-white text-md font-semibold mt-10 mb-5">Available Tasks</Text>
+            <Text className="text-white text-md font-semibold mt-10  mb-5">Available Tasks</Text>
             <View className="bg-white/8 rounded-xl border border-white/20 overflow-hidden">
               {parsedTasks.map((task, index) => (
                 <View
                   key={index}
-                  className={`flex-row justify-between items-center py-3.5 px-4 bg-white/25 ${
-                    index !== parsedTasks.length - 1 ? 'border-b border-b-white/10' : ''
-                  }`}
+                  className={`flex-row justify-between items-center py-3.5 px-4 bg-white/25 ${index !== parsedTasks.length - 1 ? 'border-b border-b-white/10' : ''
+                    }`}
                 >
                   <Text className="text-white text-sm flex-1 mr-2.5">{task}</Text>
                   <Ionicons name="radio-button-on" size={16} color="rgba(255,255,255,0.4)" />
@@ -110,35 +86,35 @@ export default function StartJobView() {
             </View>
           </View>
         )}
-      </ScrollView>
 
-      {/* Footer Action Button */}
-      {status !== 'completed' && (
-        <View className="w-full px-5 py-3.75 items-center justify-center">
-          <TouchableOpacity
-            className="bg-green-500 rounded-[25px] p-4 items-center justify-center shadow-md w-[90%]"
-            activeOpacity={0.8}
-            onPress={() => router.push({
-              pathname: '/booking/Timer',
-              params: {
-                title: title || '',
-                client: client || '',
-                address: address || '',
-                propertySize: propertySize || '',
-                rate: rate || '',
-                example: example || '',
-                schedule: schedule || '',
-                contact: contact || '',
-                tasks: tasks || '',
-                status: status || '',
-                activeTab: activeTab || ''
-              }
-            })}
-          >
-            <Text className="text-dark font-bold text-base">Let&apos;s Get Started</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+        {status !== 'completed' && (
+          <View className="w-full px-5 items-center justify-center mt-6">
+            <TouchableOpacity
+              className="bg-[#66EE66] h-[50px] rounded-[25px] items-center justify-center shadow-md"
+              style={{ width: width > 500 ? '60%' : '85%' }}
+              activeOpacity={0.8}
+              onPress={() => router.push({
+                pathname: '/booking/Timer',
+                params: {
+                  title: title || '',
+                  client: client || '',
+                  address: address || '',
+                  propertySize: propertySize || '',
+                  rate: rate || '',
+                  example: example || '',
+                  schedule: schedule || '',
+                  contact: contact || '',
+                  tasks: tasks || '',
+                  status: status || '',
+                  activeTab: activeTab || ''
+                }
+              })}
+            >
+              <Text className="text-[#001540] font-bold text-base">Let&apos;s Get Started</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </ScrollView>
     </BaseMain>
   );
 }
