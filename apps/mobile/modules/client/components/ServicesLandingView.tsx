@@ -7,12 +7,19 @@ import BaseMain from '@/components/layout/(base-main)/BaseMain';
 const SERVICES = [
     { id: 'cleaning', name: 'Cleaning', icon: 'broom', desc: 'Home, condo, and deep cleaning services' },
     { id: 'plumbing', name: 'Plumbing', icon: 'wrench', desc: 'Pipe leaks, installations, and repairs' },
-    { id: 'construction', name: 'Construction', icon: 'hammer', desc: 'Carpentry, renovations, and builds' },
-    { id: 'electrical', name: 'Electrical', icon: 'bolt', desc: 'Wiring, fixtures, and appliances' },
+    { id: 'carpenter', name: 'Carpenter', icon: 'hammer', desc: 'Carpentry, renovations, and builds' },
+    { id: 'electrician', name: 'Electrical', icon: 'bolt', desc: 'Wiring, fixtures, and appliances' },
 ];
-
 export default function ServicesLandingView() {
     const router = useRouter();
+
+    // Unified dynamic routing method matching your file template [DynamicServiceViewPage]
+    const handleServiceNavigation = (slug: string) => {
+        router.push({
+        pathname: '/(client)/services/variation/DynamicServiceViewPage',
+        params: { serviceType: slug },
+        });
+    };
 
     return (
         <BaseMain>
@@ -27,7 +34,7 @@ export default function ServicesLandingView() {
                         <TouchableOpacity
                             key={service.id}
                             activeOpacity={0.8}
-                            onPress={() => router.push('/(bookings)/mainpage/BookingPage' as any)}
+                            onPress={() => handleServiceNavigation(service.id)}
                             className="bg-white rounded-2xl p-5 flex-row items-center shadow-md"
                         >
                             <View className="w-12 h-12 rounded-xl bg-[#E6EEFD] items-center justify-center mr-4">
