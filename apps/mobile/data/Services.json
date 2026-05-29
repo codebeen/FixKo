@@ -1,0 +1,82 @@
+{
+    "carpenter": {
+        "title": "Carpenter Services",
+        "subtitle": "Expert woodwork, custom furniture crafting, and installations.",
+        "tiers": [
+            { "title": "Minor Woodwork & Repairs", "rate": "₱500 – ₱1,000", "description": "Fixing loose hinges, broken drawers, door alignments, or small furniture repairs" },
+            { "title": "Furniture Assembly & Installation", "rate": "₱800 – ₱1,800", "description": "Assembly of flat-pack furniture (IKEA, etc.), mounting shelves, or cabinet installations" },
+            { "title": "Custom Woodworking & Fabrication", "rate": "₱1,500 – ₱3,500 / day", "description": "Custom tables, wardrobes, partitions, or specialized structural woodwork" }
+        ]
+    },
+
+    "cleaning": {
+        "title": "Variations for Cleaning Services",
+        "subtitle": "Flexible pricing based on home size—bigger spaces, more time and effort.",
+        "tiers": [
+            { "title": "Small Homes (0–50 sqm)", "rate": "₱25–₱35 per sqm", "description": "Perfect for condos, studio units, and small apartments" },
+            { "title": "Medium Homes (51–120 sqm)", "rate": "₱30–₱45 per sqm", "description": "Ideal for standard apartments and small family houses" },
+            { "title": "Large Homes (121–250 sqm)", "rate": "₱40–₱60 per sqm", "description": "Best for bigger family homes with multiple rooms" }
+        ]
+    },
+
+    "painter": {
+        "title": "Painting Services",
+        "subtitle": "Professional interior and exterior painting services for your space.",
+        "tiers": [
+            { "title": "Touch-up & Single Wall Painting", "rate": "₱1,000 – ₱2,000", "description": "Fixing patches, accent walls, or small designated areas" },
+            { "title": "Full Room Painting (Standard Size)", "rate": "₱3,500 – ₱6,000", "description": "Wall and ceiling painting including basic surface preparation and taping" },
+            { "title": "Whole House Exterior/Interior Painting", "rate": "₱800 – ₱1,500 / day", "description": "Large scale contract labor for full home renovations and multi-room projects" }
+        ]
+    },
+
+    "electrician": {
+        "title": "Electrical Services",
+        "subtitle": "Safe and reliable electrical repairs, wiring, and panel upgrades.",
+        "tiers": [
+            { "title": "Fixture & Switch Installation", "rate": "₱400 – ₱800", "description": "Replacing or installing light fixtures, ceiling fans, outlets, or light switches" },
+            { "title": "Electrical Troubleshooting & Leakage", "rate": "₱800 – ₱1,500", "description": "Diagnosing power outages, short circuits, trippings, or grounded lines" },
+            { "title": "Full House Rewiring & Breaker Upgrades", "rate": "₱2,000 – ₱5,000+", "description": "Upgrading load centers, heavy appliance line tracking, or full property rewiring" }
+        ]
+    },
+
+    "beauty": {
+        "title": "Beauty Services",
+        "subtitle": "In-home hair, nail grooming, and professional wellness treatment.",
+        "tiers": [
+            { "title": "Basic Mani-Pedi Session", "rate": "₱350 – ₱600", "description": "Standard cleaning, shaping, and premium polish application for hands and feet" },
+            { "title": "Full Body Massage & Spa", "rate": "₱600 – ₱1,200", "description": "60 to 90-minute home service relaxation massage (Swedish, Shiatsu, or Combination)" },
+            { "title": "Skin & Facial Treatment Pack", "rate": "₱1,000 – ₱2,500", "description": "Deep cleansing facials, diamond peels, or specialized home skincare routines" }
+        ]
+    },
+
+    "ac_repair": {
+        "title": "AC Repair & Maintenance",
+        "subtitle": "Cleaning, leak fixing, and reliable troubleshooting for all AC units.",
+        "tiers": [
+            { "title": "Standard Split/Window Type AC Cleaning", "rate": "₱600 – ₱1,200", "description": "Filter wash, system flushing, and comprehensive performance check" },
+            { "title": "Freon Gas Refill & Leak Repair", "rate": "₱1,500 – ₱3,000", "description": "Locating refrigerant leaks, sealing lines, and recharging Freon systems" },
+            { "title": "Compressor Replacement & General Overhaul", "rate": "₱3,500 – ₱7,000", "description": "Heavy-duty electrical component replacement, board repairs, or full system tear-downs" }
+        ]
+    },
+
+    "plumbing": {
+        "title": "Plumbing Services (Per Fixture Pricing)",
+        "subtitle": "Simple, transparent pricing—pay only for what you need.",
+        "tiers": [
+            { "title": "Faucet Installation", "rate": "₱300 – ₱700", "description": "Includes basic installation and leak check" },
+            { "title": "Sink Installation", "rate": "₱500 – ₱1,200", "description": "Includes mounting and pipe connection" },
+            { "title": "Shower Installation", "rate": "₱700 – ₱1,500", "description": "Includes fixture setup and water flow testing" },
+            { "title": "Toilet Installation", "rate": "₱800 – ₱1,500", "description": "Covers setup, sealing, and functionality testing" }
+        ]
+    },
+
+    "salon": {
+        "title": "Salon Services",
+        "subtitle": "Professional haircuts, styling, and color treatments delivered home.",
+        "tiers": [
+            { "title": "Premium Haircut & Styling", "rate": "₱250 – ₱500", "description": "Personalized hair cutting, shampooing, blow-dry, and professional styling advice" },
+            { "title": "Hair Coloring & Highlights", "rate": "₱1,200 – ₱3,000", "description": "Full hair dyes, root touch-ups, or balayage treatments using salon-grade products" },
+            { "title": "Hair Treatment (Keratin / Rebond)", "rate": "₱1,800 – ₱4,500", "description": "Intense smoothening, straighteners, and restorative damage control hair care" }
+        ]
+    }
+}
