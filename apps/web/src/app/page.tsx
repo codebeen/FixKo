@@ -1,5 +1,10 @@
-import { redirect } from "next/navigation";
+import BaseWebsite from "./components/layout/BaseWebsite";
+import HomeContent from "./homepage/Home";
 
 export default function Home() {
-  redirect("/login");
+  return (
+    <BaseWebsite>
+      <HomeContent />
+    </BaseWebsite>
+  );
 }
