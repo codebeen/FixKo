@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, ScrollView, TextInput, FlatList,} from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, TextInput, FlatList } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import BaseMain from "@/components/layout/(base-main)/BaseMain";
 import { useUserRole } from "../hooks/useUserRole";
 import TabTopBar from "@/components/ui/TabTopBar";
+
 const reviewsData = require("../../../data/Reviews.json");
 
 interface WorkerToReview {
@@ -29,9 +30,7 @@ export default function ReviewsView() {
     const router = useRouter();
 
     // Client states
-    const [selectedWorker, setSelectedWorker] = useState<WorkerToReview | null>(
-        null,
-    );
+    const [selectedWorker, setSelectedWorker] = useState<WorkerToReview | null>(null);
     const [rating, setRating] = useState(5);
     const [reviewTitle, setReviewTitle] = useState("");
     const [comment, setComment] = useState("");
@@ -66,11 +65,13 @@ export default function ReviewsView() {
                 <ScrollView
                     className="flex-1 mt-2"
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: 100 }}
                 >
                     {/* Back button */}
                     <TouchableOpacity
                         onPress={() => setSelectedWorker(null)}
                         className="flex-row items-center mb-5 gap-1"
+                        activeOpacity={0.7}
                     >
                         <Ionicons name="arrow-back" size={16} color="#7EB1F1" />
                         <Text className="text-[#7EB1F1] text-sm font-semibold">
@@ -86,8 +87,7 @@ export default function ReviewsView() {
                             {selectedWorker.name}
                         </Text>
                         <Text className="text-brand-grey-light text-xs mt-0.5">
-                            {selectedWorker.service} • Hired on{" "}
-                            {selectedWorker.date}
+                            {selectedWorker.service} • Hired on {selectedWorker.date}
                         </Text>
                     </View>
 
@@ -100,6 +100,7 @@ export default function ReviewsView() {
                             <TouchableOpacity
                                 key={num}
                                 onPress={() => setRating(num)}
+                                activeOpacity={0.7}
                             >
                                 <Ionicons
                                     name="star"
@@ -141,6 +142,7 @@ export default function ReviewsView() {
                     <TouchableOpacity
                         onPress={handleReviewSubmit}
                         className="bg-brand-blue rounded-full py-4 items-center mb-10"
+                        activeOpacity={0.8}
                     >
                         <Text className="text-[#001449] font-bold text-base">
                             Submit Review
@@ -151,7 +153,12 @@ export default function ReviewsView() {
         }
 
         return (
-            <View className="flex-1 mt-2">
+            // FIXED LAYOUT: Swapped container from non-scrollable View to safe ScrollView layout boundary
+            <ScrollView 
+                className="flex-1 mt-2"
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 110 }}
+            >
                 <Text className="text-brand-yellow text-xs font-bold uppercase tracking-wider mb-3">
                     Workers Pending Review
                 </Text>
@@ -161,6 +168,7 @@ export default function ReviewsView() {
                         key={worker.id}
                         onPress={() => setSelectedWorker(worker)}
                         className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-4 flex-row justify-between items-center"
+                        activeOpacity={0.9}
                     >
                         <View className="flex-1 mr-4">
                             <Text className="text-white text-base font-bold">
@@ -181,8 +189,9 @@ export default function ReviewsView() {
                     </TouchableOpacity>
                 ))}
 
+                {/* Reviews You Left Segment (Now fully scrollable smoothly inside the view stream) */}
                 {submittedReviews.length > 0 && (
-                    <View className="mt-6">
+                    <View className="mt-6 pt-4 border-t border-white/10">
                         <Text className="text-brand-yellow text-xs font-bold uppercase tracking-wider mb-3">
                             Reviews You Left
                         </Text>
@@ -207,14 +216,14 @@ export default function ReviewsView() {
                                 <Text className="text-white text-xs font-bold mt-1">
                                     {rev.title}
                                 </Text>
-                                <Text className="text-brand-grey-light text-[11px] mt-0.5">
+                                <Text className="text-brand-grey-light text-[11px] mt-0.5 leading-4">
                                     {rev.comment}
                                 </Text>
                             </View>
                         ))}
                     </View>
                 )}
-            </View>
+            </ScrollView>
         );
     };
 
@@ -223,6 +232,7 @@ export default function ReviewsView() {
             <ScrollView
                 className="flex-1 mt-2"
                 showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 100 }}
             >
                 {/* Profile Rating Summary Card */}
                 <View className="bg-white rounded-3xl p-6 items-center mb-6">
