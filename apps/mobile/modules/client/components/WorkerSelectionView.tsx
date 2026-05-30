@@ -6,7 +6,6 @@ import ConfirmBookingModal from './ConfirmBookingModal';
 import Button from '@/components/ui/gradient-button';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
 
-// Import our central structured workers file
 import WORKERS_JSON from '@/data/Workers.json';
 
 export default function WorkerSelectionView() {
@@ -14,7 +13,6 @@ export default function WorkerSelectionView() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedWorker, setSelectedWorker] = useState<any>(null);
 
-  // 1. Unified parameter extraction hook container
   const { 
     serviceType, 
     totalCost,
@@ -34,7 +32,6 @@ export default function WorkerSelectionView() {
   const currentServiceKey = serviceType?.toLowerCase() || 'cleaning';
   const numericCost = parseFloat(totalCost || '0');
 
-  // Filter available workers dynamically based on the current service skill requirement
   const matchedWorkers = WORKERS_JSON.filter((worker) =>
     worker.skills.includes(currentServiceKey)
   );
@@ -51,7 +48,7 @@ export default function WorkerSelectionView() {
         showsVerticalScrollIndicator={false}
         className="flex-1"
       >
-        {/* Improved Page Headers Container */}
+        {/* Page Headers Container */}
         <View className="items-center mb-8 mt-4">
           <Text className="text-white text-2xl font-extrabold tracking-tight text-center">
             Supporting Filipino Workers,
@@ -67,7 +64,7 @@ export default function WorkerSelectionView() {
           </View>
         </View>
 
-        {/* Worker Cards Dynamic List Layout */}
+        {/* Worker Cards List Layout */}
         <View className="gap-4">
           {matchedWorkers.length > 0 ? (
             matchedWorkers.map((worker) => (
@@ -75,7 +72,7 @@ export default function WorkerSelectionView() {
                 key={worker.id} 
                 className="bg-white rounded-2xl p-5 shadow-sm"
               >
-                {/* Top Layout Row: Replaced Avatar Image with an official person-fill Icon wrapper */}
+                {/* Top Layout Row: Avatar Image  */}
                 <View className="flex-row items-start">
                   <View className="w-14 h-14 rounded-full bg-[#E6EEFD] border-2 border-[#12357F]/10 items-center justify-center mr-4">
                     <FontAwesome5 name="user-alt" size={20} color="#12357F" />
@@ -108,7 +105,7 @@ export default function WorkerSelectionView() {
                   </View>
                 </View>
 
-                {/* Central Divider line inside white card layout */}
+                {/* Central Divider */}
                 <View className="w-full border-t border-gray-100 my-4" />
 
                 {/* Bottom Layout Row: Feedback description alongside rounded button elements */}
@@ -129,7 +126,6 @@ export default function WorkerSelectionView() {
                     ))}
                   </View>
 
-                  {/* Replaced with your official custom GradientButton mapping */}
                   <Button 
                     title="Book now" 
                     compact={true} 
@@ -155,13 +151,12 @@ export default function WorkerSelectionView() {
         </View>
       </ScrollView>
 
-      {/* Booking confirmation overlay layer with full forward-parameters mapping */}
       <ConfirmBookingModal 
         visible={isModalVisible}
         onClose={() => setModalVisible(false)} 
         basePrice={numericCost}
         addons={[]}
-        workerName={selectedWorker?.name || 'Assigned Specialist'} // Explicitly passing targeted name reference string here
+        workerName={selectedWorker?.name || 'Assigned Specialist'}
         onConfirm={() => {
           setModalVisible(false);
           router.push({

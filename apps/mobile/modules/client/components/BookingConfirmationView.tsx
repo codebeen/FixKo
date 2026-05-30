@@ -6,16 +6,18 @@ import BaseMain from '@/components/layout/(base-main)/BaseMain';
 import TopBar from '@/components/ui/top-bar';
 import Button from '@/components/ui/gradient-button';
 
-const CONFIRMATION_THEMES: Record<string, { name: string; icon: string; primaryIcon: string; secondaryIcon: string; providerLabel: string }> = {
-  carpenter: { name: 'Carpentry', icon: 'hammer', primaryIcon: 'boxes', secondaryIcon: 'tools', providerLabel: 'Carpenter' },
-  cleaning: { name: 'Cleaning', icon: 'broom', primaryIcon: 'bath', secondaryIcon: 'bed', providerLabel: 'Cleaner' },
-  painter: { name: 'Painting', icon: 'paint-roller', primaryIcon: 'layer-group', secondaryIcon: 'paint-brush', providerLabel: 'Painter' },
-  electrician: { name: 'Electrical', icon: 'bolt', primaryIcon: 'plug', secondaryIcon: 'charging-station', providerLabel: 'Electrician' },
-  beauty: { name: 'Beauty', icon: 'cut', primaryIcon: 'spa', secondaryIcon: 'heart', providerLabel: 'Beautician' },
-  ac_repair: { name: 'AC Repair', icon: 'snowflake', primaryIcon: 'wind', secondaryIcon: 'wrench', providerLabel: 'AC Technician' },
-  plumbing: { name: 'Plumbing', icon: 'wrench', primaryIcon: 'tint', secondaryIcon: 'shield-alt', providerLabel: 'Plumber' },
-  salon: { name: 'Salon', icon: 'user-tie', primaryIcon: 'cut', secondaryIcon: 'spray-can', providerLabel: 'Stylist' },
-};
+import { SERVICE_THEMES } from "@/constants/serviceThemes";
+
+// const CONFIRMATION_THEMES: Record<string, { name: string; icon: string; primaryIcon: string; secondaryIcon: string; providerLabel: string }> = {
+//   carpenter: { name: 'Carpentry', icon: 'hammer', primaryIcon: 'boxes', secondaryIcon: 'tools', providerLabel: 'Carpenter' },
+//   cleaning: { name: 'Cleaning', icon: 'broom', primaryIcon: 'bath', secondaryIcon: 'bed', providerLabel: 'Cleaner' },
+//   painter: { name: 'Painting', icon: 'paint-roller', primaryIcon: 'layer-group', secondaryIcon: 'paint-brush', providerLabel: 'Painter' },
+//   electrician: { name: 'Electrical', icon: 'bolt', primaryIcon: 'plug', secondaryIcon: 'charging-station', providerLabel: 'Electrician' },
+//   beauty: { name: 'Beauty', icon: 'cut', primaryIcon: 'spa', secondaryIcon: 'heart', providerLabel: 'Beautician' },
+//   ac_repair: { name: 'AC Repair', icon: 'snowflake', primaryIcon: 'wind', secondaryIcon: 'wrench', providerLabel: 'AC Technician' },
+//   plumbing: { name: 'Plumbing', icon: 'wrench', primaryIcon: 'tint', secondaryIcon: 'shield-alt', providerLabel: 'Plumber' },
+//   salon: { name: 'Salon', icon: 'user-tie', primaryIcon: 'cut', secondaryIcon: 'spray-can', providerLabel: 'Stylist' },
+// };
 
 export default function BookingConfirmationView() {
   const router = useRouter();
@@ -32,7 +34,7 @@ export default function BookingConfirmationView() {
   } = useLocalSearchParams<any>();
 
   const currentKey = serviceType?.toLowerCase() || 'cleaning';
-  const theme = CONFIRMATION_THEMES[currentKey] || CONFIRMATION_THEMES.cleaning;
+  const theme = SERVICE_THEMES[currentKey] || SERVICE_THEMES.cleaning;
   const isCleaning = currentKey === 'cleaning';
 
   const parsedAddons: string[] = selectedAddons ? selectedAddons.split(',').filter(Boolean) : [];
@@ -58,7 +60,7 @@ export default function BookingConfirmationView() {
 
         <View className="px-1 gap-4">
           
-          {/* Section 1: Dynamic Service Context Title Badge */}
+          {/* Section 1:  Service Context Title Badge */}
           <View className="flex-row justify-between items-center bg-white/5 border border-white/10 rounded-xl px-4 py-3">
             <View className="flex-row items-center gap-2.5 flex-1">
               <FontAwesome5 name={theme.icon} size={15} color="white" />
@@ -84,7 +86,7 @@ export default function BookingConfirmationView() {
             </View>
           </View>
 
-          {/* Section 3: FIXED - Quantity / Units Counters Segment (No Overlapping) */}
+          {/* Section 3: Quantity / Units Counters Segment  */}
           <View className="flex-row bg-white/5 border border-white/10 rounded-2xl p-4 items-center justify-between">
             <View className="flex-1 flex-row items-center justify-center gap-3 px-2">
               <FontAwesome5 name={theme.primaryIcon} size={20} color="white" />
@@ -103,7 +105,7 @@ export default function BookingConfirmationView() {
             </View>
           </View>
 
-          {/* Section 4: Dynamic Included Add-ons Panel */}
+          {/* Section 4: Included Add-ons Panel */}
           {parsedAddons.length > 0 && (
             <View className="bg-white/5 border border-white/10 rounded-2xl p-4">
               <Text className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-2.5">Your Active Add-ons</Text>
@@ -120,13 +122,12 @@ export default function BookingConfirmationView() {
             </View>
           )}
 
-          {/* Section 5: Dynamic Professional Specialist Summary & Cost Block */}
+          {/* Section 5: Professional Specialist Summary & Cost Block */}
           <View className="bg-white/5 border border-white/10 rounded-2xl p-4 mt-1">
             <Text className="text-brand-yellow text-xl font-black mb-3">
               Total Cost: ₱{parseFloat(totalCost || '700').toLocaleString('en-US')}
             </Text>
             
-            {/* FIXED LAYOUT ROW: Organized with precise flexible bounds and layout wrapping */}
             <View className="flex-row items-center justify-between border-t border-white/5 pt-3 gap-x-2">
               
               {/* Left Side Container: Specialist Name */}

@@ -13,7 +13,7 @@ export type StepType = {
     status: "completed" | "upcoming";
 };
 
-// Realistic operational data timeline simulation
+
 const TIMELINE_STEPS: StepType[] = [
     {
         id: "1",

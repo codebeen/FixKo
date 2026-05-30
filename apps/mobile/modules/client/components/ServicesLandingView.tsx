@@ -13,7 +13,6 @@ const SERVICES = [
 export default function ServicesLandingView() {
     const router = useRouter();
 
-    // Unified dynamic routing method matching your file template [DynamicServiceViewPage]
     const handleServiceNavigation = (slug: string) => {
         router.push({
         pathname: '/(client)/services/variation/DynamicServiceViewPage',

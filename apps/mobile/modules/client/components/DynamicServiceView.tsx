@@ -8,10 +8,10 @@ import ClientSectionLabel from './ClientSectionLabel';
 import ServiceTierSelector from './ServiceTierSelector';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
 
-// 1. Directly import your JSON data from your relative path
+
 import SERVICES_JSON from '@/data/Services.json'; 
 
-// 2. Define TypeScript structures to avoid lookup compilation errors
+
 interface ServiceStructure {
     title: string;
     subtitle: string;
@@ -22,13 +22,12 @@ interface ServiceStructure {
     }[];
 }
 
-// Map the keys strictly to the typed structure
+
 const SERVICES_DATA = SERVICES_JSON as Record<string, ServiceStructure>;
 
 export default function DynamicServiceView() {
     const { serviceType } = useLocalSearchParams<{ serviceType: string }>();
 
-    // Use a string matching fallback key
     const currentServiceKey = serviceType?.toLowerCase() || 'cleaning';
     const serviceData = SERVICES_DATA[currentServiceKey];
 
@@ -65,7 +64,7 @@ export default function DynamicServiceView() {
         {serviceData.tiers && serviceData.tiers.length > 0 ? (
             <ServiceTierSelector 
                 tiers={serviceData.tiers}  
-                serviceType={currentServiceKey} // Passes 'cleaning', 'carpenter', etc.
+                serviceType={currentServiceKey} 
             />
         ) : (
             <View className="mt-8 items-center p-6 bg-gray-50 rounded-2xl border border-dashed border-gray-200">

@@ -5,7 +5,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
 import TopBar from '@/components/ui/top-bar';
 
-// Centralized context theme mapping to keep visual tracking indicators uniform
+
 const MODAL_THEMES: Record<string, { name: string; icon: string; primaryIcon: string; secondaryIcon: string }> = {
   carpenter: { name: 'Carpentry', icon: 'hammer', primaryIcon: 'boxes', secondaryIcon: 'tools' },
   cleaning: { name: 'Cleaning', icon: 'broom', primaryIcon: 'bath', secondaryIcon: 'bed' },
@@ -21,7 +21,7 @@ interface ConfirmBookingModalProps {
   visible: boolean;
   onClose: () => void;
   basePrice: number;
-  addons: any[]; // Kept for interface backward compatibility if needed
+  addons: any[]; 
   onConfirm: () => void;
   workerName?: string;
 }
@@ -40,7 +40,6 @@ export default function ConfirmBookingModal({
   const currentKey = serviceType?.toLowerCase() || 'cleaning';
   const theme = MODAL_THEMES[currentKey] || MODAL_THEMES.cleaning;
 
-  // Convert comma-separated string of addon IDs back into an array safely
   const parsedAddons: string[] = selectedAddons ? selectedAddons.split(',').filter(Boolean) : [];
 
   return (
@@ -78,7 +77,7 @@ export default function ConfirmBookingModal({
               </Text>
             </View>
 
-            {/* Row 3: Simplified Volume text to Quantity / Units */}
+            {/* Row 3: Quantity / Units */}
             <View className="flex-row border-t border-gray-200/60 pt-3 justify-between items-center">
               <Text className="text-gray-400 text-xs font-bold uppercase tracking-wider">Quantity / Units</Text>
               <View className="flex-row gap-4 items-center">
@@ -93,7 +92,7 @@ export default function ConfirmBookingModal({
               </View>
             </View>
 
-            {/* Row 4: Dynamic Included Add-ons Segment */}
+            {/* Row 4: Included Add-ons Segment */}
             {parsedAddons.length > 0 && (
               <View className="border-t border-gray-200/60 pt-3">
                 <Text className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1.5">Selected Add-ons</Text>

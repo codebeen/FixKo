@@ -11,7 +11,7 @@ interface Tier {
 
 interface ServiceTierSelectorProps {
   tiers: Tier[];
-  serviceType: string; // 1. Added this to track which service key we are booking
+  serviceType: string; 
   onSelectTier?: (title: string) => void;
 }
 

@@ -9,7 +9,6 @@ interface ServiceCategory {
   name: string;
   icon: string;
   color: string;
-  // Changed from static file routes to a structural slug key matching services.json
   slug: string;
 }
 
@@ -81,7 +80,6 @@ const bestServices: BestService[] = [
 export default function ClientHomeDashboardView() {
   const router = useRouter();
 
-  // Helper method to pass the serviceType key dynamically to Expo Router
   const handleServiceNavigation = (slug: string) => {
     router.push({
       pathname: '/(client)/services/variation/DynamicServiceViewPage',
