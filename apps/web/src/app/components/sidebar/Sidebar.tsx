@@ -29,7 +29,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
   // Filter items based on the current URL role
   const NavItems = useMemo(() => {
     if (!roleSlug) return [];
-    return (NAV_CONFIG as any[]).filter(item => !item.roles || item.roles.includes(roleSlug));
+    return NAV_CONFIG.filter(item => !item.roles || item.roles.includes(roleSlug));
   }, [roleSlug]);
 
   const isActive = (path: string) => {
@@ -44,7 +44,7 @@ export default function Sidebar({ opened, close }: SidebarProps) {
     if (lastPathname.current !== pathname) {
       const newState: Record<string, boolean> = {};
       NavItems.forEach((item) => {
-        if (item.links && item.links.some((sub: any) => isActive(sub.link))) {
+        if (item.links && item.links.some((sub) => isActive(sub.link))) {
           newState[item.label] = true;
         }
       });

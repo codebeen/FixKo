@@ -29,6 +29,7 @@ const BaseModal = ({ opened, onClose, title, children, footer, width = "md", }: 
             }}
             closeButtonProps={{
                 icon: <IconX size={24} color="white" />,
+                variant: 'transparent',
             }}
             title={
                 title && (

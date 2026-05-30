@@ -4,8 +4,13 @@ import BaseLayout from "../components/layout/BaseLayout";
 import PageHeader from "../components/page-header/PageHeader";
 import ViewDetailes from "./components/ViewDetailes";
 
-import { Box, Flex, TextInput, Text, rem, Badge, ActionIcon, Tooltip, Pagination, NativeSelect, Paper } from "@mantine/core";
-import { useState, useEffect } from "react";
+import { Box, Flex, Menu, TextInput, Text, rem, Badge, ActionIcon, Tooltip } from "@mantine/core";
+import { useState } from "react";
+import {
+    useMantineReactTable,
+    MantineReactTable,
+    type MRT_ColumnDef,
+} from "mantine-react-table";
 import { IconSearch, IconEye } from "@tabler/icons-react";
 
 import applicantsData from "../data/applicants.json";
@@ -18,131 +23,27 @@ export default function Applicant() {
         "pending" | "approved" | "rejected"
     >("pending");
     const [globalFilter, setGlobalFilter] = useState("");
+    const [columnFilters, setColumnFilters] = useState<any[]>([]);
     const [selectedRecord, setSelectedRecord] = useState<any | null>(null);
-
-    // Simulation states
-    const [applicants, setApplicants] = useState<any[]>([]);
-    const [workers, setWorkers] = useState<any[]>([]);
-    const [initialized, setInitialized] = useState(false);
-
-    // Pagination states
-    const [pageIndex, setPageIndex] = useState(0);
-    const [pageSize, setPageSize] = useState(10);
-
-    // Load initial data from localStorage
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const storedApplicants = localStorage.getItem("fixko_applicants");
-            const storedWorkers = localStorage.getItem("fixko_workers");
-
-            if (storedApplicants) {
-                setApplicants(JSON.parse(storedApplicants));
-            } else {
-                localStorage.setItem("fixko_applicants", JSON.stringify(applicantsData));
-                setApplicants(applicantsData);
-            }
-
-            if (storedWorkers) {
-                setWorkers(JSON.parse(storedWorkers));
-            } else {
-                localStorage.setItem("fixko_workers", JSON.stringify(workersData));
-                setWorkers(workersData);
-            }
-            setInitialized(true);
-        }
-    }, []);
-
-    // Approve handler
-    const handleApprove = (id: string) => {
-        const applicantIndex = applicants.findIndex((a) => a.id === id);
-        if (applicantIndex === -1) return;
-
-        const applicant = applicants[applicantIndex];
-        const newWorkerId = `WRK-${String(workers.length + 1).padStart(3, "0")}`;
-        const newWorker = {
-            id: newWorkerId,
-            first_name: applicant.first_name,
-            middle_name: applicant.middle_name,
-            last_name: applicant.last_name,
-            email: applicant.email,
-            phone: applicant.phone,
-            birthdate: applicant.birthdate,
-            gender: applicant.gender,
-            address: applicant.address,
-            job_type: applicant.job_type,
-            employment_status: "Active",
-            date_hired: new Date().toISOString().split("T")[0],
-            daily_rate: 750,
-            rating: 5.0,
-            total_jobs: 0,
-            supervisor: "Maria Santos",
-        };
-
-        const updatedApplicants = [...applicants];
-        updatedApplicants[applicantIndex] = {
-            ...applicant,
-            status: "Approved",
-        };
-
-        const updatedWorkers = [...workers, newWorker];
-
-        setApplicants(updatedApplicants);
-        setWorkers(updatedWorkers);
-        localStorage.setItem("fixko_applicants", JSON.stringify(updatedApplicants));
-        localStorage.setItem("fixko_workers", JSON.stringify(updatedWorkers));
-
-        const fullName = [applicant.first_name, applicant.middle_name, applicant.last_name]
-            .filter(Boolean)
-            .join(" ");
-        
-        import("react-hot-toast").then(({ default: toast }) => {
-            toast.success(`${fullName} has been successfully approved.`, { id: "status-toast" });
-        });
-    };
-
-    // Reject handler
-    const handleReject = (id: string, remarks: string) => {
-        const applicantIndex = applicants.findIndex((a) => a.id === id);
-        if (applicantIndex === -1) return;
-
-        const applicant = applicants[applicantIndex];
-
-        const updatedApplicants = [...applicants];
-        updatedApplicants[applicantIndex] = {
-            ...applicant,
-            status: "Rejected",
-            notes: remarks || applicant.notes,
-        };
-
-        setApplicants(updatedApplicants);
-        localStorage.setItem("fixko_applicants", JSON.stringify(updatedApplicants));
-
-        const fullName = [applicant.first_name, applicant.middle_name, applicant.last_name]
-            .filter(Boolean)
-            .join(" ");
-
-        import("react-hot-toast").then(({ default: toast }) => {
-            toast.error(`${fullName} has been rejected.`, { id: "status-toast" });
-        });
-    };
-
-    const currentApplicants = initialized ? applicants : applicantsData;
-    const currentWorkers = initialized ? workers : workersData;
 
     const tableData =
         activeTab === "pending"
-            ? currentApplicants.filter((a) => a.status !== "Approved" && a.status !== "Rejected")
+            ? applicantsData
             : activeTab === "approved"
-              ? currentWorkers
-              : currentApplicants.filter((a) => a.status === "Rejected");
+              ? workersData
+              : applicantsData.filter((a) => a.status === "Rejected");
 
-    const applicantColumns = [
+    const applicantColumns: MRT_ColumnDef<any>[] = [
         {
+            accessorKey: "full_name",
             header: "Full Name",
-            render: (row: any) => {
-                const first = row.first_name ?? "";
-                const middle = row.middle_name ? ` ${row.middle_name}` : "";
-                const last = row.last_name ?? "";
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ row }) => {
+                const first = row.original.first_name ?? "";
+                const middle = row.original.middle_name
+                    ? ` ${row.original.middle_name}`
+                    : "";
+                const last = row.original.last_name ?? "";
                 return (
                     <Text fw={500}>
                         {`${first}${middle} ${last}`.trim() || "—"}
@@ -151,19 +52,25 @@ export default function Applicant() {
             },
         },
         {
+            accessorKey: "email",
             header: "Email",
-            render: (row: any) => (
-                <Text c="dimmed">{row.email ?? "—"}</Text>
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => (
+                <Text c="dimmed">{cell.getValue<string>() ?? "—"}</Text>
             ),
         },
         {
+            accessorKey: "job_type",
             header: "Job Type",
-            render: (row: any) => <Text>{row.job_type ?? "—"}</Text>,
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => <Text>{cell.getValue<string>() ?? "—"}</Text>,
         },
         {
+            accessorKey: "created_at",
             header: "Date Applied",
-            render: (row: any) => {
-                const val = row.created_at;
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => {
+                const val = cell.getValue<string>();
                 if (!val) return <Text c="dimmed">—</Text>;
                 return (
                     <Text>
@@ -177,9 +84,11 @@ export default function Applicant() {
             },
         },
         {
+            accessorKey: "status",
             header: "Status",
-            render: (row: any) => {
-                const val = row.status;
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => {
+                const val = cell.getValue<string>();
                 let color = "gray";
                 if (val === "Pending" || val === "For Review") color = "orange";
                 if (val === "Rejected") color = "red";
@@ -192,13 +101,17 @@ export default function Applicant() {
         },
     ];
 
-    const workerColumns = [
+    const workerColumns: MRT_ColumnDef<any>[] = [
         {
+            accessorKey: "full_name",
             header: "Full Name",
-            render: (row: any) => {
-                const first = row.first_name ?? "";
-                const middle = row.middle_name ? ` ${row.middle_name}` : "";
-                const last = row.last_name ?? "";
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ row }) => {
+                const first = row.original.first_name ?? "";
+                const middle = row.original.middle_name
+                    ? ` ${row.original.middle_name}`
+                    : "";
+                const last = row.original.last_name ?? "";
                 return (
                     <Text fw={500}>
                         {`${first}${middle} ${last}`.trim() || "—"}
@@ -207,19 +120,25 @@ export default function Applicant() {
             },
         },
         {
+            accessorKey: "email",
             header: "Email",
-            render: (row: any) => (
-                <Text c="dimmed">{row.email ?? "—"}</Text>
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => (
+                <Text c="dimmed">{cell.getValue<string>() ?? "—"}</Text>
             ),
         },
         {
+            accessorKey: "job_type",
             header: "Job Type",
-            render: (row: any) => <Text>{row.job_type ?? "—"}</Text>,
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => <Text>{cell.getValue<string>() ?? "—"}</Text>,
         },
         {
+            accessorKey: "date_hired",
             header: "Date Hired",
-            render: (row: any) => {
-                const val = row.date_hired;
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: ({ cell }) => {
+                const val = cell.getValue<string>();
                 if (!val) return <Text c="dimmed">—</Text>;
                 return (
                     <Text>
@@ -233,8 +152,10 @@ export default function Applicant() {
             },
         },
         {
+            accessorKey: "status",
             header: "Status",
-            render: (row: any) => (
+            mantineTableHeadCellProps: { align: "center" },
+            Cell: () => (
                 <Badge color="green" variant="light">
                     Approved
                 </Badge>
@@ -244,42 +165,75 @@ export default function Applicant() {
 
     const columns = activeTab === "approved" ? workerColumns : applicantColumns;
 
-    const filteredData = tableData.filter((row) => {
-        if (!globalFilter) return true;
-        const search = globalFilter.toLowerCase();
-        const first = row.first_name ?? "";
-        const middle = row.middle_name ?? "";
-        const last = row.last_name ?? "";
-        const fullName = `${first} ${middle} ${last}`.toLowerCase();
-        const email = (row.email ?? "").toLowerCase();
-        const jobType = (row.job_type ?? "").toLowerCase();
-        const status = (row.status ?? row.employment_status ?? "").toLowerCase();
-        return (
-            fullName.includes(search) ||
-            email.includes(search) ||
-            jobType.includes(search) ||
-            status.includes(search)
-        );
+    const table = useMantineReactTable({
+        columns,
+        data: tableData,
+        enablePagination: true,
+        state: {
+            globalFilter,
+            columnFilters,
+            columnOrder: [
+                ...(columns
+                    .map((col) => col.accessorKey)
+                    .filter(Boolean) as string[]),
+                "mrt-row-actions",
+            ],
+        },
+        enableRowActions: true,
+        positionActionsColumn: "last",
+        displayColumnDefOptions: {
+            "mrt-row-actions": { header: "Actions", size: 100 },
+        },
+        enableStickyHeader: true,
+        onGlobalFilterChange: setGlobalFilter,
+        onColumnFiltersChange: setColumnFilters,
+        mantineTableContainerProps: { className: "pup-table-container" },
+        mantineBottomToolbarProps: { className: "pup-table-bottom-toolbar" },
+        mantinePaperProps: {
+            className: "pup-table-wrapper",
+            radius: 0,
+            style: { border: "none", boxShadow: "none" },
+        },
+        mantineTableHeadCellProps: { align: "center" },
+        mantineFilterTextInputProps: {
+            styles: { input: { color: "#FFFFFF", padding: rem(8) } },
+        },
+        mantineTableProps: {
+            className: "pup-table",
+            id: "no-curve",
+            striped: "odd",
+            highlightOnHover: true,
+            highlightOnHoverColor: "#fff5f5",
+            style: { tableLayout: "auto" },
+        },
+        mantineTableBodyRowProps: ({ row }) => ({
+            onClick: () => setSelectedRecord(row.original),
+            style: { cursor: "pointer", height: rem(65) },
+        }),
+        mantineTableBodyCellProps: {
+            align: "center",
+            style: { verticalAlign: "middle" },
+        },
+        renderRowActions: ({ row }) => (
+            <Flex justify="center" align="center">
+                <Tooltip label="View Details">
+                    <ActionIcon
+                        variant="subtle"
+                        color="blue"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedRecord(row.original);
+                        }}
+                    >
+                        <IconEye style={{ width: rem(18), height: rem(18) }} />
+                    </ActionIcon>
+                </Tooltip>
+            </Flex>
+        ),
+        enableTopToolbar: false,
     });
 
-    const handleTabChange = (tab: "pending" | "approved" | "rejected") => {
-        setActiveTab(tab);
-        setPageIndex(0);
-    };
-
-    const handleFilterChange = (val: string) => {
-        setGlobalFilter(val);
-        setPageIndex(0);
-    };
-
-    const totalRows = filteredData.length;
-    const totalPages = Math.ceil(totalRows / pageSize);
-    const adjustedPageIndex = Math.min(pageIndex, Math.max(0, totalPages - 1));
-    const pageStart = adjustedPageIndex * pageSize;
-    const pageEnd = pageStart + pageSize;
-    const paginatedData = filteredData.slice(pageStart, pageEnd);
-
-    // If a record is selected, show ViewDetailes inline
+    // ── If a record is selected, show ViewDetailes inline ─────────────────
     if (selectedRecord) {
         return (
             <BaseLayout>
@@ -291,13 +245,12 @@ export default function Applicant() {
                             : "worker"
                     }
                     onBack={() => setSelectedRecord(null)}
-                    onApprove={handleApprove}
-                    onReject={handleReject}
                 />
             </BaseLayout>
         );
     }
 
+    // ── Default: show the table ────────────────────────────────────────────
     return (
         <BaseLayout>
             <PageHeader
@@ -307,12 +260,12 @@ export default function Applicant() {
                 showArea={true}
             />
 
-            <Paper
+            <Box
                 mt="xl"
                 bg="white"
                 p="xl"
                 shadow="sm"
-                radius={12}
+                style={{ borderRadius: 12 }}
             >
                 <Box mb="md">
                     <Flex
@@ -331,7 +284,7 @@ export default function Applicant() {
                                 }
                                 value={globalFilter ?? ""}
                                 onChange={(e) =>
-                                    handleFilterChange(e.target.value)
+                                    setGlobalFilter(e.target.value)
                                 }
                             />
                         </Flex>
@@ -341,19 +294,19 @@ export default function Applicant() {
                 <Box className="pup-tabs-container">
                     <button
                         className={`pup-tab ${activeTab === "pending" ? "pup-tab-active" : "pup-tab-inactive"}`}
-                        onClick={() => handleTabChange("pending")}
+                        onClick={() => setActiveTab("pending")}
                     >
                         Pending
                     </button>
                     <button
                         className={`pup-tab ${activeTab === "approved" ? "pup-tab-active" : "pup-tab-inactive"}`}
-                        onClick={() => handleTabChange("approved")}
+                        onClick={() => setActiveTab("approved")}
                     >
                         Approved
                     </button>
                     <button
                         className={`pup-tab ${activeTab === "rejected" ? "pup-tab-active" : "pup-tab-inactive"}`}
-                        onClick={() => handleTabChange("rejected")}
+                        onClick={() => setActiveTab("rejected")}
                     >
                         Rejected
                     </button>
@@ -365,110 +318,9 @@ export default function Applicant() {
                     style={{ display: "flex", flexDirection: "column" }}
                     mt={0}
                 >
-                    <div className="pup-table-wrapper" style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
-                        <div className="pup-table-container" style={{ overflowX: "auto" }}>
-                            <table className="pup-table" style={{ width: "100%", borderCollapse: "collapse" }}>
-                                <thead>
-                                    <tr>
-                                        {columns.map((col, idx) => (
-                                            <th key={idx}>
-                                                <div>
-                                                    <span className="mrt-table-head-cell-labels">
-                                                        {col.header}
-                                                    </span>
-                                                </div>
-                                            </th>
-                                        ))}
-                                        <th>
-                                            <div>
-                                                <span className="mrt-table-head-cell-labels">
-                                                    Actions
-                                                </span>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {paginatedData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={columns.length + 1} style={{ padding: "2rem" }}>
-                                                <Text c="dimmed">No records found</Text>
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        paginatedData.map((row) => (
-                                            <tr
-                                                key={row.id}
-                                                onClick={() => setSelectedRecord(row)}
-                                                style={{ cursor: "pointer" }}
-                                            >
-                                                {columns.map((col, idx) => (
-                                                    <td key={idx}>
-                                                        {col.render(row)}
-                                                    </td>
-                                                ))}
-                                                <td onClick={(e) => e.stopPropagation()}>
-                                                    <Flex justify="center" align="center">
-                                                        <Tooltip label="View Details">
-                                                            <ActionIcon
-                                                                variant="subtle"
-                                                                color="blue"
-                                                                onClick={() => setSelectedRecord(row)}
-                                                            >
-                                                                <IconEye style={{ width: rem(18), height: rem(18) }} />
-                                                            </ActionIcon>
-                                                        </Tooltip>
-                                                    </Flex>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="pup-table-bottom-toolbar">
-                            <div>
-                                <Flex align="center" gap="xs">
-                                    <Text size="xs" c="dimmed">
-                                        Rows per page:
-                                    </Text>
-                                    <NativeSelect
-                                        value={pageSize.toString()}
-                                        onChange={(e) => {
-                                            setPageSize(Number(e.target.value));
-                                            setPageIndex(0);
-                                        }}
-                                        data={["5", "10", "15", "20", "25"]}
-                                        size="xs"
-                                        style={{ width: rem(70) }}
-                                        styles={{
-                                            input: {
-                                                height: rem(34),
-                                                minHeight: rem(34),
-                                            }
-                                        }}
-                                    />
-                                </Flex>
-
-                                <Text size="xs" c="dimmed">
-                                    {totalRows === 0
-                                        ? "0–0 of 0"
-                                        : `${pageStart + 1}–${Math.min(pageEnd, totalRows)} of ${totalRows}`}
-                                </Text>
-
-                                <Pagination
-                                    total={totalPages}
-                                    value={adjustedPageIndex + 1}
-                                    onChange={(page) => setPageIndex(page - 1)}
-                                    size="sm"
-                                    className="pup-table-pagination"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <MantineReactTable key={activeTab} table={table} />
                 </Box>
-            </Paper>
+            </Box>
         </BaseLayout>
     );
 }

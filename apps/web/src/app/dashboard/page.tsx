@@ -16,17 +16,90 @@ import {
   IconMessageCircle,
   IconUserCog,
 } from "@tabler/icons-react";
-import { SimpleGrid } from "@mantine/core";
-import { useState, useEffect } from "react";
+import { SimpleGrid, Box } from "@mantine/core";
 
 import applicantsRaw from "../data/applicants.json";
 import workersRaw from "../data/worker.json";
 import usersRaw from "../data/UserManagementData.json";
 
+// ─── Derived stats ────────────────────────────────────────────────────────────
+
+const totalApplicants = applicantsRaw.length;
+const pendingApplicants = applicantsRaw.filter((a) => a.status === "Pending").length;
+const forReviewApplicants = applicantsRaw.filter((a) => a.status === "For Review").length;
+
+const totalWorkers = workersRaw.length;
+const activeWorkers = workersRaw.filter((w) => w.employment_status === "Active").length;
+const onLeaveWorkers = workersRaw.filter((w) => w.employment_status === "On Leave").length;
+
+const totalUsers = usersRaw.length;
+const activeUsers = usersRaw.filter((u) => u.status === "Active").length;
+const inactiveUsers = usersRaw.filter((u) => u.status === "Inactive").length;
+
 // Customer service mocked counters
 const OPEN_TICKETS = 7;
 const IN_PROGRESS_TICKETS = 4;
 const RESOLVED_TODAY = 12;
+
+// ─── Summary cards ────────────────────────────────────────────────────────────
+
+const CARDS = [
+  {
+    title: "Total Applicants",
+    total: totalApplicants,
+    icon: <IconBriefcase size={20} />,
+    accentColor: "#18388c",
+    statuses: [
+      { label: "Pending", value: pendingApplicants, color: "#E67E22" },
+      { label: "For Review", value: forReviewApplicants, color: "#2980B9" },
+    ],
+  },
+  {
+    title: "Total Workers",
+    total: totalWorkers,
+    icon: <IconUserCheck size={20} />,
+    accentColor: "#27AE60",
+    statuses: [
+      { label: "Active", value: activeWorkers, color: "#27AE60" },
+      { label: "On Leave", value: onLeaveWorkers, color: "#E67E22" },
+    ],
+  },
+  {
+    title: "Customer Service",
+    total: OPEN_TICKETS + IN_PROGRESS_TICKETS + RESOLVED_TODAY,
+    icon: <IconMessageCircle size={20} />,
+    accentColor: "#2980B9",
+    statuses: [
+      { label: "Open", value: OPEN_TICKETS, color: "#C0392B" },
+      { label: "In Progress", value: IN_PROGRESS_TICKETS, color: "#E67E22" },
+      { label: "Resolved Today", value: RESOLVED_TODAY, color: "#27AE60" },
+    ],
+  },
+  {
+    title: "System Users",
+    total: totalUsers,
+    icon: <IconUserCog size={20} />,
+    accentColor: "#8E44AD",
+    statuses: [
+      { label: "Active", value: activeUsers, color: "#27AE60" },
+      { label: "Inactive", value: inactiveUsers, color: "var(--brand-mid-gray)" },
+    ],
+  },
+];
+
+// ─── Recent applications (from static JSON) ───────────────────────────────────
+
+const RECENT_APPLICATIONS: RecentApplicationItem[] = applicantsRaw
+  .slice()
+  .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+  .slice(0, 6)
+  .map((a) => ({
+    id: a.id,
+    name: [a.first_name, a.middle_name, a.last_name].filter(Boolean).join(" "),
+    jobType: a.job_type,
+    status: a.status as RecentApplicationItem["status"],
+    appliedAt: a.created_at,
+  }));
 
 // ─── Recent customer concerns (mocked) ────────────────────────────────────────
 
@@ -84,107 +157,6 @@ const RECENT_CONCERNS: RecentConcernItem[] = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Dashboard() {
-  const [applicants, setApplicants] = useState<any[]>([]);
-  const [workers, setWorkers] = useState<any[]>([]);
-  const [users] = useState<any[]>(usersRaw);
-  const [initialized, setInitialized] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedApplicants = localStorage.getItem("fixko_applicants");
-      const storedWorkers = localStorage.getItem("fixko_workers");
-
-      if (storedApplicants) {
-        setApplicants(JSON.parse(storedApplicants));
-      } else {
-        setApplicants(applicantsRaw);
-      }
-
-      if (storedWorkers) {
-        setWorkers(JSON.parse(storedWorkers));
-      } else {
-        setWorkers(workersRaw);
-      }
-      setInitialized(true);
-    }
-  }, []);
-
-  const currentApplicants = initialized ? applicants : applicantsRaw;
-  const currentWorkers = initialized ? workers : workersRaw;
-
-  // Derived stats
-  const totalApplicants = currentApplicants.length;
-  const pendingApplicants = currentApplicants.filter((a) => a.status === "Pending").length;
-  const forReviewApplicants = currentApplicants.filter((a) => a.status === "For Review").length;
-
-  const totalWorkers = currentWorkers.length;
-  const activeWorkers = currentWorkers.filter((w) => w.employment_status === "Active").length;
-  const onLeaveWorkers = currentWorkers.filter((w) => w.employment_status === "On Leave").length;
-
-  const totalUsers = users.length;
-  const activeUsers = users.filter((u) => u.status === "Active").length;
-  const inactiveUsers = users.filter((u) => u.status === "Inactive").length;
-
-  // ─── Summary cards ────────────────────────────────────────────────────────────
-
-  const cards = [
-    {
-      title: "Total Applicants",
-      total: totalApplicants,
-      icon: <IconBriefcase size={20} />,
-      accentColor: "#18388c",
-      statuses: [
-        { label: "Pending", value: pendingApplicants, color: "#E67E22" },
-        { label: "For Review", value: forReviewApplicants, color: "#2980B9" },
-      ],
-    },
-    {
-      title: "Total Workers",
-      total: totalWorkers,
-      icon: <IconUserCheck size={20} />,
-      accentColor: "#27AE60",
-      statuses: [
-        { label: "Active", value: activeWorkers, color: "#27AE60" },
-        { label: "On Leave", value: onLeaveWorkers, color: "#E67E22" },
-      ],
-    },
-    {
-      title: "Customer Service",
-      total: OPEN_TICKETS + IN_PROGRESS_TICKETS + RESOLVED_TODAY,
-      icon: <IconMessageCircle size={20} />,
-      accentColor: "#2980B9",
-      statuses: [
-        { label: "Open", value: OPEN_TICKETS, color: "#C0392B" },
-        { label: "In Progress", value: IN_PROGRESS_TICKETS, color: "#E67E22" },
-        { label: "Resolved Today", value: RESOLVED_TODAY, color: "#27AE60" },
-      ],
-    },
-    {
-      title: "System Users",
-      total: totalUsers,
-      icon: <IconUserCog size={20} />,
-      accentColor: "#8E44AD",
-      statuses: [
-        { label: "Active", value: activeUsers, color: "#27AE60" },
-        { label: "Inactive", value: inactiveUsers, color: "var(--brand-mid-gray)" },
-      ],
-    },
-  ];
-
-  // ─── Recent applications ───────────────────────────────────────────────────────
-
-  const recentApplications: RecentApplicationItem[] = currentApplicants
-    .slice()
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    .slice(0, 6)
-    .map((a) => ({
-      id: a.id,
-      name: [a.first_name, a.middle_name, a.last_name].filter(Boolean).join(" "),
-      jobType: a.job_type,
-      status: a.status as RecentApplicationItem["status"],
-      appliedAt: a.created_at,
-    }));
-
   return (
     <BaseLayout>
       <PageHeader
@@ -196,14 +168,14 @@ export default function Dashboard() {
 
       {/* 4 Summary Cards */}
       <SimpleGrid cols={{ base: 1, xs: 2, lg: 4 }} spacing="lg" mb="xl" mt="xl">
-        {cards.map((card) => (
+        {CARDS.map((card) => (
           <SummaryCard key={card.title} {...card} />
         ))}
       </SimpleGrid>
 
       {/* Two recent lists side-by-side */}
       <SimpleGrid cols={{ base: 1, md: 2 }} spacing="lg">
-        <RecentApplications items={recentApplications} />
+        <RecentApplications items={RECENT_APPLICATIONS} />
         <RecentConcerns items={RECENT_CONCERNS} />
       </SimpleGrid>
     </BaseLayout>

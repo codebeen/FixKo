@@ -3,28 +3,17 @@ import { Box, Stack, Group, Text, UnstyledButton, Collapse, rem } from "@mantine
 import Link from "next/link";
 import { IconChevronDown } from "@tabler/icons-react";
 
-interface SidebarLinkProps {
-  item: any;
-  role: string;
-  isActive: (link: string) => boolean;
-  isNarrow: boolean;
-  opened: boolean;
-  isAnyOpened: boolean;
-  onToggle: () => void;
-  onClose: () => void;
-}
-
-export function SidebarLink({ item, role, isActive, isNarrow, opened, isAnyOpened, onToggle, onClose }: SidebarLinkProps) {
+export function SidebarLink({ item, role, isActive, isNarrow, opened, isAnyOpened, onToggle, onClose }) {
   const Icon = item.icon;
   const isDirectActive = item.link ? isActive(item.link) : false;
-  const isParentActive = item.links?.some((sub: any) => isActive(sub.link));
+  const isParentActive = item.links?.some((sub) => isActive(sub.link));
   const active = isDirectActive || isParentActive;
 
   // Exclusive highlight logic: If any item is opened, only highlight if this item is the one opened.
   // Otherwise, fallback to active state only if no other items are opened.
   const isHighlighted = isAnyOpened ? (opened && !isNarrow) : active;
 
-  const navButtonStyle = (activeState: boolean) => ({
+  const navButtonStyle = (activeState) => ({
     display: "block",
     width: "100%",
     padding: rem(12),
@@ -60,11 +49,11 @@ export function SidebarLink({ item, role, isActive, isNarrow, opened, isAnyOpene
           </Group>
         </UnstyledButton>
 
-        <Collapse expanded={opened && !isNarrow}>
+        <Collapse in={opened && !isNarrow}>
           <Stack gap={10} mt={10} pl={isNarrow ? 0 : 40}>
             {item.links
-              .filter((sub: any) => !sub.roles || sub.roles.includes(role))
-              .map((sub: any) => {
+              .filter(sub => !sub.roles || sub.roles.includes(role))
+              .map((sub) => {
                 const SubIcon = sub.icon;
                 const subActive = isActive(sub.link);
                 return (
