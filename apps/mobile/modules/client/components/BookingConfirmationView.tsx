@@ -57,7 +57,7 @@ export default function BookingConfirmationView() {
               <Text className="text-white text-base font-bold" numberOfLines={1}>{theme.name} Services</Text>
             </View>
             
-            {/* UPDATED: Matches the clean Assigned blue status theme */}
+            {/* Matches the clean Assigned blue status theme */}
             <View className="bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-full">
               <Text className="text-blue-400 text-[10px] font-extrabold uppercase tracking-widest">
                 Assigned

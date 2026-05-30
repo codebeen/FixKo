@@ -3,16 +3,15 @@ import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import BaseMain from '@/components/layout/(base-main)/BaseMain';
-import { SERVICE_THEMES } from "@/constants/serviceThemes";
 
-// Native binding for your dashboard data file import statement
+
+import { SERVICE_THEMES } from "@/constants/serviceThemes";
 import Bookings from "@/data/DashboardBookings.json";
 
 export default function ClientBookingsDashboardView() {
   const [activeTab, setActiveTab] = useState<'Active' | 'Completed'>('Active');
   const router = useRouter();
 
-  // Instantiate data parameters natively from your JSON import template
   const [bookings] = useState(Bookings);
 
   const filteredBookings = bookings.filter(item => 
@@ -21,8 +20,8 @@ export default function ClientBookingsDashboardView() {
 
   return (
     <BaseMain>
-      {/* ================= FIXED / STICKY HEADER LAYER ================= */}
       <View className="px-5 pt-5 pb-2">
+
         {/* Dashboard Header Container */}
         <View className="flex-row justify-between items-center mb-5">
           <Text className="text-white text-2xl font-black tracking-tight">Your Bookings</Text>
@@ -64,14 +63,12 @@ export default function ClientBookingsDashboardView() {
           </TouchableOpacity>
         </View>
       </View>
-      {/* =============================================================== */}
 
-      {/* SCROLLING CARD STREAM CONTENT */}
       <ScrollView 
         contentContainerStyle={{ 
           paddingHorizontal: 20, 
           paddingTop: 16, 
-          paddingBottom: 110 // FIXED: Generous baseline inner padding to completely stop bottom card cutoff bugs
+          paddingBottom: 110 
         }} 
         showsVerticalScrollIndicator={false}
         className="flex-1"
@@ -94,13 +91,12 @@ export default function ClientBookingsDashboardView() {
                       <Text className="text-gray-900 text-base font-black tracking-tight" numberOfLines={1}>
                         {item.workerName}
                       </Text>
-                      {/* FIXED: Swapped raw database ID for clear, relevant time windows */}
                       <Text className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mt-0.5">
                         SCHEDULE: {item.timeWindow}
                       </Text>
                     </View>
                     
-                    {/* Status Badges with absolute color render keys */}
+                    {/* Status Badges */}
                     <View 
                       style={{
                         backgroundColor: isInProgress ? '#FEF3C7' : isAssigned ? '#DBEAFE' : '#D1FAE5',
