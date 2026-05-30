@@ -29,7 +29,6 @@ export default function ReviewsView() {
     const role = useUserRole();
     const router = useRouter();
 
-    // Client states
     const [selectedWorker, setSelectedWorker] = useState<WorkerToReview | null>(null);
     const [rating, setRating] = useState(5);
     const [reviewTitle, setReviewTitle] = useState("");
@@ -153,7 +152,6 @@ export default function ReviewsView() {
         }
 
         return (
-            // FIXED LAYOUT: Swapped container from non-scrollable View to safe ScrollView layout boundary
             <ScrollView 
                 className="flex-1 mt-2"
                 showsVerticalScrollIndicator={false}
@@ -189,7 +187,6 @@ export default function ReviewsView() {
                     </TouchableOpacity>
                 ))}
 
-                {/* Reviews You Left Segment (Now fully scrollable smoothly inside the view stream) */}
                 {submittedReviews.length > 0 && (
                     <View className="mt-6 pt-4 border-t border-white/10">
                         <Text className="text-brand-yellow text-xs font-bold uppercase tracking-wider mb-3">
