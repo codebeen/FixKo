@@ -59,7 +59,7 @@ export default function ProfileView() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-row justify-between items-center p-4" onPress={() => router.push('/(client)/history' as any)}>
+          <TouchableOpacity className="flex-row justify-between items-center p-4" onPress={() => router.push('/(client)/history/page' as any)}>
             <View className="flex-row items-center gap-3">
               <Ionicons name="time-outline" size={20} color="#fff" />
               <Text className="text-white text-sm font-semibold">Booking History</Text>

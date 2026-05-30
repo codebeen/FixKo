@@ -145,7 +145,7 @@ export default function PaymentConfirmationView() {
                 <TouchableOpacity
                 className="bg-[#4ade80] rounded-full py-4 items-center w-full shadow-lg shadow-black/20"
                 activeOpacity={0.8}
-                onPress={() => router.replace("/(client)/(tabs)/reviews" as any)}
+                onPress={() => router.replace("/(client)/review/ReviewPage" as any)}
                 >
                 <Text className="text-[#001851] text-base font-black tracking-tight">
                     Write a Review for your Helper
