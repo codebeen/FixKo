@@ -11,10 +11,11 @@ interface Tier {
 
 interface ServiceTierSelectorProps {
   tiers: Tier[];
+  serviceType: string; // 1. Added this to track which service key we are booking
   onSelectTier?: (title: string) => void;
 }
 
-export default function ServiceTierSelector({ tiers, onSelectTier }: ServiceTierSelectorProps) {
+export default function ServiceTierSelector({ tiers, serviceType, onSelectTier }: ServiceTierSelectorProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const router = useRouter();
 
@@ -24,7 +25,20 @@ export default function ServiceTierSelector({ tiers, onSelectTier }: ServiceTier
   };
 
   const handleBook = () => {
-    router.push('/(client)/booking/BookingPage' as any);
+    if (selectedIndex === null) return;
+    
+    const selectedTier = tiers[selectedIndex];
+
+    // 2. Fire the centralized navigation layout and forward the parameters
+    router.push({
+      pathname: '/(client)/booking/BookingPage' as any,
+      params: {
+        serviceType: serviceType, // e.g., 'cleaning', 'carpenter'
+        tierTitle: selectedTier.title,
+        tierRate: selectedTier.rate,
+        tierDescription: selectedTier.description
+      },
+    });
   };
 
   return (
