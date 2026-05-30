@@ -147,7 +147,7 @@ export default function ExperienceView() {
                 <View className="items-center mb-3 -mt-2.5">
                     <Image
                         source={FixKoLogo}
-                        className="w-[180px] h-[90px]"
+                        style={{ width: 180, height: 90 }}
                         resizeMode="contain"
                     />
                 </View>

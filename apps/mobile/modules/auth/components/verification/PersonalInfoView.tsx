@@ -293,7 +293,7 @@ export default function PersonalInfoView() {
       />
       <View className="w-full max-w-[340px]">
         <View className="items-center mb-3 -mt-2.5">
-          <Image source={FixKoLogo} className="w-[180px] h-[90px]" resizeMode="contain" />
+          <Image source={FixKoLogo} style={{ width: 180, height: 90 }} resizeMode="contain" />
         </View>
 
         <Stepper currentStep={1} />

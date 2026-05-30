@@ -190,7 +190,7 @@ export default function RegisterFormView() {
       <View className="w-full max-w-[320px] items-center">
         <Image
           source={FixKoLogo}
-          className="w-[200px] h-[100px]"
+          style={{ width: 180, height: 90 }}
           resizeMode="contain"
         />
 
