@@ -1,137 +1,180 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import BaseMain from "@/components/layout/(base-main)/BaseMain";
 import TopBar from "@/components/ui/top-bar";
 
+// Centralized dictionary to match icons and labels across all 8 home services uniform
+const SERVICE_THEMES: Record<string, { name: string; icon: string; primaryIcon: string; secondaryIcon: string; providerLabel: string }> = {
+  carpenter: { name: 'Carpentry', icon: 'hammer', primaryIcon: 'boxes', secondaryIcon: 'tools', providerLabel: 'Carpenter' },
+  cleaning: { name: 'Cleaning', icon: 'broom', primaryIcon: 'bath', secondaryIcon: 'bed', providerLabel: 'Cleaner' },
+  painter: { name: 'Painting', icon: 'paint-roller', primaryIcon: 'layer-group', secondaryIcon: 'paint-brush', providerLabel: 'Painter' },
+  electrician: { name: 'Electrical', icon: 'bolt', primaryIcon: 'plug', secondaryIcon: 'charging-station', providerLabel: 'Electrician' },
+  beauty: { name: 'Beauty', icon: 'cut', primaryIcon: 'spa', secondaryIcon: 'heart', providerLabel: 'Beautician' },
+  ac_repair: { name: 'AC Repair', icon: 'snowflake', primaryIcon: 'wind', secondaryIcon: 'wrench', providerLabel: 'AC Technician' },
+  plumbing: { name: 'Plumbing', icon: 'wrench', primaryIcon: 'tint', secondaryIcon: 'shield-alt', providerLabel: 'Plumber' },
+  salon: { name: 'Salon', icon: 'user-tie', primaryIcon: 'cut', secondaryIcon: 'spray-can', providerLabel: 'Stylist' },
+};
+
 export default function PaymentConfirmationView() {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <BaseMain>
-            <TopBar title="Payment Completed" />
+  // Intercept the real parameters passed along from the booking workflow stack
+  const { 
+    serviceType, 
+    totalCost, 
+    tierTitle, 
+    tierDescription, 
+    primaryCount, 
+    secondaryCount, 
+    workerName,
+    selectedAddons 
+  } = useLocalSearchParams<any>();
 
-            <ScrollView
-                contentContainerStyle={{
-                    paddingHorizontal: 24,
-                    paddingBottom: 40,
-                    alignItems: "center",
-                    paddingTop: 10,
-                }}
-                showsVerticalScrollIndicator={false}
-            >
-                <Text className="text-white text-2xl font-bold text-center mt-2.5 mb-6">
-                    Cleaning Services
+  // Normalize parameters with solid fallback strings for standalone safety checks
+  const currentKey = serviceType?.toLowerCase() || 'cleaning';
+  const theme = SERVICE_THEMES[currentKey] || SERVICE_THEMES.cleaning;
+  const isCleaning = currentKey === 'cleaning';
+
+  const parsedAddons: string[] = selectedAddons ? selectedAddons.split(',').filter(Boolean) : [];
+
+  return (
+    <BaseMain>
+      <TopBar title="Payment Completed" />
+
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingBottom: 40,
+          paddingTop: 10,
+        }}
+        showsVerticalScrollIndicator={false}
+        className="flex-1"
+      >
+        {/* Animated Checkmark Success Header Badge */}
+        <View className="items-center justify-center mt-6 mb-5 relative">
+          <FontAwesome5 name="certificate" size={125} color="#4ade80" />
+          <FontAwesome5 name="check" size={55} color="#001851" style={{ position: "absolute", top: 31 }} />
+        </View>
+
+        <Text className="text-white text-[26px] font-black text-center mb-6 tracking-tight">
+          Payment Successful!
+        </Text>
+
+        <View className="px-1 gap-4 w-full">
+          
+          {/* Section 1: Dynamic Service Context Title Badge */}
+          <View className="flex-row justify-between items-center bg-white/5 border border-white/10 rounded-xl px-4 py-3 w-full">
+            <View className="flex-row items-center gap-2.5 flex-1">
+              <FontAwesome5 name={theme.icon} size={15} color="white" />
+              <Text className="text-white text-base font-bold" numberOfLines={1}>
+                {theme.name} Services
+              </Text>
+            </View>
+            <View className="bg-green-500/10 border border-green-500/20 px-2.5 py-0.5 rounded-full">
+              <Text className="text-[#4ade80] text-[10px] font-extrabold uppercase tracking-widest">Paid</Text>
+            </View>
+          </View>
+
+          {/* Section 2: Selected Package Tier Display Card */}
+          <View className="flex-row items-start bg-white/5 border border-white/10 rounded-2xl p-4 w-full">
+            <View className="bg-white/10 w-11 h-11 rounded-xl items-center justify-center mr-3.5 mt-0.5">
+              <FontAwesome5 name={isCleaning ? "home" : "briefcase"} size={18} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-white text-sm font-bold mb-1">
+                {tierTitle || 'Standard Package Allocation'}
+              </Text>
+              <Text className="text-white/70 text-xs leading-[17px]">
+                {tierDescription || 'Service parameters successfully closed and finalized.'}
+              </Text>
+            </View>
+          </View>
+
+          {/* Section 3: Quantity / Units Counters Segment (No Overlapping bugs) */}
+          <View className="flex-row bg-white/5 border border-white/10 rounded-2xl p-4 items-center justify-between w-full">
+            <View className="flex-1 flex-row items-center justify-center gap-3 px-2">
+              <FontAwesome5 name={theme.primaryIcon} size={20} color="white" />
+              <Text className="text-white text-base font-bold">
+                {primaryCount || '1'} <Text className="text-white/60 text-xs font-normal">Units</Text>
+              </Text>
+            </View>
+            
+            <View className="w-[1px] h-6 bg-white/10" />
+            
+            <View className="flex-1 flex-row items-center justify-center gap-3 px-2">
+              <FontAwesome5 name={theme.secondaryIcon} size={20} color="white" />
+              <Text className="text-white text-base font-bold">
+                {secondaryCount || '1'} <Text className="text-white/60 text-xs font-normal">Tasks</Text>
+              </Text>
+            </View>
+          </View>
+
+          {/* Section 4: Dynamic Included Add-ons Panel display context */}
+          {parsedAddons.length > 0 && (
+            <View className="bg-white/5 border border-white/10 rounded-2xl p-4 w-full">
+              <Text className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-2.5">Add-ons Settled</Text>
+              <View className="gap-2 pl-1">
+                {parsedAddons.map((addonId, index) => (
+                  <View key={index} className="flex-row items-center gap-2.5">
+                    <FontAwesome5 name="plus-circle" size={11} color="#DBA92E" />
+                    <Text className="text-white/90 text-xs font-semibold capitalize tracking-tight" numberOfLines={1}>
+                      {addonId.replace(/_/g, ' ')}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          )}
+
+          {/* Section 5: Dynamic Professional Specialist Summary & Cost Block */}
+          <View className="bg-white/5 border border-white/10 rounded-2xl p-4 mt-1 w-full">
+            <Text className="text-brand-yellow text-xl font-black mb-3">
+              Total Settled: ₱{parseFloat(totalCost || '700').toLocaleString('en-US')}
+            </Text>
+            
+            <View className="flex-row justify-between items-center border-t border-white/5 pt-3 gap-2">
+              <View className="flex-row items-center gap-2 flex-1 min-w-0">
+                <FontAwesome5 name="user-check" size={12} color="rgba(255,255,255,0.6)" />
+                <Text className="text-white/80 text-xs font-bold" numberOfLines={1} ellipsizeMode="tail">
+                  {workerName || 'Assigned Specialist'} ({theme.providerLabel})
                 </Text>
+              </View>
+              <View className="flex-row items-center gap-2 shrink-0">
+                <FontAwesome5 name="clock" size={12} color="rgba(255,255,255,0.6)" />
+                <Text className="text-white/80 text-xs font-medium">Job Concluded</Text>
+              </View>
+            </View>
+          </View>
 
-                <View className="items-center justify-center mb-4 relative">
-                    <FontAwesome5
-                        name="certificate"
-                        size={120}
-                        color="#4ade80"
-                    />
-                    <FontAwesome5
-                        name="check"
-                        size={50}
-                        color="#001851"
-                        style={{ position: "absolute", top: 32 }}
-                    />
-                </View>
+        </View>
 
-                <Text className="text-white text-base text-center mb-8">
-                    Service Completed & Paid Successfully
-                </Text>
+        {/* Section 6: Action Controls */}
+        <View className="gap-2.5 mt-8 px-1 w-full">
+          {/* Write Review Action Control */}
+          <TouchableOpacity
+            className="bg-[#4ade80] rounded-full py-4 items-center w-full shadow-lg shadow-black/20"
+            activeOpacity={0.8}
+            onPress={() => router.replace("/(client)/(tabs)/reviews" as any)}
+          >
+            <Text className="text-[#001851] text-base font-black tracking-tight">
+              Write a Review for your Helper
+            </Text>
+          </TouchableOpacity>
 
-                <View className="bg-white w-full rounded-2xl p-5 mb-10 shadow-lg">
-                    <View className="flex-row gap-3 mb-3">
-                        <View className="flex-1 bg-[#F3F4F6] rounded-xl py-4 items-center justify-center border border-[#E5E7EB]">
-                            <FontAwesome5
-                                name="bed"
-                                size={24}
-                                color="#001851"
-                            />
-                            <Text className="text-[#111827] text-[13px] font-medium mt-2">
-                                1 Bedroom
-                            </Text>
-                        </View>
-                        <View className="flex-1 bg-[#F3F4F6] rounded-xl py-4 items-center justify-center border border-[#E5E7EB]">
-                            <FontAwesome5
-                                name="bath"
-                                size={24}
-                                color="#001851"
-                            />
-                            <Text className="text-[#111827] text-[13px] font-medium mt-2">
-                                1 Bathroom
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View className="bg-[#F3F4F6] rounded-xl p-4 mb-3 border border-[#E5E7EB]">
-                        <Text className="text-[#111827] text-sm font-bold mb-1">
-                            Small Homes (0–50 sqm)
-                        </Text>
-                        <Text className="text-[#4B5563] text-xs leading-[18px]">
-                            Perfect for condos, studio units, and small
-                            apartments
-                        </Text>
-                    </View>
-
-                    <View className="flex-row bg-[#F3F4F6] rounded-xl p-4 items-center justify-center border border-[#E5E7EB]">
-                        <View className="flex-row items-center gap-2">
-                            <FontAwesome5
-                                name="user"
-                                solid
-                                size={14}
-                                color="#4B5563"
-                            />
-                            <Text className="text-[#111827] text-[13px] font-medium">
-                                1 Cleaner
-                            </Text>
-                        </View>
-
-                        <View className="w-1 h-1 rounded-full bg-[#9CA3AF] mx-4" />
-
-                        <View className="flex-row items-center gap-2">
-                            <FontAwesome5
-                                name="clock"
-                                solid
-                                size={14}
-                                color="#4B5563"
-                            />
-                            <Text className="text-[#111827] text-[13px] font-medium">
-                                One hour
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-                <View className="w-full">
-                    <TouchableOpacity
-                        className="bg-[#4ade80] rounded-full py-4 items-center w-full mb-3"
-                        activeOpacity={0.8}
-                        onPress={() =>
-                            router.replace("/(client)/(tabs)/reviews" as any)
-                        }
-                    >
-                        <Text className="text-[#001851] text-[15px] font-bold">
-                            Write a Review for your Helper
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className="bg-white/10 border border-white/20 rounded-full py-4 items-center w-full"
-                        activeOpacity={0.8}
-                        onPress={() =>
-                            router.replace("/(client)/(tabs)/home" as any)
-                        }
-                    >
-                        <Text className="text-white text-[15px] font-bold">
-                            Back to Dashboard
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-        </BaseMain>
-    );
+          {/* Dashboard Fallback Route button */}
+          <TouchableOpacity
+            className="border border-white/20 bg-white/5 rounded-full py-4 items-center w-full active:bg-white/10 mt-1"
+            activeOpacity={0.8}
+            onPress={() => router.replace("/(client)/(tabs)/home" as any)}
+          >
+            <Text className="text-white text-base font-bold tracking-tight">
+              Back to Dashboard
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </BaseMain>
+  );
 }
