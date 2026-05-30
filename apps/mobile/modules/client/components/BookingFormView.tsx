@@ -88,12 +88,18 @@ export default function BookingFormView() {
   const totalEstimatedCost = basePrice + counterMultiplierCost + addonsCost;
 
   const handleBookService = () => {
-    // Push directly to your routing path inside the app folder structure
     router.push({
+      // Points to your loading page or worker selection page route layout stack
       pathname: '/booking/LoadingPage' as any, 
       params: {
         serviceType: currentServiceKey,
         totalCost: totalEstimatedCost.toString(),
+        tierTitle: tierTitle, 
+        tierDescription: tierDescription, 
+        primaryCount: primaryCount.toString(), 
+        secondaryCount: secondaryCount.toString(),
+        // Convert ['addon1', 'addon2'] -> "addon1,addon2" so the string parses perfectly over the URL tree
+        selectedAddons: selectedAddons.join(','), 
       }
     });
   };
