@@ -1,0 +1,112 @@
+[
+  {
+    "id": "1",
+    "name": "Tessa Cruz",
+    "age": 38,
+    "gender": "Female",
+    "location": "Rodriguez, Rizal",
+    "rating": 5.0,
+    "skills": ["cleaning", "beauty", "salon"],
+    "completedJobs": 142,
+    "reviews": ["\"Very accommodating standard, clean gear.\"", "\"Mabait... super nice and detail oriented with instructions.\""]
+  },
+  {
+    "id": "2",
+    "name": "Danilo Santos",
+    "age": 42,
+    "gender": "Male",
+    "location": "San Jose, Rodriguez",
+    "rating": 4.9,
+    "skills": ["carpenter", "plumbing"],
+    "completedJobs": 218,
+    "reviews": ["\"Magaling gumawa, mabilis matapos yung cabinet re-alignments.\"", "\"Highly recommended structural repairs and fixture routing.\""]
+  },
+  {
+    "id": "3",
+    "name": "Grace Pineda",
+    "age": 29,
+    "gender": "Female",
+    "location": "Manggahan, Rodriguez",
+    "rating": 4.8,
+    "skills": ["beauty", "salon"],
+    "completedJobs": 95,
+    "reviews": ["\"Excellent gel manicure finish. Arrived completely on-time.\"", "\"Super light hands and friendly service approach!\""]
+  },
+  {
+    "id": "4",
+    "name": "Ramon Mercado",
+    "age": 35,
+    "gender": "Male",
+    "location": "Burgos, Rodriguez",
+    "rating": 5.0,
+    "skills": ["electrician", "ac_repair"],
+    "completedJobs": 164,
+    "reviews": ["\"Sinalba yung inverter AC unit namin, sharp analytical troubleshooting!\"", "\"Very transparent explaining safety configurations layer setups.\""]
+  },
+  {
+    "id": "5",
+    "name": "Juancho Reyes",
+    "age": 40,
+    "gender": "Male",
+    "location": "Payatas, Quezon City",
+    "rating": 4.7,
+    "skills": ["painter", "carpenter"],
+    "completedJobs": 180,
+    "reviews": ["\"Clean straight wall edges, minimal paint drips!\"", "\"Very professional wood surface prep and masking taping layout.\""]
+  },
+  {
+    "id": "6",
+    "name": "Maria Clara Santos",
+    "age": 33,
+    "gender": "Female",
+    "location": "Litex, Quezon City",
+    "rating": 4.9,
+    "skills": ["cleaning", "ac_repair"],
+    "completedJobs": 112,
+    "reviews": ["\"Immaculate deep cleaning vacuuming, mabango yung chemical flush.\"", "\"Sipag maglinis, completely systematic process with the equipment.\""]
+  },
+  {
+    "id": "7",
+    "name": "Nestor Castro",
+    "age": 45,
+    "gender": "Male",
+    "location": "Commonwealth, Quezon City",
+    "rating": 4.8,
+    "skills": ["painter", "carpenter"],
+    "completedJobs": 295,
+    "reviews": ["\"Very meticulous with the primer layers. Maayos kausap sa timeline.\"", "\"Excellent custom shelf building and matching wood staining work.\""]
+  },
+  {
+    "id": "8",
+    "name": "Arnel Dimaculangan",
+    "age": 37,
+    "gender": "Male",
+    "location": "Batasan Hills, Quezon City",
+    "rating": 4.9,
+    "skills": ["plumbing", "electrician"],
+    "completedJobs": 174,
+    "reviews": ["\"Agad nahanap yung tagas sa banyo, persistent troubleshooting setup.\"", "\"Safe installation of our new multipoint water heater systems.\""]
+  },
+  {
+    "id": "9",
+    "name": "Elena Torralba",
+    "age": 31,
+    "gender": "Female",
+    "location": "Fairview, Quezon City",
+    "rating": 5.0,
+    "skills": ["salon", "beauty"],
+    "completedJobs": 130,
+    "reviews": ["\"Ganda ng kinalabasan ng hair color alignment layout, modern cut styling!\"", "\"Bait ni ate, complete salon-grade hair care procedures equipment brought.\""]
+  },
+  {
+    "id": "10",
+    "name": "Renato Cruz",
+    "age": 39,
+    "gender": "Male",
+    "location": "Holy Spirit, Quezon City",
+    "rating": 4.6,
+    "skills": ["electrician", "ac_repair"],
+    "completedJobs": 140,
+    "reviews": ["\"Fast breaker checking installation, detailed circuit path trace process.\"", "\"Prompt repair split type unit response, cold breeze fully restored.\""]
+  }
+]

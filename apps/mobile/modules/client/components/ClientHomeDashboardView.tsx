@@ -9,7 +9,7 @@ interface ServiceCategory {
   name: string;
   icon: string;
   color: string;
-  route: string;
+  slug: string;
 }
 
 interface BestService {
@@ -24,14 +24,14 @@ interface BestService {
 }
 
 const categories: ServiceCategory[] = [
-  { id: '1', name: 'Carpenter', icon: 'hammer', color: '#DBA92E', route: '/(client)/services/variation/ConstructionServicePage' },
-  { id: '2', name: 'Cleaner', icon: 'broom', color: '#7EB1F1', route: '/(client)/services/variation/CleaningServicePage' },
-  { id: '3', name: 'Painter', icon: 'paint-roller', color: '#4ade80', route: '/(client)/services/variation/ConstructionServicePage' },
-  { id: '4', name: 'Electrician', icon: 'bolt', color: '#f87171', route: '/(client)/services/variation/CleaningServicePage' },
-  { id: '5', name: 'Beauty', icon: 'cut', color: '#93c5fd', route: '/(client)/services/variation/CleaningServicePage' },
-  { id: '6', name: 'AC Repair', icon: 'snowflake', color: '#7EB1F1', route: '/(client)/services/variation/CleaningServicePage' },
-  { id: '7', name: 'Plumber', icon: 'wrench', color: '#f87171', route: '/(client)/services/variation/PlumbingServicePage' },
-  { id: '8', name: 'Salon', icon: 'user-tie', color: '#DBA92E', route: '/(client)/services/variation/CleaningServicePage' },
+  { id: '1', name: 'Carpenter', icon: 'hammer', color: '#DBA92E', slug: 'carpenter' },
+  { id: '2', name: 'Cleaner', icon: 'broom', color: '#7EB1F1', slug: 'cleaning' },
+  { id: '3', name: 'Painter', icon: 'paint-roller', color: '#4ade80', slug: 'painter' },
+  { id: '4', name: 'Electrician', icon: 'bolt', color: '#f87171', slug: 'electrician' },
+  { id: '5', name: 'Beauty', icon: 'cut', color: '#93c5fd', slug: 'beauty' },
+  { id: '6', name: 'AC Repair', icon: 'snowflake', color: '#7EB1F1', slug: 'ac_repair' },
+  { id: '7', name: 'Plumber', icon: 'wrench', color: '#f87171', slug: 'plumbing' },
+  { id: '8', name: 'Salon', icon: 'user-tie', color: '#DBA92E', slug: 'salon' },
 ];
 
 const bestServices: BestService[] = [
@@ -80,6 +80,13 @@ const bestServices: BestService[] = [
 export default function ClientHomeDashboardView() {
   const router = useRouter();
 
+  const handleServiceNavigation = (slug: string) => {
+    router.push({
+      pathname: '/(client)/services/variation/DynamicServiceViewPage',
+      params: { serviceType: slug },
+    });
+  };
+
   return (
     <BaseMain>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 76 }} className="flex-1 px-5 pt-4">
@@ -125,7 +132,7 @@ export default function ClientHomeDashboardView() {
           {categories.map((cat) => (
             <TouchableOpacity
               key={cat.id}
-              onPress={() => router.push(cat.route as any)}
+              onPress={() => handleServiceNavigation(cat.slug)}
               className="w-[23%] mb-4 items-center"
               activeOpacity={0.8}
             >
