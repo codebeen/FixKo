@@ -50,14 +50,18 @@ export default function BookingConfirmationView() {
 
         <View className="px-1 gap-4">
           
-          {/* Section 1:  Service Context Title Badge */}
+          {/* Section 1: Service Context Title Badge */}
           <View className="flex-row justify-between items-center bg-white/5 border border-white/10 rounded-xl px-4 py-3">
             <View className="flex-row items-center gap-2.5 flex-1">
               <FontAwesome5 name={theme.icon} size={15} color="white" />
               <Text className="text-white text-base font-bold" numberOfLines={1}>{theme.name} Services</Text>
             </View>
-            <View className="bg-green-500/10 border border-green-500/20 px-2.5 py-0.5 rounded-full">
-              <Text className="text-[#4ade80] text-[10px] font-extrabold uppercase tracking-widest">Confirmed</Text>
+            
+            {/* UPDATED: Matches the clean Assigned blue status theme */}
+            <View className="bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-full">
+              <Text className="text-blue-400 text-[10px] font-extrabold uppercase tracking-widest">
+                Assigned
+              </Text>
             </View>
           </View>
 

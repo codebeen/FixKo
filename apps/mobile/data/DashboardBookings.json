@@ -1,0 +1,46 @@
+[
+  {
+    "id": "B-1092",
+    "workerName": "Shanella A. Cagulang",
+    "serviceKey": "cleaning",
+    "tierTitle": "Small Homes (0–50 sqm)",
+    "tierDescription": "Perfect for condos, studio units, and small apartments.",
+    "totalCost": 700,
+    "status": "In-progress",
+    "dateString": "May 30, 2026",
+    "timeWindow": "08:30 AM - 11:30 AM"
+  },
+  {
+    "id": "B-1084",
+    "workerName": "Arnel Dimaculangan",
+    "serviceKey": "plumbing",
+    "tierTitle": "Minor Leak Assessment",
+    "tierDescription": "Comprehensive line inspection, thread resealing, and loose joint repairs.",
+    "totalCost": 450,
+    "status": "Completed",
+    "dateString": "May 28, 2026",
+    "timeWindow": "02:00 PM - 03:30 PM"
+  },
+  {
+    "id": "B-1101",
+    "workerName": "Althea Amor Asis",
+    "serviceKey": "cleaning",
+    "tierTitle": "Medium Homes (51–100 sqm)",
+    "tierDescription": "Standard deep clean package optimal for single-attached townhomes.",
+    "totalCost": 1400,
+    "status": "Assigned",
+    "dateString": "June 02, 2026",
+    "timeWindow": "09:00 AM - 12:00 PM"
+  },
+  {
+    "id": "B-1071",
+    "workerName": "Ramon Mercado",
+    "serviceKey": "ac_repair",
+    "tierTitle": "Split Type Aircon Cleaning",
+    "tierDescription": "Pressure coil wash, filter extraction, and systemic drainage purge.",
+    "totalCost": 900,
+    "status": "Completed",
+    "dateString": "May 25, 2026",
+    "timeWindow": "10:00 AM - 11:30 AM"
+  }
+]
