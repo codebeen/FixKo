@@ -27,10 +27,8 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable} ${poppins.className} h-full antialiased`}>
       <body className={`${poppins.className} min-h-full flex flex-col bg-slate-100`}>
         <MantineProvider
-          withNormalizeCSS
-          withGlobalStyles
+          defaultColorScheme="light"
           theme={{
-            colorScheme: "light",
             fontFamily: "'Poppins', var(--font-poppins), sans-serif",
             primaryColor: "blue",
             defaultRadius: "sm",

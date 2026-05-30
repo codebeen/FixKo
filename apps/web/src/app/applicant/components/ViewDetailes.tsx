@@ -55,6 +55,8 @@ export interface ViewDetailesProps {
   record: Applicant | Worker;
   mode: 'applicant' | 'worker';
   onBack: () => void;
+  onApprove?: (id: string) => void;
+  onReject?: (id: string, remarks: string) => void;
 }
 
 // ── Badge colors ───────────────────────────────────────────────────────
@@ -97,7 +99,7 @@ function DetailRow({
 }
 
 // ── Main Component ─────────────────────────────────────────────────────
-export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps) {
+export default function ViewDetailes({ record, mode, onBack, onApprove, onReject }: ViewDetailesProps) {
   const isApplicant = mode === 'applicant';
   const app = record as Applicant;
   const wrk = record as Worker;
@@ -128,14 +130,22 @@ export default function ViewDetailes({ record, mode, onBack }: ViewDetailesProps
       confirmButtonText: 'Yes, approve'
     }).then((result) => {
       if (result.isConfirmed) {
-        toast.success(`${fullName} has been successfully approved.`, { id: 'status-toast' });
+        if (onApprove) {
+          onApprove(record.id);
+        } else {
+          toast.success(`${fullName} has been successfully approved.`, { id: 'status-toast' });
+        }
         onBack();
       }
     });
   };
 
   const handleRejectConfirm = (remarks: string) => {
-    toast.error(`${fullName} has been rejected.`, { id: 'status-toast' });
+    if (onReject) {
+      onReject(record.id, remarks);
+    } else {
+      toast.error(`${fullName} has been rejected.`, { id: 'status-toast' });
+    }
     onBack();
   };
 

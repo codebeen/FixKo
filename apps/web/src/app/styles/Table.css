@@ -57,6 +57,7 @@
     font-weight: 600;
     font-size: 0.75rem;
     border: none !important;
+    padding: 1rem 0.75rem;
 }
 
 /* Force the main header wrapper to center everything tightly */
@@ -99,6 +100,7 @@
     font-weight: 500;
     vertical-align: middle;
     text-align: center;
+    padding: 1rem 0.75rem;
 }
 
 /* Force consistent font size on all content inside body cells */
@@ -108,7 +110,6 @@
 
 /* Row height */
 .pup-table tbody tr {
-    height: 2rem !important;
     transition: all 0.2s ease-in-out;
 }
 
