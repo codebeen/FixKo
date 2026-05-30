@@ -7,17 +7,6 @@ import TopBar from "@/components/ui/top-bar";
 
 import { SERVICE_THEMES } from "@/constants/serviceThemes";
 
-// Centralized dictionary to match icons and labels across all 8 home services uniform
-// const SERVICE_THEMES: Record<string, { name: string; icon: string; primaryIcon: string; secondaryIcon: string; providerLabel: string }> = {
-//   carpenter: { name: 'Carpentry', icon: 'hammer', primaryIcon: 'boxes', secondaryIcon: 'tools', providerLabel: 'Carpenter' },
-//   cleaning: { name: 'Cleaning', icon: 'broom', primaryIcon: 'bath', secondaryIcon: 'bed', providerLabel: 'Cleaner' },
-//   painter: { name: 'Painting', icon: 'paint-roller', primaryIcon: 'layer-group', secondaryIcon: 'paint-brush', providerLabel: 'Painter' },
-//   electrician: { name: 'Electrical', icon: 'bolt', primaryIcon: 'plug', secondaryIcon: 'charging-station', providerLabel: 'Electrician' },
-//   beauty: { name: 'Beauty', icon: 'cut', primaryIcon: 'spa', secondaryIcon: 'heart', providerLabel: 'Beautician' },
-//   ac_repair: { name: 'AC Repair', icon: 'snowflake', primaryIcon: 'wind', secondaryIcon: 'wrench', providerLabel: 'AC Technician' },
-//   plumbing: { name: 'Plumbing', icon: 'wrench', primaryIcon: 'tint', secondaryIcon: 'shield-alt', providerLabel: 'Plumber' },
-//   salon: { name: 'Salon', icon: 'user-tie', primaryIcon: 'cut', secondaryIcon: 'spray-can', providerLabel: 'Stylist' },
-// };
 
 export default function PaymentConfirmationView() {
     const router = useRouter();

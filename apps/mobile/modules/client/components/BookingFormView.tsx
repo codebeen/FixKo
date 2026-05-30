@@ -11,18 +11,6 @@ import SERVICES_JSON from '@/data/Services.json';
 import { SERVICE_THEMES } from "@/constants/serviceThemes";
 
 
-// Centralized style and context mapping for all services
-// const SERVICE_THEMES: Record<string, { name: string; icon: string; color: string; primaryLabel: string; secondaryLabel: string }> = {
-//   carpenter: { name: 'Carpentry', icon: 'hammer', color: '#DBA92E', primaryLabel: 'Large Items / Build Tasks', secondaryLabel: 'Minor Repairs / Fixtures' },
-//   cleaning: { name: 'Cleaning', icon: 'broom', color: '#7EB1F1', primaryLabel: 'Bathroom', secondaryLabel: 'Bedroom' },
-//   painter: { name: 'Painting', icon: 'paint-roller', color: '#4ade80', primaryLabel: 'Full Rooms', secondaryLabel: 'Accent/Touch-up Walls' },
-//   electrician: { name: 'Electrical', icon: 'bolt', color: '#f87171', primaryLabel: 'Heavy Lines / Breakers', secondaryLabel: 'Fixtures / Outlets' },
-//   beauty: { name: 'Beauty', icon: 'cut', color: '#93c5fd', primaryLabel: 'Main Treatment Sessions', secondaryLabel: 'Add-on Pamper Packs' },
-//   ac_repair: { name: 'AC Repair', icon: 'snowflake', color: '#7EB1F1', primaryLabel: 'Split Type Units', secondaryLabel: 'Window Type Units' },
-//   plumbing: { name: 'Plumbing', icon: 'wrench', color: '#f87171', primaryLabel: 'Major Fixture Installs', secondaryLabel: 'Minor Leak Checks' },
-//   salon: { name: 'Salon', icon: 'user-tie', color: '#DBA92E', primaryLabel: 'Hair / Style Cuts', secondaryLabel: 'Color / Care Procedures' },
-// };
-
 export default function BookingFormView() {
   const router = useRouter();
 
